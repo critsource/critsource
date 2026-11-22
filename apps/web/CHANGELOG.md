@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - The image sends a `Content-Security-Policy-Report-Only` header with the app's HTML, so browsers report in their console each script or style that neither the app nor Cloudflare's bot check loads, and block nothing. Mount your own copy of `/etc/nginx/csp.inc` to change the policy. A later release enforces it.
+- The image sends `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and `X-Frame-Options` with every response, so browsers don't guess the type of a file, send no referrer to other sites, offer no device features such as the camera to scripts, and let no other site frame the app. An app that you embed in a frame on another site no longer loads there. Mount your own copy of `/etc/nginx/security-headers.inc` to change the headers, and send `Strict-Transport-Security` from the proxy that terminates TLS, since the image serves plain HTTP.
 
 ### Changed
 
