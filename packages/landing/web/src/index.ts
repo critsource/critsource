@@ -1,2 +1,2 @@
-export { LandingPageComponent } from './landing-page/landing-page.component';
+export { LandingPage } from './landing.page';
 export { landingRoutes } from './landing.routes';

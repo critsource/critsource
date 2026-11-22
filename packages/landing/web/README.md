@@ -8,8 +8,10 @@ The page at `/` and its sections. The page renders a placeholder until the secti
 
 The page is prerendered during `web:build`, so every component on it follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 
-- [`src/landing.routes.ts`](src/landing.routes.ts) holds `landingRoutes`, which renders `LandingPageComponent` at the root of the routes.
-- `LandingPageComponent`, in [`src/landing-page/`](src/landing-page), is the page.
+- [`src/landing.routes.ts`](src/landing.routes.ts) holds `landingRoutes`, which renders `LandingPage` at the root of the routes.
+- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page.
+
+A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `LandingPage` does. Every other component takes the `Component` suffix.
 
 ## Using the package
 
@@ -19,10 +21,10 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                            | Source                                 | Exports                                 |
-|:----------------------------------|:---------------------------------------|:----------------------------------------|
-| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPageComponent`, `landingRoutes` |
-| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `LandingPageHarness`                    |
+| Import                            | Source                                 | Exports                        |
+|:----------------------------------|:---------------------------------------|:-------------------------------|
+| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes` |
+| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `LandingPageHarness`           |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 

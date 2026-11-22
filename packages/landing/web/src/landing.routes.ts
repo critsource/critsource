@@ -1,4 +1,4 @@
 import { type Routes } from '@angular/router';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LandingPage } from './landing.page';
 
-export const landingRoutes: Routes = [{ path: '', component: LandingPageComponent }];
+export const landingRoutes: Routes = [{ path: '', component: LandingPage }];
