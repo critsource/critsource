@@ -64,3 +64,10 @@ tasks:
             - "*.config.ts"
             - project: "config-eslint"
               group: "sources"
+
+    lint:
+        # Extends the inherited task, since the type-aware rules read the types of the domain modules that the router
+        # lazy-loads.
+        inputs:
+            - project: "landing-web"
+              group: "sources"

@@ -14,11 +14,12 @@ test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
 
-        test('shows the prerendered app shell', async ({ page }) => {
+        test('shows the prerendered landing page in the app shell', async ({ page }) => {
             await page.goto('/');
 
             await expect(page).toHaveTitle('Critsource');
             await expectShell(page);
+            await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
         });
     });
 
@@ -38,6 +39,7 @@ test.describe('app', () => {
         await expect(root).toHaveAttribute('ng-server-context', 'ssg');
         await expect(root).not.toHaveAttribute('ngh');
         await expectShell(page);
+        await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
         expect(errors).toEqual([]);
     });
 
@@ -47,6 +49,7 @@ test.describe('app', () => {
         await expect(page).toHaveTitle('Critsource');
         // The app shell holds an empty root element, so the content comes from the app once it boots.
         expect(await response?.text()).toMatch(/<dma-root [^>]*><\/dma-root>/);
+        // No route matches the path until the Not found page lands, so the shell boots without a page.
         await expectShell(page);
     });
 });

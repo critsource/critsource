@@ -1,6 +1,6 @@
 # Web landing page
 
-The landing page of the [web client](../../../apps/web/README.md), which the router of [`core-web`](../../core/web/README.md) is to load at `/`. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../config-eslint/README.md), which holds the rules.
+The landing page of the [web client](../../../apps/web/README.md), which the router of [`core-web`](../../core/web/README.md) loads at `/`. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../config-eslint/README.md), which holds the rules.
 
 ## What belongs here
 
@@ -15,7 +15,7 @@ A component that a route renders as a page takes the `Page` suffix, in its class
 
 ## Using the package
 
-Only the router of `core-web` may load the module, through `import()`, as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. The module imports nothing of `core-web`: `core-web` declares each module it loads in its `package.json`, so a dependency back on it would form a cycle, which moon refuses.
+Only the router of `core-web` may load the module, through `import()` in [`app.routes.ts`](../../core/web/src/config/app.routes.ts), as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. The module imports nothing of `core-web`: `core-web` declares each module it loads in its `package.json`, so a dependency back on it would form a cycle, which moon refuses.
 
 The `exports` of [`package.json`](package.json) point at the TypeScript sources, and the web client compiles them as part of its own build, as [Architecture](../../../docs/architecture.md#modules-compile-from-source) describes. Each entry point has an `ng-package.json`, which the unit-test builder reads and which an `ng build` with ng-packagr would package as is.
 
