@@ -1,10 +1,10 @@
 # Common helpers
 
-Small, general helpers that any project of D&D Mapp can use.
+Small, general helpers that any project of Critsource can use.
 
 ## What belongs here
 
-A helper belongs here when it knows nothing about D&D Mapp, a domain, or a platform: no models or rules of a domain, and no Angular, DOM, or Node.js APIs. Code that the platforms of a domain share goes in the `domain` package of that domain, `packages/<domain>/domain`, as [Architecture](../../docs/architecture.md#projects) describes.
+A helper belongs here when it knows nothing about Critsource, a domain, or a platform: no models or rules of a domain, and no Angular, DOM, or Node.js APIs. Code that the platforms of a domain share goes in the `domain` package of that domain, `packages/<domain>/domain`, as [Architecture](../../docs/architecture.md#projects) describes.
 
 ## Using the package
 

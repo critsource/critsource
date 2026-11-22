@@ -47,7 +47,8 @@ config:
 
     MD044:
         names:
-            - D&D Mapp
+            - "@critsource"
+            - Critsource
             - GitHub
             - JavaScript
             - TypeScript

@@ -1,6 +1,6 @@
 # ESLint config
 
-The shared ESLint config of the projects of D&D Mapp. Its presets hold the rules that the projects share, leave formatting to Prettier, and enforce the dependency rules between the projects on the imports of each project. [Architecture](../../docs/architecture.md#dependency-rules) describes those rules. [`tsconfig.json`](tsconfig.json) checks the types of the presets, which ESLint loads without checking.
+The shared ESLint config of the projects of Critsource. Its presets hold the rules that the projects share, leave formatting to Prettier, and enforce the dependency rules between the projects on the imports of each project. [Architecture](../../docs/architecture.md#dependency-rules) describes those rules. [`tsconfig.json`](tsconfig.json) checks the types of the presets, which ESLint loads without checking.
 
 ## Using the package
 

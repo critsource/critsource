@@ -24,7 +24,7 @@ gh workflow run release-pull-request.yaml --field project=web --field level=auto
 | `level`    | `auto`, which picks the bump from the entries in `Unreleased`, or `major`, `minor`, or `patch` to set it. |
 | `timezone` | The IANA time zone of the release date, `Europe/Amsterdam` by default.                                    |
 
-The workflow lints every changelog, fails when `Unreleased` has no entries, and runs `release bump`. The `dnd-mapp` GitHub App commits the changed `CHANGELOG.md` and `package.json` to `chore/release-<project>`, which GitHub signs, and opens a pull request titled `chore: release <project> v<version>`. Its description says how the level was chosen.
+The workflow lints every changelog, fails when `Unreleased` has no entries, and runs `release bump`. The `critsource` GitHub App commits the changed `CHANGELOG.md` and `package.json` to `chore/release-<project>`, which GitHub signs, and opens a pull request titled `chore: release <project> v<version>`. Its description says how the level was chosen.
 
 Dispatching again rebuilds the branch from the latest `main` and updates the same pull request, so entries merged in the meantime join the release.
 

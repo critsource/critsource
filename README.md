@@ -1,13 +1,13 @@
-# D&D Mapp
+# Critsource
 
 [![Push main](https://github.com/critsource/critsource/actions/workflows/push-main.yaml/badge.svg?branch=main)](https://github.com/critsource/critsource/actions/workflows/push-main.yaml?query=branch%3Amain)
 [![Docker image version](https://img.shields.io/docker/v/critsource/web?sort=semver&label=critsource%2Fweb)](https://hub.docker.com/r/critsource/web)
 [![License: MIT](https://img.shields.io/github/license/critsource/critsource)](LICENSE)
 
-D&D Mapp is an open-source web app for dungeon masters and players of Dungeons & Dragons 5th edition. It covers the 2014 rules from the System Reference Document 5.1, and users add their own homebrew content on top.
+Critsource is an open-source web app for dungeon masters and players of Dungeons & Dragons 5th edition. It covers the 2014 rules from the System Reference Document 5.1, and users add their own homebrew content on top.
 
 > [!IMPORTANT]
-> D&D Mapp is in early development, and none of the features below exist yet.
+> Critsource is in early development, and none of the features below exist yet.
 
 ## Features
 
@@ -21,7 +21,7 @@ Every tool is open to all users, except those marked for dungeon masters (DMs).
 ### Characters
 
 - Build and keep character sheets.
-- Keep spell books for any character, whether or not D&D Mapp manages it, and attach a spell book to its character once the character moves into D&D Mapp.
+- Keep spell books for any character, whether or not Critsource manages it, and attach a spell book to its character once the character moves into Critsource.
 
 ### Worlds and campaigns
 
@@ -44,7 +44,7 @@ The [guides in `docs/`](docs/README.md) cover the workspace as a whole, from set
 
 ## Projects
 
-This repository is the monorepo of D&D Mapp, holding all its packages and applications. Each project's README says what the project is for and lists its tasks:
+This repository is the monorepo of Critsource, holding all its packages and applications. Each project's README says what the project is for and lists its tasks:
 
 - [`apps/web`](apps/web/README.md): the Angular web client.
 - [`e2e/web`](e2e/web/README.md): the end-to-end tests of the web client.
@@ -69,4 +69,4 @@ This repository is the monorepo of D&D Mapp, holding all its packages and applic
 
 ## License
 
-D&D Mapp is released under the [MIT License](LICENSE).
+Critsource is released under the [MIT License](LICENSE).

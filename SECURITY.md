@@ -1,6 +1,6 @@
 # Security policy
 
-This policy covers which versions of D&D Mapp get security fixes, what is in scope, how to report a vulnerability privately, and what happens after you report one.
+This policy covers which versions of Critsource get security fixes, what is in scope, how to report a vulnerability privately, and what happens after you report one.
 
 ## Supported versions
 
@@ -26,8 +26,8 @@ Where you can, reproduce a weakness against a local `critsource/web` container, 
 Out of scope:
 
 - The `dev` and `staging` environments as test targets. They run `main` and the latest release, so report a weakness against those instead.
-- A weakness in a dependency that doesn't affect D&D Mapp.
-- Output of a scanner or AI tool that you haven't confirmed in D&D Mapp's code, as [Using AI tools](CONTRIBUTING.md#using-ai-tools) asks.
+- A weakness in a dependency that doesn't affect Critsource.
+- Output of a scanner or AI tool that you haven't confirmed in Critsource's code, as [Using AI tools](CONTRIBUTING.md#using-ai-tools) asks.
 - Denial of service or load testing against any hosted site.
 - Social engineering.
 
@@ -42,7 +42,7 @@ Include the affected version or commit, the steps to reproduce the weakness, and
 
 ## After you report
 
-The [lead maintainer](GOVERNANCE.md#lead-maintainer) handles every report. D&D Mapp runs on one volunteer, so the times below are goals, not promises:
+The [lead maintainer](GOVERNANCE.md#lead-maintainer) handles every report. Critsource runs on one volunteer, so the times below are goals, not promises:
 
 1. The lead maintainer aims to acknowledge your report within 7 days, and to share an assessment within 14 days.
 2. Once the weakness is confirmed, the lead maintainer fixes it in a temporary private fork of the advisory.
@@ -52,4 +52,4 @@ Keep the details private until the advisory is published, or for 90 days after y
 
 ## Credit
 
-The advisory credits you under the name or handle you choose, or not at all if you ask. D&D Mapp has no bug bounty.
+The advisory credits you under the name or handle you choose, or not at all if you ask. Critsource has no bug bounty.

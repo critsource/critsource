@@ -97,13 +97,13 @@ The `setup` action caches the pnpm store, which also holds the Node.js runtime. 
 
 The workflows read these repository secrets and variables:
 
-| Name                                           | Kind     | Used for                                                                                                                                                           |
-|:-----------------------------------------------|:---------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `DOCKERHUB_USERNAME`                           | Variable | The Docker Hub account that pushes and deletes the images.                                                                                                         |
-| `DOCKERHUB_TOKEN_WRITE`                        | Secret   | Pushing the web image, and moving its tags in a rollback.                                                                                                          |
-| `DOCKERHUB_TOKEN_DELETE`                       | Secret   | Deleting `pr-<number>` tags, and publishing the overview.                                                                                                          |
-| `GH_APP_CLIENT_ID`                             | Variable | The `dnd-mapp` GitHub App that commits the release bump, opens the release pull request, and readies a retargeted pull request, so its merge triggers `Push main`. |
-| `GH_APP_PRIVATE_KEY`                           | Secret   | Signing in as that app.                                                                                                                                            |
+| Name                                           | Kind     | Used for                                                                                                                                                             |
+|:-----------------------------------------------|:---------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DOCKERHUB_USERNAME`                           | Variable | The Docker Hub account that pushes and deletes the images.                                                                                                           |
+| `DOCKERHUB_TOKEN_WRITE`                        | Secret   | Pushing the web image, and moving its tags in a rollback.                                                                                                            |
+| `DOCKERHUB_TOKEN_DELETE`                       | Secret   | Deleting `pr-<number>` tags, and publishing the overview.                                                                                                            |
+| `GH_APP_CLIENT_ID`                             | Variable | The `critsource` GitHub App that commits the release bump, opens the release pull request, and readies a retargeted pull request, so its merge triggers `Push main`. |
+| `GH_APP_PRIVATE_KEY`                           | Secret   | Signing in as that app.                                                                                                                                              |
 
 The deploy jobs read these from the GitHub environment they deploy to, so no other job can read them. Each of `development`, `staging`, and `production` holds its own:
 

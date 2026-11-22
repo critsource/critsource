@@ -1,6 +1,6 @@
-# Contributing to D&D Mapp
+# Contributing to Critsource
 
-Thanks for helping build D&D Mapp. This guide covers where a contribution starts, how issues move across the project board, and how to use AI tools. It then sets the conventions for branches, commits, changelog entries, and docs, and explains how to check your changes and how a pull request gets reviewed and merged.
+Thanks for helping build Critsource. This guide covers where a contribution starts, how issues move across the project board, and how to use AI tools. It then sets the conventions for branches, commits, changelog entries, and docs, and explains how to check your changes and how a pull request gets reviewed and merged.
 
 ## Where to start
 
@@ -26,7 +26,7 @@ Before you post, check that your contribution meets the bar for its kind:
 |:--------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | A discussion              | It says what you mean, in your own words, without padding.                                                                                                       |
 | A bug report              | You reproduced the bug on the version you name, and the steps, environment, and logs are ones you observed.                                                      |
-| A security advisory       | You confirmed the weakness in D&D Mapp's code, not only in the output of a scanner or an AI tool.                                                                |
+| A security advisory       | You confirmed the weakness in Critsource's code, not only in the output of a scanner or an AI tool.                                                              |
 | A pull request            | You can explain every line it changes and why, you ran the checks under [Checking your changes](#checking-your-changes), and its description matches the change. |
 | A review comment or reply | You read the code it is about, and checked any finding an AI tool suggested.                                                                                     |
 
