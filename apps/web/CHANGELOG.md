@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-22
+
 ### Added
 
 - Every page now has a header with a link home, a GitHub button, and a theme picker, a menu for narrow screens, a skip link to the main content, and a footer with the license and the SRD 5.1 attribution.
@@ -52,7 +54,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `build-info.json`, which reports the commit and version of the build that a deployment serves.
 - A `/healthz` endpoint and a `HEALTHCHECK` in the image, which report whether the container is healthy.
 
-[unreleased]: https://github.com/critsource/critsource/compare/web@v0.4.0...HEAD
+[unreleased]: https://github.com/critsource/critsource/compare/web@v0.5.0...HEAD
+[0.5.0]: https://github.com/critsource/critsource/compare/web@v0.4.0...web@v0.5.0
 [0.4.0]: https://github.com/critsource/critsource/compare/web@v0.3.0...web@v0.4.0
 [0.3.0]: https://github.com/critsource/critsource/compare/web@v0.2.0...web@v0.3.0
 [0.2.0]: https://github.com/critsource/critsource/compare/web@v0.1.0...web@v0.2.0
