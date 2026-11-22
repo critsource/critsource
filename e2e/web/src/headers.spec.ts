@@ -10,7 +10,7 @@ const headers = {
 
 const files = [
     { path: '/', file: 'the prerendered landing page', status: 200 },
-    { path: '/any/other/path', file: 'the app shell', status: 200 },
+    { path: '/any/other/path', file: 'the Not found page', status: 404 },
     { path: '/build-info.json', file: 'build-info.json', status: 200 },
     { path: '/missing.js', file: 'a missing file', status: 404 },
 ];

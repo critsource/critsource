@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const paths = [
     { path: '/', page: 'the prerendered landing page' },
-    { path: '/any/other/path', page: 'the app shell' },
+    { path: '/any/other/path', page: 'the Not found page' },
 ];
 
 /**

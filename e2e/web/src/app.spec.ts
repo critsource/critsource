@@ -42,14 +42,4 @@ test.describe('app', () => {
         await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
         expect(errors).toEqual([]);
     });
-
-    test('boots the app shell on any other path', async ({ page }) => {
-        const response = await page.goto('/any/other/path');
-
-        await expect(page).toHaveTitle('Critsource');
-        // The app shell holds an empty root element, so the content comes from the app once it boots.
-        expect(await response?.text()).toMatch(/<dma-root [^>]*><\/dma-root>/);
-        // No route matches the path until the Not found page lands, so the shell boots without a page.
-        await expectShell(page);
-    });
 });
