@@ -25,7 +25,10 @@ describe('RootComponent', () => {
             host: TestComponent,
             harness: RootHarness,
             providers: [
-                provideRouter([{ path: '', component: RoutedPage }]),
+                provideRouter([
+                    { path: '', component: RoutedPage },
+                    { path: 'privacy', component: RoutedPage },
+                ]),
                 provideBrowserStorage(new InMemoryStorage()),
             ],
         });
@@ -33,7 +36,7 @@ describe('RootComponent', () => {
         await TestBed.inject(Router).navigateByUrl('/');
         await fixture.whenStable();
 
-        return { harness };
+        return { fixture, harness };
     }
 
     const menuButton = () => page.getByRole('button', { name: 'Menu', exact: true });
@@ -115,15 +118,39 @@ describe('RootComponent', () => {
     });
 
     describe('footer', () => {
-        it('should hold the project group with the link to GitHub', async () => {
+        const privacyLink = () =>
+            page.getByRole('navigation', { name: 'Legal', exact: true }).getByRole('link', { name: 'Privacy' });
+
+        it('should hold the project group, then the legal group', async () => {
             const { harness } = await setupTest();
 
             const groups = await harness.getLinkGroups();
 
-            expect(await Promise.all(groups.map((group) => group.getHeadingText()))).toEqual(['Project']);
+            expect(await Promise.all(groups.map((group) => group.getHeadingText()))).toEqual(['Project', 'Legal']);
+        });
+
+        it('should link to GitHub from the project group', async () => {
+            await setupTest();
+
             await expect
                 .element(page.getByRole('navigation', { name: 'Project', exact: true }).getByRole('link'))
                 .toHaveAttribute('href', githubUrl);
+        });
+
+        it('should link to the Privacy page from the legal group', async () => {
+            await setupTest();
+
+            await expect.element(privacyLink()).toHaveAttribute('href', '/privacy');
+            await expect.element(privacyLink()).not.toHaveAttribute('aria-current');
+        });
+
+        it('should mark the Privacy link as the current page on the Privacy page', async () => {
+            const { fixture } = await setupTest();
+
+            await TestBed.inject(Router).navigateByUrl('/privacy');
+            await fixture.whenStable();
+
+            await expect.element(privacyLink()).toHaveAttribute('aria-current', 'page');
         });
     });
 
