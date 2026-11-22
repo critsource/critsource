@@ -22,9 +22,9 @@ describe('repositoryUrl', () => {
         ['a missing field', undefined],
         ['an object without a URL', { type: 'git' }],
         ['a URL without an owner', 'https://github.com/critsource'],
-        ['a URL of another protocol', 'file:///repos/dnd-mapp'],
+        ['a URL of another protocol', 'file:///repos/critsource'],
         ['the gitlab: shorthand', 'gitlab:critsource/critsource'],
-        ['text that is no URL', 'the D&D Mapp repository'],
+        ['text that is no URL', 'the Critsource repository'],
     ])('returns undefined for %s', (_, field) => {
         expect(repositoryUrl(field)).toBeUndefined();
     });

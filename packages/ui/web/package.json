@@ -1,7 +1,7 @@
 {
   "name": "@critsource/ui-web",
   "version": "0.0.0",
-  "description": "The UI components that every app and module of the D&D Mapp web client builds its pages from.",
+  "description": "The UI components that every app and module of the Critsource web client builds its pages from.",
   "private": true,
   "license": "MIT",
   "repository": {

@@ -1,7 +1,7 @@
 {
   "name": "@critsource/core-web",
   "version": "0.0.0",
-  "description": "The core of the D&D Mapp web client: the root component, the app config, and the routes.",
+  "description": "The core of the Critsource web client: the root component, the app config, and the routes.",
   "private": true,
   "license": "MIT",
   "repository": {

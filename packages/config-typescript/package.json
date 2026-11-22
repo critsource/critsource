@@ -1,7 +1,7 @@
 {
   "name": "@critsource/config-typescript",
   "version": "0.0.0",
-  "description": "The TypeScript config presets that the projects of D&D Mapp extend.",
+  "description": "The TypeScript config presets that the projects of Critsource extend.",
   "private": true,
   "license": "MIT",
   "repository": {

@@ -1,7 +1,7 @@
 {
   "name": "@critsource/config-eslint",
   "version": "0.0.0",
-  "description": "The shared ESLint config of the projects of D&D Mapp.",
+  "description": "The shared ESLint config of the projects of Critsource.",
   "private": true,
   "license": "MIT",
   "repository": {

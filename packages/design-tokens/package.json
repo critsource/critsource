@@ -1,7 +1,7 @@
 {
   "name": "@critsource/design-tokens",
   "version": "0.0.0",
-  "description": "The design tokens of D&D Mapp: the Penpot export, the CSS custom properties generated from it, and the fonts.",
+  "description": "The design tokens of Critsource: the Penpot export, the CSS custom properties generated from it, and the fonts.",
   "private": true,
   "license": "MIT",
   "repository": {

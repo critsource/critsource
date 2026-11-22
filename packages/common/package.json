@@ -1,7 +1,7 @@
 {
   "name": "@critsource/common",
   "version": "0.0.0",
-  "description": "General helpers that any project of D&D Mapp can use, which know nothing about a domain or a platform.",
+  "description": "General helpers that any project of Critsource can use, which know nothing about a domain or a platform.",
   "private": true,
   "license": "MIT",
   "repository": {

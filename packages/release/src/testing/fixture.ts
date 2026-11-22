@@ -16,7 +16,7 @@ export interface FixtureOptions {
     project?: string;
     /** The content of `CHANGELOG.md`, or `undefined` to leave the file out. */
     changelog?: string | undefined;
-    /** The content of `package.json`. Defaults to a manifest that holds `version` and the repository of D&D Mapp. */
+    /** The content of `package.json`. Defaults to a manifest that holds `version` and the repository of Critsource. */
     manifest?: string;
     /** The version in the default `package.json`. */
     version?: string;
@@ -53,7 +53,7 @@ export interface Fixture {
 /** The root of the repository, at the root of the drive. */
 const repositoryRoot = resolve('/repo');
 
-/** The `repository` field of the packages of D&D Mapp. */
+/** The `repository` field of the packages of Critsource. */
 export const repositoryField = { type: 'git', url: 'git+https://github.com/critsource/critsource.git' };
 
 /**
