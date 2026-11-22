@@ -1,0 +1,45 @@
+{
+  "name": "@critsource/landing-web",
+  "version": "0.0.0",
+  "description": "The landing page of the Critsource web client, which the router of core-web loads at the root.",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/critsource/critsource.git",
+    "directory": "packages/landing/web"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./testing/index.ts"
+  },
+  "peerDependencies": {
+    "@angular/cdk": "catalog:angular",
+    "@angular/common": "catalog:angular",
+    "@angular/core": "catalog:angular",
+    "@angular/platform-browser": "catalog:angular",
+    "@angular/router": "catalog:angular",
+    "rxjs": "catalog:angular",
+    "tslib": "catalog:angular"
+  },
+  "devDependencies": {
+    "@angular/build": "catalog:angular",
+    "@angular/cli": "catalog:angular",
+    "@angular/compiler": "catalog:angular",
+    "@angular/compiler-cli": "catalog:angular",
+    "@critsource/config-eslint": "workspace:*",
+    "@critsource/config-typescript": "workspace:*",
+    "@critsource/ui-web": "workspace:*",
+    "@types/node": "catalog:node",
+    "@vitest/browser-playwright": "catalog:vitest",
+    "@vitest/coverage-v8": "catalog:vitest",
+    "@vitest/ui": "catalog:vitest",
+    "eslint": "catalog:eslint",
+    "ng-packagr": "catalog:angular",
+    "playwright": "catalog:playwright",
+    "sass": "catalog:angular",
+    "typescript": "catalog:angular",
+    "vitest": "catalog:vitest"
+  }
+}

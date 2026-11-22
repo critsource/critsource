@@ -1,0 +1,59 @@
+$schema: "../../../.moon/cache/schemas/project.json"
+
+# moon names a project after its folder, which apps/web already takes, so the id follows the package name instead.
+id: "landing-web"
+layer: "library"
+tags:
+    - "web"
+
+project:
+    title: "Web landing page"
+    description: "The landing page of the web client, which the router of core-web lazy-loads at the root."
+    owner: "@critsource/reviewers"
+    maintainers:
+        - "@NoNamer777"
+
+fileGroups:
+    sources:
+        - "src/**/*"
+        - "testing/**/*"
+        - "angular.json"
+        - "ng-package.json"
+
+    tests:
+        - "vitest.config.ts"
+
+tasks:
+    test:
+        command: "ng test"
+        preset: "server"
+        inputs:
+            - "@group(sources)"
+            - "@group(configs)"
+            - "@group(tests)"
+            # The setup file of @critsource/ui-web moves the pointer away before each test.
+            - project: "ui-web"
+              group: "sources"
+
+    test-ci:
+        command: "ng test -c ci"
+        inputs:
+            - "@group(sources)"
+            - "@group(configs)"
+            - "@group(tests)"
+            # The setup file of @critsource/ui-web moves the pointer away before each test.
+            - project: "ui-web"
+              group: "sources"
+        outputs:
+            - "coverage/**/*"
+
+    typecheck:
+        # The Angular builders check the sources and the tests of the package only, so the task checks the config files
+        # that tsconfig.node.json includes. moon tracks the files of each project for its own tasks only, so the inputs
+        # also list the shared ESLint config that eslint.config.ts imports.
+        command: "tsc --project tsconfig.node.json"
+        inputs:
+            - "@group(configs)"
+            - "*.config.ts"
+            - project: "config-eslint"
+              group: "sources"

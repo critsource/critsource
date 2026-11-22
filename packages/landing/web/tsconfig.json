@@ -1,0 +1,9 @@
+{
+    "extends": ["@critsource/config-typescript/angular.json", "../../../tsconfig.base.json"],
+    "references": [
+        { "path": "./tsconfig.lib.json" },
+        { "path": "./tsconfig.spec.json" },
+        { "path": "./tsconfig.node.json" }
+    ],
+    "files": []
+}

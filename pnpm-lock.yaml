@@ -684,6 +684,82 @@ importers:
         specifier: catalog:vitest
         version: 5.1.1(@types/node@26.6.6)(@vitest/browser-playwright@5.1.1)(@vitest/coverage-v8@5.1.1)(@vitest/ui@5.1.1)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@8.1.1))(sass-embedded@1.108.2)(sass@1.108.2))
 
+  packages/landing/web:
+    dependencies:
+      '@angular/cdk':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(@angular/forms@22.3.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(@angular/platform-browser@22.3.0(@angular/animations@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(rxjs@7.8.2))(@angular/platform-browser@22.3.0(@angular/animations@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@angular/common':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2)
+      '@angular/core':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)
+      '@angular/platform-browser':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/animations@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))
+      '@angular/router':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(@angular/platform-browser@22.3.0(@angular/animations@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(rxjs@7.8.2)
+      rxjs:
+        specifier: catalog:angular
+        version: 7.8.2
+      tslib:
+        specifier: catalog:angular
+        version: 2.9.1
+    devDependencies:
+      '@angular/build':
+        specifier: catalog:angular
+        version: 22.3.0(8a9356b61de1f6aef9371afc661bcdd5)
+      '@angular/cli':
+        specifier: catalog:angular
+        version: 22.3.0(@types/node@26.6.6)(chokidar@6.0.0)
+      '@angular/compiler':
+        specifier: catalog:angular
+        version: 22.3.0
+      '@angular/compiler-cli':
+        specifier: catalog:angular
+        version: 22.3.0(@angular/compiler@22.3.0)(typescript@6.0.3)
+      '@critsource/config-eslint':
+        specifier: workspace:*
+        version: link:../../config-eslint
+      '@critsource/config-typescript':
+        specifier: workspace:*
+        version: link:../../config-typescript
+      '@critsource/ui-web':
+        specifier: workspace:*
+        version: link:../../ui/web
+      '@types/node':
+        specifier: catalog:node
+        version: 26.6.6
+      '@vitest/browser-playwright':
+        specifier: catalog:vitest
+        version: 5.1.1(playwright@1.65.1)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@8.1.1))(sass-embedded@1.108.2)(sass@1.108.2))(vitest@5.1.1)
+      '@vitest/coverage-v8':
+        specifier: catalog:vitest
+        version: 5.1.1(@vitest/browser@5.1.1)(vitest@5.1.1)
+      '@vitest/ui':
+        specifier: catalog:vitest
+        version: 5.1.1(vitest@5.1.1)
+      eslint:
+        specifier: catalog:eslint
+        version: 10.15.0(jiti@2.7.0)(supports-color@8.1.1)
+      ng-packagr:
+        specifier: catalog:angular
+        version: 22.3.0(@angular/compiler-cli@22.3.0(@angular/compiler@22.3.0)(typescript@6.0.3))(oxc-resolver@11.21.2)(supports-color@8.1.1)(tslib@2.9.1)(typescript@6.0.3)
+      playwright:
+        specifier: catalog:playwright
+        version: 1.65.1
+      sass:
+        specifier: catalog:angular
+        version: 1.108.2
+      typescript:
+        specifier: catalog:angular
+        version: 6.0.3
+      vitest:
+        specifier: catalog:vitest
+        version: 5.1.1(@types/node@26.6.6)(@vitest/browser-playwright@5.1.1)(@vitest/coverage-v8@5.1.1)(@vitest/ui@5.1.1)(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@8.1.1))(sass-embedded@1.108.2)(sass@1.108.2))
+
   packages/release:
     dependencies:
       '@critsource/common':

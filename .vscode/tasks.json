@@ -132,6 +132,47 @@
             "problemMatcher": "$tsc"
         },
         {
+            "label": "landing-web:test",
+            "type": "shell",
+            "command": "pnpm moon run landing-web:test",
+            "isBackground": true,
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "typescript",
+                "pattern": "$tsc",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": {
+                        "regexp": "\bRERUN\b"
+                    },
+                    "endsPattern": {
+                        "regexp": "(Waiting|Watching) for file changes"
+                    }
+                }
+            }
+        },
+        {
+            "label": "landing-web:test-ci",
+            "type": "shell",
+            "command": "pnpm moon run landing-web:test-ci",
+            "problemMatcher": []
+        },
+        {
+            "label": "landing-web:lint",
+            "type": "shell",
+            "command": "pnpm moon run landing-web:lint",
+            "problemMatcher": "$eslint-stylish"
+        },
+        {
+            "label": "landing-web:typecheck",
+            "type": "shell",
+            "command": "pnpm moon run landing-web:typecheck",
+            "problemMatcher": "$tsc"
+        },
+        {
             "label": "web-e2e:e2e",
             "type": "shell",
             "command": "pnpm moon run web-e2e:e2e",
