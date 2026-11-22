@@ -15,6 +15,9 @@
     "./server": "./server/index.ts",
     "./testing": "./testing/index.ts"
   },
+  "dependencies": {
+    "@critsource/ui-web": "workspace:*"
+  },
   "peerDependencies": {
     "@angular/cdk": "catalog:angular",
     "@angular/common": "catalog:angular",
@@ -32,7 +35,7 @@
     "@angular/compiler": "catalog:angular",
     "@angular/compiler-cli": "catalog:angular",
     "@critsource/config-typescript": "workspace:*",
-    "@critsource/ui-web": "workspace:*",
+    "@critsource/design-tokens": "workspace:*",
     "@types/node": "catalog:node",
     "@vitest/browser-playwright": "catalog:vitest",
     "@vitest/coverage-v8": "catalog:vitest",

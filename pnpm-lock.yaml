@@ -425,6 +425,9 @@ importers:
       '@critsource/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
+      '@critsource/ui-web':
+        specifier: workspace:*
+        version: link:../../packages/ui/web
       rxjs:
         specifier: catalog:angular
         version: 7.8.2
@@ -573,6 +576,9 @@ importers:
       '@angular/ssr':
         specifier: catalog:angular
         version: 22.3.0(1e1999155bfcb4d610e730fef3407622)
+      '@critsource/ui-web':
+        specifier: workspace:*
+        version: link:../../ui/web
       rxjs:
         specifier: catalog:angular
         version: 7.8.2
@@ -598,9 +604,9 @@ importers:
       '@critsource/config-typescript':
         specifier: workspace:*
         version: link:../../config-typescript
-      '@critsource/ui-web':
+      '@critsource/design-tokens':
         specifier: workspace:*
-        version: link:../../ui/web
+        version: link:../../design-tokens
       '@types/node':
         specifier: catalog:node
         version: 26.6.6

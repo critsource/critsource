@@ -32,9 +32,12 @@ tasks:
             - "@group(sources)"
             - "@group(configs)"
             - "@group(tests)"
-            # The setup file of @critsource/ui-web moves the pointer away before each test.
+            # The setup file of @critsource/ui-web moves the pointer away before each test, and the shell places its
+            # components, which read the breakpoint of @critsource/design-tokens.
             - project: "ui-web"
               group: "sources"
+            - project: "design-tokens"
+              group: "css"
 
     test-ci:
         command: "ng test -c ci"
@@ -42,9 +45,12 @@ tasks:
             - "@group(sources)"
             - "@group(configs)"
             - "@group(tests)"
-            # The setup file of @critsource/ui-web moves the pointer away before each test.
+            # The setup file of @critsource/ui-web moves the pointer away before each test, and the shell places its
+            # components, which read the breakpoint of @critsource/design-tokens.
             - project: "ui-web"
               group: "sources"
+            - project: "design-tokens"
+              group: "css"
         outputs:
             - "coverage/**/*"
 

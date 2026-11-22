@@ -22,6 +22,7 @@
     "@angular/ssr": "catalog:angular",
     "@critsource/core-web": "workspace:*",
     "@critsource/design-tokens": "workspace:*",
+    "@critsource/ui-web": "workspace:*",
     "rxjs": "catalog:angular",
     "tslib": "catalog:angular"
   },
