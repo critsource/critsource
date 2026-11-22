@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- A path that no page answers, such as a broken link, now shows a Not found page titled "Page not found - Critsource" and returns status 404 instead of 200, so search engines no longer index broken links as pages. The image answers a missing file, such as a bundle of an older build, with a plain 404, as before.
+
 ### Fixed
 
 - The theme picker in the footer and the menu on narrow screens now shows only its icons when its labels no longer fit, so its options no longer run past its border.
