@@ -24,7 +24,7 @@ tasks:
     e2e:
         command: "playwright test --ui"
         preset: "server"
-        inputs:
+        inputs: &e2e-inputs
             - "@group(sources)"
             - "@group(configs)"
 
@@ -34,9 +34,7 @@ tasks:
         command: "playwright test"
         env:
             CI: "true"
-        inputs:
-            - "@group(sources)"
-            - "@group(configs)"
+        inputs: *e2e-inputs
         options:
             # The result depends on the web image, which moon cannot hash.
             cache: false

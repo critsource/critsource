@@ -30,7 +30,7 @@ tasks:
         preset: "server"
         deps:
             - "root:ssl-certs"
-        inputs:
+        inputs: &app-inputs
             - "@group(sources)"
             - "@group(configs)"
             - project: "core-web"
@@ -43,16 +43,7 @@ tasks:
 
     build:
         command: "ng build"
-        inputs:
-            - "@group(sources)"
-            - "@group(configs)"
-            - project: "core-web"
-              group: "sources"
-            - project: "ui-web"
-              group: "sources"
-            - "@group(domains)"
-            - project: "design-tokens"
-              group: "css"
+        inputs: *app-inputs
         outputs:
             - "dist/**/*"
 
