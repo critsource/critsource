@@ -24,17 +24,14 @@ tasks:
     test:
         command: "vitest"
         preset: "server"
-        inputs:
+        inputs: &test-inputs
             - "@group(sources)"
             - "@group(configs)"
             - "@group(tests)"
 
     test-ci:
         command: "vitest run --reporter dot --reporter github-actions"
-        inputs:
-            - "@group(sources)"
-            - "@group(configs)"
-            - "@group(tests)"
+        inputs: *test-inputs
         outputs:
             - "coverage/**/*"
 

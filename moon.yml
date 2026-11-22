@@ -36,7 +36,7 @@ fileGroups:
 tasks:
     format:
         command: "prettier -w ."
-        inputs:
+        inputs: &format-inputs
             - "@group(sources)"
             - "@group(prettier-configs)"
         options:
@@ -46,9 +46,7 @@ tasks:
 
     format-check:
         command: "prettier -c ."
-        inputs:
-            - "@group(sources)"
-            - "@group(prettier-configs)"
+        inputs: *format-inputs
 
     lint-md:
         command: "markdownlint-cli2"
