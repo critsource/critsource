@@ -71,6 +71,10 @@ COPY .docker/web/nginx.conf /etc/nginx/conf.d/default.conf
 # configuration includes in full, since a location holds it.
 COPY .docker/web/csp.inc /etc/nginx/csp.inc
 
+# The security headers that nginx.conf includes in its server block and in each location that adds a header. It sits
+# outside conf.d for the same reason.
+COPY .docker/web/security-headers.inc /etc/nginx/security-headers.inc
+
 RUN sed -i "s|@BASE_HREF@|${BASE_HREF}|g" /etc/nginx/conf.d/default.conf \
     && ! grep -q '@BASE_HREF@' /etc/nginx/conf.d/default.conf
 

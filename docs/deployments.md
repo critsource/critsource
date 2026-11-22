@@ -48,9 +48,19 @@ Staging and production both run `latest`, which only a release of `web` moves. T
 
 ## HTTPS and headers
 
-Cloudflare answers every request for an environment, so its zone settings decide the `Strict-Transport-Security` header. The HSTS setting of the `critsource.com` zone, under **SSL/TLS** > **Edge Certificates**, sends `Strict-Transport-Security: max-age=0` and `X-Content-Type-Options: nosniff`. A `max-age` of 0 leaves HSTS off and clears any rule that a browser stored earlier, so browsers don't yet insist on HTTPS for the domain. Traefik still redirects every HTTP request to HTTPS.
+The web image sends its own security headers with every response, as the [README of the image](../.docker/web/README.md#security-headers) lists. It serves plain HTTP, so it leaves `Strict-Transport-Security` to Cloudflare, which terminates TLS and answers every request for an environment. Traefik still redirects every HTTP request to HTTPS.
 
-Switching HSTS on is a separate decision, since browsers then refuse plain HTTP for the whole domain for the length of the `max-age`, and can't be told otherwise until it ends.
+The HSTS setting of the `critsource.com` zone, under **SSL/TLS** > **Edge Certificates**, sends `Strict-Transport-Security: max-age=2592000; includeSubDomains` for every host of the domain:
+
+| Setting                         | Value             |
+|:--------------------------------|:------------------|
+| Enable HSTS                     | On                |
+| Max Age Header                  | 1 month (2592000) |
+| Apply HSTS policy to subdomains | On                |
+| Preload                         | Off               |
+| No-Sniff Header                 | Off               |
+
+Once a browser sees the header, it refuses plain HTTP for the whole domain until the `max-age` ends, and nothing can tell it otherwise, so raise the `max-age` in steps. Preload stays off, since leaving the preload lists of browsers takes months. The No-Sniff header stays off, since the image sends `X-Content-Type-Options` itself.
 
 ## Rolling back
 

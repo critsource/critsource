@@ -50,6 +50,25 @@ services:
         restart: unless-stopped
 ```
 
+## Security headers
+
+nginx sends these headers with every response, a `404` and `/healthz` included:
+
+| Header                   | Value                                                                                                                               |
+|:-------------------------|:------------------------------------------------------------------------------------------------------------------------------------|
+| `X-Content-Type-Options` | `nosniff`                                                                                                                           |
+| `Referrer-Policy`        | `same-origin`                                                                                                                       |
+| `Permissions-Policy`     | `accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()` |
+| `X-Frame-Options`        | `DENY`                                                                                                                              |
+
+The container serves plain HTTP, and browsers ignore `Strict-Transport-Security` over plain HTTP, so the image leaves HSTS out. Send it from the proxy that terminates TLS in front of the container, for example `Strict-Transport-Security: max-age=2592000; includeSubDomains`.
+
+To change the headers, mount your own copy of [`security-headers.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/security-headers.inc) over `/etc/nginx/security-headers.inc`. Keep `always` on each `add_header`, or error responses lose the header:
+
+```bash
+docker run --rm -p 4200:4200 -v ./security-headers.inc:/etc/nginx/security-headers.inc:ro critsource/web
+```
+
 ## Content Security Policy
 
 nginx sends a `Content-Security-Policy-Report-Only` header with `index.html` and `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
@@ -82,4 +101,4 @@ nginx serves the file with `Cache-Control: no-store`, so neither browsers nor pr
 
 ## Source
 
-The image is built from [`.docker/web/Dockerfile`](https://github.com/critsource/critsource/blob/main/.docker/web/Dockerfile), and [`.docker/web/nginx.conf`](https://github.com/critsource/critsource/blob/main/.docker/web/nginx.conf) and [`.docker/web/csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) configure nginx. The [README of the web app](https://github.com/critsource/critsource/blob/main/apps/web/README.md) explains how to build the image yourself, for example under another base path. Report problems in the [issues](https://github.com/critsource/critsource/issues) of the repository. The image is licensed under the [MIT License](https://github.com/critsource/critsource/blob/main/LICENSE).
+The image is built from [`.docker/web/Dockerfile`](https://github.com/critsource/critsource/blob/main/.docker/web/Dockerfile), and [`.docker/web/nginx.conf`](https://github.com/critsource/critsource/blob/main/.docker/web/nginx.conf) [`.docker/web/security-headers.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/security-headers.inc), and [`.docker/web/csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) configure nginx. The [README of the web app](https://github.com/critsource/critsource/blob/main/apps/web/README.md) explains how to build the image yourself, for example under another base path. Report problems in the [issues](https://github.com/critsource/critsource/issues) of the repository. The image is licensed under the [MIT License](https://github.com/critsource/critsource/blob/main/LICENSE).
