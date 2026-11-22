@@ -50,6 +50,7 @@ This repository is the monorepo of Critsource, holding all its packages and appl
 - [`e2e/web`](e2e/web/README.md): the end-to-end tests of the web client.
 - [`packages/core/web`](packages/core/web/README.md): the core of the web client, which the domain modules build on.
 - [`packages/landing/web`](packages/landing/web/README.md): the landing page of the web client.
+- [`packages/legal/web`](packages/legal/web/README.md): the Privacy and Accessibility pages of the web client.
 - [`packages/ui/web`](packages/ui/web/README.md): the UI components that every app and module of the web client may import.
 - [`packages/design-tokens`](packages/design-tokens/README.md): the design tokens of the Penpot design system, which any project can read.
 - [`packages/config-typescript`](packages/config-typescript/README.md): the TypeScript config presets that the projects extend.
