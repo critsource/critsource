@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - A Privacy page at `/privacy` says which personal data the site processes, why, and for how long, who else sees it, and how to use your rights. The footer links to it.
+- An Accessibility page at `/accessibility` says which standard the site aims for, what it does to meet it, the barriers it knows of, and how to report one, by email or on GitHub. The footer links to it.
 
 ### Fixed
 

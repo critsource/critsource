@@ -792,6 +792,9 @@ importers:
       '@angular/router':
         specifier: catalog:angular
         version: 22.3.0(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(@angular/platform-browser@22.3.0(@angular/animations@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(@angular/common@22.3.0(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.3.0(@angular/compiler@22.3.0)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@critsource/design-tokens':
+        specifier: workspace:*
+        version: link:../../design-tokens
       '@critsource/ui-web':
         specifier: workspace:*
         version: link:../../ui/web
@@ -820,9 +823,6 @@ importers:
       '@critsource/config-typescript':
         specifier: workspace:*
         version: link:../../config-typescript
-      '@critsource/design-tokens':
-        specifier: workspace:*
-        version: link:../../design-tokens
       '@types/node':
         specifier: catalog:node
         version: 26.6.6
