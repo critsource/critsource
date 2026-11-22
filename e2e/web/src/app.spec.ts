@@ -1,14 +1,24 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
+
+/** Expects the app shell: the header, the main content, and the footer, each as a landmark of the page. */
+async function expectShell(page: Page) {
+    const root = page.locator('dma-root');
+
+    await expect(root.getByRole('banner')).toBeVisible();
+    await expect(root.getByRole('main')).toBeVisible();
+    await expect(root.getByRole('contentinfo')).toBeVisible();
+    await expect(root.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute('href', '#main');
+}
 
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
 
-        test('shows the prerendered landing page', async ({ page }) => {
+        test('shows the prerendered app shell', async ({ page }) => {
             await page.goto('/');
 
             await expect(page).toHaveTitle('Critsource');
-            await expect(page.locator('dma-root')).toHaveText('root works!');
+            await expectShell(page);
         });
     });
 
@@ -27,6 +37,7 @@ test.describe('app', () => {
         const root = page.locator('dma-root');
         await expect(root).toHaveAttribute('ng-server-context', 'ssg');
         await expect(root).not.toHaveAttribute('ngh');
+        await expectShell(page);
         expect(errors).toEqual([]);
     });
 
@@ -36,6 +47,6 @@ test.describe('app', () => {
         await expect(page).toHaveTitle('Critsource');
         // The app shell holds an empty root element, so the content comes from the app once it boots.
         expect(await response?.text()).toMatch(/<dma-root [^>]*><\/dma-root>/);
-        await expect(page.locator('dma-root')).toHaveText('root works!');
+        await expectShell(page);
     });
 });

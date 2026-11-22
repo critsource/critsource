@@ -26,7 +26,7 @@ async function violationsOn(page: Page, path: string): Promise<string[]> {
 
     // The app has booted once the prerendered page hydrates, or the app shell fills its root element.
     const root = page.locator('dma-root');
-    await expect(root).toHaveText('root works!');
+    await expect(root.getByRole('banner')).toBeVisible();
     await expect(root).not.toHaveAttribute('ngh');
     return violations;
 }
