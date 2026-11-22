@@ -28,6 +28,7 @@ describe('RootComponent', () => {
                 provideRouter([
                     { path: '', component: RoutedPage },
                     { path: 'privacy', component: RoutedPage },
+                    { path: 'accessibility', component: RoutedPage },
                 ]),
                 provideBrowserStorage(new InMemoryStorage()),
             ],
@@ -118,8 +119,12 @@ describe('RootComponent', () => {
     });
 
     describe('footer', () => {
-        const privacyLink = () =>
-            page.getByRole('navigation', { name: 'Legal', exact: true }).getByRole('link', { name: 'Privacy' });
+        const legalLinks = [
+            { name: 'Privacy', path: '/privacy' },
+            { name: 'Accessibility', path: '/accessibility' },
+        ];
+        const legalLink = (name: string) =>
+            page.getByRole('navigation', { name: 'Legal', exact: true }).getByRole('link', { name, exact: true });
 
         it('should hold the project group, then the legal group', async () => {
             const { harness } = await setupTest();
@@ -137,20 +142,25 @@ describe('RootComponent', () => {
                 .toHaveAttribute('href', githubUrl);
         });
 
-        it('should link to the Privacy page from the legal group', async () => {
+        it('should link to the Privacy page, then the Accessibility page, from the legal group', async () => {
             await setupTest();
 
-            await expect.element(privacyLink()).toHaveAttribute('href', '/privacy');
-            await expect.element(privacyLink()).not.toHaveAttribute('aria-current');
+            const links = page.getByRole('navigation', { name: 'Legal', exact: true }).getByRole('link').elements();
+
+            expect(links.map((link) => [link.textContent.trim(), link.getAttribute('href')])).toEqual(
+                legalLinks.map(({ name, path }) => [name, path]),
+            );
+            expect(document.querySelectorAll('footer [aria-current]')).toHaveLength(0);
         });
 
-        it('should mark the Privacy link as the current page on the Privacy page', async () => {
+        it.each(legalLinks)('should mark only the $name link as the current page at $path', async ({ name, path }) => {
             const { fixture } = await setupTest();
 
-            await TestBed.inject(Router).navigateByUrl('/privacy');
+            await TestBed.inject(Router).navigateByUrl(path);
             await fixture.whenStable();
 
-            await expect.element(privacyLink()).toHaveAttribute('aria-current', 'page');
+            await expect.element(legalLink(name)).toHaveAttribute('aria-current', 'page');
+            expect(document.querySelectorAll('footer [aria-current]')).toHaveLength(1);
         });
     });
 

@@ -8,8 +8,9 @@ The pages that tell visitors how the site treats them: the privacy statement and
 
 The pages are prerendered during `web:build`, so every component on them follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision). [Privacy](../../../docs/privacy.md) lists where each fact on the Privacy page is enforced, so keep the two in step.
 
-- [`src/legal.routes.ts`](src/legal.routes.ts) holds `legalRoutes`, which renders `PrivacyPage` at `privacy`. Each route sets the `title` of the page, which the router writes into the tab, during prerendering too.
+- [`src/legal.routes.ts`](src/legal.routes.ts) holds `legalRoutes`, which renders `PrivacyPage` at `privacy` and `AccessibilityPage` at `accessibility`. Each route sets the `title` of the page, which the router writes into the tab, during prerendering too.
 - `PrivacyPage`, in [`src/privacy.page.ts`](src/privacy.page.ts), is the Privacy page.
+- `AccessibilityPage`, in [`src/accessibility.page.ts`](src/accessibility.page.ts), is the Accessibility page. Its status, Last checked date, and Known issues hold sample values until the WCAG check ([#303](https://github.com/critsource/critsource/issues/303)) sets them.
 
 A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `PrivacyPage` does. Every other component takes the `Component` suffix.
 
@@ -21,16 +22,16 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                          | Source                                 | Exports                      |
-|:--------------------------------|:---------------------------------------|:-----------------------------|
-| `@critsource/legal-web`         | [`src/index.ts`](src/index.ts)         | `PrivacyPage`, `legalRoutes` |
-| `@critsource/legal-web/testing` | [`testing/index.ts`](testing/index.ts) | `PrivacyPageHarness`         |
+| Import                          | Source                                 | Exports                                           |
+|:--------------------------------|:---------------------------------------|:--------------------------------------------------|
+| `@critsource/legal-web`         | [`src/index.ts`](src/index.ts)         | `AccessibilityPage`, `PrivacyPage`, `legalRoutes` |
+| `@critsource/legal-web/testing` | [`testing/index.ts`](testing/index.ts) | `AccessibilityPageHarness`, `PrivacyPageHarness`  |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 
 ## Testing
 
-The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why `design-tokens` is in the `devDependencies`, next to `ui-web` in the `dependencies`, and why both test tasks list their files as an input.
+The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why both test tasks list the files of `ui-web` and `design-tokens` as an input. `design-tokens` sits in the `dependencies`, next to `ui-web`, since the styles of `AccessibilityPage` import the breakpoint too.
 
 ## Tasks
 

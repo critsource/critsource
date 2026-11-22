@@ -1,0 +1,93 @@
+<!-- The section draws the Main board of Penpot: the page margins, and the content width the article starts at. -->
+<section dma-section>
+    <article dma-text-page>
+        <header>
+            <h1>Accessibility</h1>
+            <p>Last updated <time datetime="2026-11-22">November 22, 2026</time></p>
+        </header>
+
+        <nav dma-on-this-page>
+            <li><a dma-on-this-page-link href="#our-goal">Our goal</a></li>
+            <li><a dma-on-this-page-link href="#what-weve-done">What we’ve done</a></li>
+            <li><a dma-on-this-page-link href="#known-issues">Known issues</a></li>
+            <li><a dma-on-this-page-link href="#how-we-test">How we test</a></li>
+            <li><a dma-on-this-page-link href="#report-a-barrier">Report a barrier</a></li>
+            <li><a dma-on-this-page-link href="#changes">Changes to this statement</a></li>
+        </nav>
+
+        <!-- The status, Last checked, and Known issues are samples until the WCAG check (#303) sets them. -->
+        <section dma-summary>
+            <h2 dma-summary-title>At a glance</h2>
+            <dl dma-facts-list>
+                <div>
+                    <dt>Standard</dt>
+                    <dd>WCAG 2.2, level AA</dd>
+                </div>
+                <div>
+                    <dt>Status</dt>
+                    <dd>Conformant: we know of no barriers.</dd>
+                </div>
+                <div>
+                    <dt>Last checked</dt>
+                    <dd><time datetime="2026-11-14">November 14, 2026</time></dd>
+                </div>
+                <div>
+                    <dt>Method</dt>
+                    <dd>Our own checks; no outside audit yet</dd>
+                </div>
+            </dl>
+        </section>
+
+        <h2 id="our-goal">Our goal</h2>
+        <p>
+            Critsource should work for every player at the table, whether you use a keyboard, a screen reader, a
+            magnifier, or voice control. We aim to meet WCAG 2.2 at level AA, in both the dark and the light theme.
+        </p>
+
+        <h2 id="what-weve-done">What we’ve done</h2>
+        <ul role="list">
+            <li>Every page works with a keyboard alone, starting with a link that skips to the main content.</li>
+            <li>Text and controls meet the AA contrast ratios in both themes.</li>
+            <li>Pages use headings, landmarks, and labels that screen readers announce.</li>
+            <li>Text follows your browser’s font size, and pages work at 200% zoom without losing content.</li>
+            <li>Nothing moves on its own: previews never rotate, and animations follow your reduced-motion setting.</li>
+            <li>The theme follows your device, and you can pick Dark or Light yourself.</li>
+        </ul>
+
+        <h2 id="known-issues">Known issues</h2>
+        <p>We know of no barriers right now.</p>
+        <p>
+            Every open accessibility issue is on GitHub, under the
+            <a dma-link [href]="labelUrl">accessibility label</a>.
+        </p>
+
+        <h2 id="how-we-test">How we test</h2>
+        <p>
+            Lint rules catch common mistakes in our templates before they ship. We test each page with a keyboard, with
+            NVDA in Firefox and VoiceOver in Safari, at 200% zoom, and in both themes. No outside audit has been done
+            yet.
+        </p>
+
+        <h2 id="report-a-barrier">Report a barrier</h2>
+        <p>
+            If something on the site doesn’t work for you, tell us. Describe the page, what you tried to do, and the
+            browser and assistive technology you use. We reply within 10 working days.
+        </p>
+        <div class="actions">
+            <a dma-button [href]="supportMailto">Email support</a>
+            <a dma-button kind="secondary" [href]="newIssueUrl" aria-describedby="report-hint">
+                Open an issue on GitHub<dma-icon-external />
+            </a>
+        </div>
+        <div class="hint" id="report-hint">
+            An issue on GitHub is public. Email us if you’d rather not share the details.
+        </div>
+
+        <h2 id="changes">Changes to this statement</h2>
+        <p>
+            When this statement changes, so does the date at the top. Every earlier version stays in the project’s
+            history on GitHub.
+        </p>
+        <p><a dma-link kind="standalone" [href]="historyUrl">See every change on GitHub</a></p>
+    </article>
+</section>

@@ -1,6 +1,6 @@
 # Critsource web
 
-The web client of [Critsource](https://github.com/critsource/critsource). The landing page, the Privacy page, and the Not found page are prerendered at build time, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The landing page, the Privacy page, the Accessibility page, and the Not found page are prerendered at build time, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 
@@ -24,7 +24,7 @@ Run the newest release, and open the app at <http://localhost:4200>:
 docker run --rm -p 4200:4200 critsource/web
 ```
 
-The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and `/privacy` with the prerendered Privacy page, `privacy/index.html`. Every other path that matches no file gets status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates, so crawlers don't index a broken link as a page. A missing file with an extension, such as a bundle of an older release, gets a plain `404` without the page. nginx serves every prerendered HTML file, the Not found page included, with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, `/privacy` with the prerendered Privacy page, `privacy/index.html`, and `/accessibility` with the prerendered Accessibility page, `accessibility/index.html`. Every other path that matches no file gets status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates, so crawlers don't index a broken link as a page. A missing file with an extension, such as a bundle of an older release, gets a plain `404` without the page. nginx serves every prerendered HTML file, the Not found page included, with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
 
 Under another base path, such as `/pr-42/` from the `BASE_HREF` build argument, the same holds for the paths under it. The Not found page serves only as that error page: a request for `/pr-42/not-found/` returns `404` with the page too.
 

@@ -1,12 +1,12 @@
 # Web
 
-The web client of Critsource: an [Angular](https://angular.dev) app whose landing page at `/` and Privacy page at `/privacy` are prerendered at build time, while every other route renders in the browser. [ADR 0013](../../docs/adr/0013-prerendered-public-pages.md) records why. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../packages/config-eslint/README.md), which holds the rules.
+The web client of Critsource: an [Angular](https://angular.dev) app whose landing page at `/`, Privacy page at `/privacy`, and Accessibility page at `/accessibility` are prerendered at build time, while every other route renders in the browser. [ADR 0013](../../docs/adr/0013-prerendered-public-pages.md) records why. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../packages/config-eslint/README.md), which holds the rules.
 
 ## What belongs here
 
 The app bootstraps the root component and app config of [`@critsource/core-web`](../../packages/core/web/README.md), and holds only what makes it deployable. Every feature goes in `core-web` or a module that it builds on, as [Architecture](../../docs/architecture.md#projects) describes:
 
-- [`src/main.ts`](src/main.ts) bootstraps the app in the browser, and [`src/main.server.ts`](src/main.server.ts) bootstraps it with the [server config](../../packages/core/web/README.md#prerendering) of `core-web`, which prerenders `/` and `/privacy` during the build. The app has no `server.ts`, since `outputMode: "static"` in `angular.json` writes static files only, and nginx serves them without a Node process.
+- [`src/main.ts`](src/main.ts) bootstraps the app in the browser, and [`src/main.server.ts`](src/main.server.ts) bootstraps it with the [server config](../../packages/core/web/README.md#prerendering) of `core-web`, which prerenders `/`, `/privacy`, and `/accessibility` during the build. The app has no `server.ts`, since `outputMode: "static"` in `angular.json` writes static files only, and nginx serves them without a Node process.
 - [`src/index.html`](src/index.html) holds the page shell and its metadata. An inline boot script in its `<head>` applies the theme that the reader saved before the stylesheets load. [Theme](../../packages/ui/web/README.md#theme) in the `ui-web` README explains the script, and a spec there keeps it in step with `ThemeService`. The script and the `<dma-root>` element carry the placeholder `@CSP_NONCE@`, which the [Content Security Policy](#content-security-policy) explains.
 - The global styles load in the order of `angular.json`: `fonts.css` and `tokens.css` of [`@critsource/design-tokens`](../../packages/design-tokens/README.md), then [`src/styles.scss`](src/styles.scss).
 - [`public/`](public) holds the icons, the image of link previews, and the [build info](#build-info), which the build copies as they are.
@@ -42,7 +42,7 @@ The target sets these labels, of which the `org.opencontainers.image` ones follo
 | `org.opencontainers.image.version`     | The first tag in `TAGS`.                   |
 | `org.opencontainers.image.created`     | The time of the build.                     |
 
-[`.docker/web/nginx.conf`](../../.docker/web/nginx.conf) serves the app on port 4200 under its base path, and answers the base path with the prerendered `index.html`, and `privacy` under it with `privacy/index.html`. Every other path under it that matches no file gets status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates. A missing file with an extension, such as a bundle of an older build, gets a plain `404` without the page. nginx serves every prerendered HTML file with `Cache-Control: no-cache`, so browsers load a new release, and `build-info.json` with `Cache-Control: no-store`.
+[`.docker/web/nginx.conf`](../../.docker/web/nginx.conf) serves the app on port 4200 under its base path, and answers the base path with the prerendered `index.html`, and `privacy` and `accessibility` under it with `privacy/index.html` and `accessibility/index.html`. Every other path under it that matches no file gets status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates. A missing file with an extension, such as a bundle of an older build, gets a plain `404` without the page. nginx serves every prerendered HTML file with `Cache-Control: no-cache`, so browsers load a new release, and `build-info.json` with `Cache-Control: no-store`.
 
 ### Content Security Policy
 
@@ -89,7 +89,7 @@ Serve the app at <https://localhost.www.critsource.com:4200>, and rebuild it whe
 pnpm moon run web:start
 ```
 
-Build the app for production into `dist/web/`. The build prerenders `/` into `browser/index.html`, `/privacy` into `browser/privacy/index.html`, and the Not found page into `browser/not-found/index.html`, and writes the app shell for every other route to `browser/index.csr.html`. It hashes the names of its files and adds [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) to the scripts and stylesheets it loads. Its budgets warn when the initial bundle passes 500 kB or the styles of a component pass 4 kB, and fail the build at 1 MB and 8 kB:
+Build the app for production into `dist/web/`. The build prerenders `/` into `browser/index.html`, `/privacy` into `browser/privacy/index.html`, `/accessibility` into `browser/accessibility/index.html`, and the Not found page into `browser/not-found/index.html`, and writes the app shell for every other route to `browser/index.csr.html`. It hashes the names of its files and adds [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) to the scripts and stylesheets it loads. Its budgets warn when the initial bundle passes 500 kB or the styles of a component pass 4 kB, and fail the build at 1 MB and 8 kB:
 
 ```bash
 pnpm moon run web:build

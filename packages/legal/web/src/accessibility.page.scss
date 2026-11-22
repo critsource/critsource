@@ -1,0 +1,26 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+
+// The two ways to report a barrier, primary first and space.12 apart. Below the desktop breakpoint, they stack and fill
+// the width, as the buttons of the landing page hero do; from it up, they sit side by side at the width of their
+// labels. The Text page spaces the row in the prose like any other element.
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .actions {
+        flex-flow: row wrap;
+    }
+}
+
+// The note under the buttons draws the small body typography in the muted color, as the date of the Text page does.
+.hint {
+    color: var(--color-foreground-muted);
+    font-family: var(--typography-body-sm-font-family);
+    font-size: var(--typography-body-sm-font-size);
+    font-weight: var(--typography-body-sm-font-weight);
+    letter-spacing: var(--typography-body-sm-letter-spacing);
+    line-height: var(--typography-body-sm-line-height);
+}
