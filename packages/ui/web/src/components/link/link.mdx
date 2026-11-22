@@ -23,7 +23,7 @@ Link is an attribute on `<a>`, so the element keeps the semantics and keyboard b
 
 ## Kind
 
-`kind` picks how the link looks, and an unknown value draws the default. Each kind draws a default, a hover, and a focus state.
+`kind` picks how the link looks, and an unknown value draws the default. Each kind draws a default, a hover, and a focus state, and the quiet kind also draws a [current](#current) state.
 
 ### Inline
 
@@ -49,6 +49,22 @@ Link is an attribute on `<a>`, so the element keeps the semantics and keyboard b
 
 <Canvas of={LinkStories.QuietHover} />
 
+## Current
+
+A quiet link to the current page, such as Privacy in the footer of the Privacy page, draws as bold body text in the default foreground color. It keeps that look on hover and on focus, so the reader can always tell which page they are on. The inline and standalone kinds draw no current state.
+
+Link reads the current page from `aria-current="page"` on the link, which also tells assistive technology. With the router, `routerLinkActive` sets it on the link to the active route, so Link still needs no router:
+
+```html
+<a dma-link kind="quiet" routerLink="/privacy" routerLinkActive ariaCurrentWhenActive="page">Privacy</a>
+```
+
+<Canvas of={LinkStories.QuietCurrent} />
+
+<Canvas of={LinkStories.QuietCurrentHover} />
+
+<Canvas of={LinkStories.QuietCurrentFocus} />
+
 ## Focus
 
 Every kind draws the focus ring outside itself on keyboard focus, and keeps the colors of its default state.
@@ -67,4 +83,4 @@ A link takes the height of its line of text, rather than the 44 px target size o
 
 ## Testing
 
-`LinkHarness` from `@critsource/ui-web/testing` reads a link in a test: its text, its color, its font weight, whether it is underlined, its focus ring, and its arrow.
+`LinkHarness` from `@critsource/ui-web/testing` reads a link in a test: its text, its color, its font weight, whether it is underlined, whether it marks the current page, its focus ring, and its arrow.

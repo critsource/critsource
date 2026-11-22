@@ -3,8 +3,8 @@ import { LinkComponent } from './link.component';
 import { DEFAULT_LINK_KIND, LinkKind } from './link.types';
 import { radioArgType } from '../../../.storybook/arg-types';
 
-/** The args of a story: the inputs of the link, and the label it projects. */
-type LinkArgs = LinkComponent & { label: string };
+/** The args of a story: the inputs of the link, the label it projects, and whether it marks the current page. */
+type LinkArgs = LinkComponent & { label: string; current: boolean };
 
 const meta = {
     title: 'Elements/Link',
@@ -21,10 +21,17 @@ const meta = {
             description: 'The content the link projects, which names it to assistive technology.',
             control: 'text',
         },
+        current: {
+            description:
+                'Whether the link marks the current page, through `aria-current="page"` on the link. Only the quiet kind draws it.',
+            control: 'boolean',
+            table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+        },
     },
+    args: { current: false },
     render: (args) => ({
         props: args,
-        template: `<a dma-link [kind]="kind" href="#">{{ label }}</a>`,
+        template: `<a dma-link [kind]="kind" [attr.aria-current]="current ? 'page' : null" href="#">{{ label }}</a>`,
     }),
 } satisfies Meta<LinkArgs>;
 
@@ -74,6 +81,20 @@ export const QuietHover: Story = {
 
 export const QuietFocus: Story = {
     args: { kind: 'quiet', label: 'Link' },
+    parameters: focus,
+};
+
+export const QuietCurrent: Story = {
+    args: { kind: 'quiet', label: 'Link', current: true },
+};
+
+export const QuietCurrentHover: Story = {
+    args: { kind: 'quiet', label: 'Link', current: true },
+    parameters: hover,
+};
+
+export const QuietCurrentFocus: Story = {
+    args: { kind: 'quiet', label: 'Link', current: true },
     parameters: focus,
 };
 
