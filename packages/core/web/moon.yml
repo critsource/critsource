@@ -24,34 +24,24 @@ fileGroups:
     tests:
         - "vitest.config.ts"
 
-    # The files of other projects that the tests load. The setup file of @critsource/ui-web moves the pointer away before
-    # each test, and the shell places its components, which read the breakpoint of @critsource/design-tokens.
-    ui:
-        - "/packages/ui/web/angular.json"
-        - "/packages/ui/web/ng-package.json"
-        - "/packages/ui/web/src/**/*"
-        - "/packages/ui/web/testing/**/*"
-        - "/packages/design-tokens/css/**/*"
-        - "/packages/design-tokens/scss/**/*"
-        - "/packages/design-tokens/src/breakpoints.ts"
-
 tasks:
     test:
         command: "ng test"
         preset: "server"
-        inputs:
+        inputs: &test-inputs
             - "@group(sources)"
             - "@group(configs)"
             - "@group(tests)"
-            - "@group(ui)"
+            # The setup file of @critsource/ui-web moves the pointer away before each test, and the shell places its
+            # components, which read the breakpoint of @critsource/design-tokens.
+            - project: "ui-web"
+              group: "sources"
+            - project: "design-tokens"
+              group: "css"
 
     test-ci:
         command: "ng test -c ci"
-        inputs:
-            - "@group(sources)"
-            - "@group(configs)"
-            - "@group(tests)"
-            - "@group(ui)"
+        inputs: *test-inputs
         outputs:
             - "coverage/**/*"
 
