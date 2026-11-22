@@ -1,1 +1,24 @@
-<router-outlet />
+<a dma-skip-link href="#main">Skip to main content</a>
+
+<header dma-header (menuPressed)="mobileMenu.showModal()">
+    <a routerLink="/"><dma-logo size="small" /></a>
+    <a dma-button kind="quiet" [href]="githubUrl"><dma-icon-github />GitHub</a>
+</header>
+
+<dialog dma-mobile-menu #mobileMenu>
+    <a routerLink="/" (click)="mobileMenu.close()"><dma-logo size="small" /></a>
+    <a dma-button kind="quiet" [href]="githubUrl"><dma-icon-github />GitHub</a>
+</dialog>
+
+<main id="main">
+    <router-outlet />
+</main>
+
+<footer dma-footer>
+    <nav aria-labelledby="footer-project">
+        <dma-link-group>
+            <h2 id="footer-project">Project</h2>
+            <li><a dma-link kind="quiet" [href]="githubUrl">GitHub</a></li>
+        </dma-link-group>
+    </nav>
+</footer>

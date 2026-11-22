@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Every page now has a header with a link home, a GitHub button, and a theme picker, a menu for narrow screens, a skip link to the main content, and a footer with the license and the SRD 5.1 attribution.
 - The image sends a `Content-Security-Policy-Report-Only` header with the app's HTML, so browsers report in their console each script or style that neither the app nor Cloudflare's bot check loads, and block nothing. Mount your own copy of `/etc/nginx/csp.inc` to change the policy. A later release enforces it.
 
 ### Changed
