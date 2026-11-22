@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- A Privacy page at `/privacy` says which personal data the site processes, why, and for how long, who else sees it, and how to use your rights. The footer links to it.
+
 ### Fixed
 
 - The theme picker in the footer and the menu on narrow screens now shows only its icons when its labels no longer fit, so its options no longer run past its border.

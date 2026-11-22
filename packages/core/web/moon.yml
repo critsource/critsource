@@ -62,3 +62,5 @@ tasks:
         inputs:
             - project: "landing-web"
               group: "sources"
+            - project: "legal-web"
+              group: "sources"
