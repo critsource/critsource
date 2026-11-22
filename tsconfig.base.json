@@ -5,6 +5,7 @@
             "@critsource/core-web": ["./packages/core/web/src/index.ts"],
             "@critsource/core-web/server": ["./packages/core/web/server/index.ts"],
             "@critsource/core-web/testing": ["./packages/core/web/testing/index.ts"],
+            "@critsource/design-tokens/breakpoints": ["./packages/design-tokens/src/breakpoints.ts"],
             "@critsource/landing-web": ["./packages/landing/web/src/index.ts"],
             "@critsource/landing-web/testing": ["./packages/landing/web/testing/index.ts"],
             "@critsource/testing-node/file-system": ["./packages/testing-node/src/file-system/index.ts"],
