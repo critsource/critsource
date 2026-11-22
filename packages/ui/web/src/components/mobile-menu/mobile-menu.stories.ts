@@ -46,6 +46,20 @@ export const Open: Story = {
     },
 };
 
+/**
+ * The menu open at 280 px, narrower than the labels of the Theme picker need: its options show the icons alone, so they
+ * stay inside its border.
+ */
+export const OpenNarrow: Story = {
+    ...Open,
+    globals: { viewport: { value: 'narrow', isRotated: false } },
+    parameters: {
+        viewport: {
+            options: { narrow: { name: '280 px', styles: { width: '280px', height: '640px' }, type: 'mobile' } },
+        },
+    },
+};
+
 /** The closed menu below Header. Press Menu to open it, and Close or Escape to close it again. */
 export const WithHeader: Story = {
     render: () => ({
