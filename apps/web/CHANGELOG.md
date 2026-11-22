@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-22
+
 ### Changed
 
 - The app is now called Critsource instead of D&D Mapp, and a red d20 replaces the M as its logo, favicon, home screen icon, and link preview. The old addresses on `dndmapp.nl.eu.org` redirect to the same pages on `critsource.com` until February 22, 2027, so update your bookmarks and links before then.
@@ -40,7 +42,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `build-info.json`, which reports the commit and version of the build that a deployment serves.
 - A `/healthz` endpoint and a `HEALTHCHECK` in the image, which report whether the container is healthy.
 
-[unreleased]: https://github.com/critsource/critsource/compare/web@v0.3.0...HEAD
+[unreleased]: https://github.com/critsource/critsource/compare/web@v0.4.0...HEAD
+[0.4.0]: https://github.com/critsource/critsource/compare/web@v0.3.0...web@v0.4.0
 [0.3.0]: https://github.com/critsource/critsource/compare/web@v0.2.0...web@v0.3.0
 [0.2.0]: https://github.com/critsource/critsource/compare/web@v0.1.0...web@v0.2.0
 [0.1.0]: https://github.com/critsource/critsource/releases/tag/web@v0.1.0
