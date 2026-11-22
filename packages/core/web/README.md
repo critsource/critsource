@@ -1,12 +1,13 @@
 # Web core
 
-The core of the [web client](../../../apps/web/README.md): the root component, the app config, and the routes, which lazy-load the domain modules of the web client. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../config-eslint/README.md), which holds the rules.
+The core of the [web client](../../../apps/web/README.md): the root component, the app and server configs, and the routes, which lazy-load the domain modules of the web client. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../config-eslint/README.md), which holds the rules.
 
 ## What belongs here
 
 The shell of the web client that its domain modules build on, as [Architecture](../../../docs/architecture.md#projects) describes. A feature goes in the domain module it belongs to, at `packages/<domain>/web`, and a presentational component goes in [`ui-web`](../../ui/web/README.md).
 
-- [`src/config/app.config.ts`](src/config/app.config.ts) holds `appConfig`, which provides the router with the routes.
+- [`src/config/app.config.ts`](src/config/app.config.ts) holds `appConfig`, which provides the router with the routes, and hydration with event replay.
+- [`server/server.config.ts`](server/server.config.ts) holds `serverConfig`, which adds server rendering to `appConfig`, as [Prerendering](#prerendering) describes.
 - [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes, which are empty until the first domain module lands.
 - `RootComponent`, in [`src/root/`](src/root), is a placeholder until the shell gets its layout.
 
@@ -14,7 +15,7 @@ A domain module adds a route to `app.routes.ts` that loads it with `import()`, s
 
 ## Using the package
 
-The [web app](../../../apps/web/README.md) adds the package to its `dependencies` and bootstraps `RootComponent` with `appConfig`, as [`apps/web/src/main.ts`](../../../apps/web/src/main.ts) does.
+The [web app](../../../apps/web/README.md) adds the package to its `dependencies` and bootstraps `RootComponent` with `appConfig` in the browser, as [`apps/web/src/main.ts`](../../../apps/web/src/main.ts) does, and with `serverConfig` during the build, as [`apps/web/src/main.server.ts`](../../../apps/web/src/main.server.ts) does.
 
 The `exports` of [`package.json`](package.json) point at the TypeScript sources, and the web client compiles them as part of its own build, as [Architecture](../../../docs/architecture.md#modules-compile-from-source) describes. Each entry point has an `ng-package.json`, which the unit-test builder reads and which an `ng build` with ng-packagr would package as is.
 
@@ -23,9 +24,21 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 | Import                         | Source                                 | Exports                      |
 |:-------------------------------|:---------------------------------------|:-----------------------------|
 | `@critsource/core-web`         | [`src/index.ts`](src/index.ts)         | `RootComponent`, `appConfig` |
+| `@critsource/core-web/server`  | [`server/index.ts`](server/index.ts)   | `serverConfig`               |
 | `@critsource/core-web/testing` | [`testing/index.ts`](testing/index.ts) | `RootHarness`                |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
+
+## Prerendering
+
+`serverConfig` merges `appConfig` with `provideServerRendering` of [`@angular/ssr`](https://angular.dev/guide/ssr) and the server routes in [`server/server.routes.ts`](server/server.routes.ts), which pick how each route renders:
+
+| Path | Render mode | Output                                                                    |
+|:-----|:------------|:--------------------------------------------------------------------------|
+| `''` | `Prerender` | `web:build` renders the page into `index.html`, which the app hydrates.   |
+| `**` | `Client`    | The page renders in the browser, from the app shell in `index.csr.html`.  |
+
+`@angular/ssr` reaches the app through the `server` entry point only, so the bundle of the browser never imports it. A component on a prerendered route renders in Node during the build, so it follows the rules of [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 
 ## Testing
 

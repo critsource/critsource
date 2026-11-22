@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- The landing page at `/` now arrives with its content in the HTML, so it shows before the app loads, and search engines and link previews that run no JavaScript see it too.
+
 ## [0.4.0] - 2026-11-22
 
 ### Changed

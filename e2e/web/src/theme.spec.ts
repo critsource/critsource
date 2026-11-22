@@ -14,8 +14,8 @@ test.describe('theme', () => {
         const html = page.locator('html');
         await expect(html).toHaveAttribute('data-theme', 'light');
         await expect(html).toHaveCSS('color-scheme', 'light');
-        // Angular sets ng-version on the root element once the app has bootstrapped.
-        await expect(page.locator('dma-root')).not.toHaveAttribute('ng-version');
+        // Hydration removes the ngh attribute that prerendering adds to the root element, so the app never booted.
+        await expect(page.locator('dma-root')).toHaveAttribute('ngh');
     });
 
     for (const colorScheme of ['dark', 'light'] as const) {
@@ -25,7 +25,8 @@ test.describe('theme', () => {
             await page.goto('/');
 
             const html = page.locator('html');
-            await expect(page.locator('dma-root')).toHaveAttribute('ng-version');
+            // Hydration removes the ngh attribute that prerendering adds to the root element.
+            await expect(page.locator('dma-root')).not.toHaveAttribute('ngh');
             await expect(html).not.toHaveAttribute('data-theme');
             await expect(html).toHaveCSS('color-scheme', colorScheme);
         });

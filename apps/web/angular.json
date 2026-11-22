@@ -50,6 +50,8 @@
                         ],
                         "browser": "src/main.ts",
                         "inlineStyleLanguage": "scss",
+                        "outputMode": "static",
+                        "server": "src/main.server.ts",
                         "styles": [
                             "@critsource/design-tokens/fonts.css",
                             "@critsource/design-tokens/tokens.css",

@@ -12,6 +12,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./server": "./server/index.ts",
     "./testing": "./testing/index.ts"
   },
   "peerDependencies": {
@@ -20,6 +21,7 @@
     "@angular/core": "catalog:angular",
     "@angular/platform-browser": "catalog:angular",
     "@angular/router": "catalog:angular",
+    "@angular/ssr": "catalog:angular",
     "rxjs": "catalog:angular",
     "tslib": "catalog:angular"
   },

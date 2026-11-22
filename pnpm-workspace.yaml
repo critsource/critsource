@@ -46,7 +46,9 @@ catalogs:
     "@angular/core": ~22.3.0
     "@angular/forms": ~22.3.0
     "@angular/platform-browser": ~22.3.0
+    "@angular/platform-server": ~22.3.0
     "@angular/router": ~22.3.0
+    "@angular/ssr": ~22.3.0
     ng-packagr: ~22.3.0
     rxjs: ~7.8.2
     sass: ~1.108.2
