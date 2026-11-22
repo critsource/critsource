@@ -7,7 +7,7 @@ This guide covers what the tests of every project share: how each kind of projec
 | Kind of project                              | Tests                                                       | Run in   | Projects                                             |
 |:---------------------------------------------|:------------------------------------------------------------|:---------|:-----------------------------------------------------|
 | A TypeScript package for the whole workspace | Unit tests, with [Vitest](https://vitest.dev)               | Node.js  | `common`, `design-tokens`, `release`, `testing-node` |
-| An Angular module                            | Unit tests, with `ng test` and Vitest                       | Chromium | `core-web`, `ui-web`                                 |
+| An Angular module                            | Unit tests, with `ng test` and Vitest                       | Chromium | `core-web`, `landing-web`, `ui-web`                  |
 | An app                                       | End-to-end tests, with [Playwright](https://playwright.dev) | Chromium | `web-e2e`, for `web`                                 |
 
 Put each unit test next to the code it tests, as `<name>.spec.ts`. Vitest runs the tests in a random order, and its globals, such as `describe` and `expect`, need no import.
@@ -23,10 +23,11 @@ Every project with unit tests has a `test` and a `test-ci` task:
 - `test` runs the tests in watch mode, and reruns them when a file changes. An Angular module also serves the [Vitest UI](https://vitest.dev/guide/ui), at the port that `api.port` in its `vitest.config.ts` sets. Vitest prints the address of the UI with a token, which the UI needs, so open the address that it prints.
 - `test-ci` runs the tests once with the `dot` and `github-actions` reporters, as CI does. On GitHub Actions, the `github-actions` reporter annotates the pull request with each failing test.
 
-| Project    | Vitest UI                           |
-|:-----------|:------------------------------------|
-| `core-web` | <http://localhost:4300/__vitest__/> |
-| `ui-web`   | <http://localhost:4301/__vitest__/> |
+| Project       | Vitest UI                           |
+|:--------------|:------------------------------------|
+| `core-web`    | <http://localhost:4300/__vitest__/> |
+| `ui-web`      | <http://localhost:4301/__vitest__/> |
+| `landing-web` | <http://localhost:4302/__vitest__/> |
 
 Give a new Angular module the next free port, so the watchers of every module can run side by side.
 
