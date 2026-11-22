@@ -92,7 +92,7 @@ pnpm moon run root:lint-md
 
 ## Browsers
 
-The unit tests of the Angular modules, `core-web` and `ui-web`, and the end-to-end tests run in the Chromium build of the Playwright version in the `playwright` catalog. The other projects run their unit tests in Node.js, as [Testing](testing.md#how-each-project-runs-its-tests) describes. Playwright keeps its browsers in one cache per user, which every project shares, so install Chromium once and again after each Playwright update:
+The unit tests of the Angular modules, `core-web`, `landing-web`, and `ui-web`, and the end-to-end tests run in the Chromium build of the Playwright version in the `playwright` catalog. The other projects run their unit tests in Node.js, as [Testing](testing.md#how-each-project-runs-its-tests) describes. Playwright keeps its browsers in one cache per user, which every project shares, so install Chromium once and again after each Playwright update:
 
 ```bash
 pnpm exec playwright install chromium
