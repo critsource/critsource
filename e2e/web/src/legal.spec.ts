@@ -4,7 +4,7 @@ import { expect, type Page, test } from '@playwright/test';
 async function expectPrivacyPage(page: Page) {
     const article = page.locator('dma-privacy-page article');
 
-    await expect(page).toHaveTitle('Privacy · Critsource');
+    await expect(page).toHaveTitle('Privacy - Critsource');
     await expect(article.getByRole('heading', { level: 1 })).toHaveText('Privacy');
     await expect(article.locator('header time')).toHaveAttribute('datetime', /^\d{4}-\d{2}-\d{2}$/);
     await expect(article.getByRole('table', { name: 'Data we process' })).toBeVisible();
@@ -27,7 +27,7 @@ test.describe('privacy page', () => {
         const response = await request.get('/privacy', { maxRedirects: 0 });
 
         expect(response.status()).toBe(200);
-        expect(await response.text()).toContain('<title>Privacy · Critsource</title>');
+        expect(await response.text()).toContain('<title>Privacy - Critsource</title>');
     });
 
     test('hydrates the privacy statement without errors', async ({ page }) => {
