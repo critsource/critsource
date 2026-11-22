@@ -146,7 +146,7 @@ describe('readFile', () => {
 
     it('fails as the real node:fs does for a missing file', async () => {
         const real = await vi.importActual<typeof import('node:fs/promises')>('node:fs/promises');
-        const path = resolve('/dnd-mapp-testing-missing.txt');
+        const path = resolve('/critsource-testing-missing.txt');
         const fields = (error: unknown) => {
             const { code, errno, syscall, message } = error as NodeJS.ErrnoException;
             return { code, errno, syscall, path: (error as NodeJS.ErrnoException).path, message };
