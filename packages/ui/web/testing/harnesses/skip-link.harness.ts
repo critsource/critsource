@@ -1,4 +1,4 @@
-import { ComponentHarness } from '@angular/cdk/testing';
+import { ComponentHarness, type TestElement } from '@angular/cdk/testing';
 
 /** How a skip link draws its label and its fill. */
 export interface SkipLinkLook {
@@ -17,7 +17,7 @@ export interface SkipLinkBox {
     borderRadius: string;
 }
 
-/** The focus ring a skip link draws, read from its outline. */
+/** The focus ring that a skip link or its target draws, read from its outline. */
 export interface SkipLinkFocusRing {
     style: string;
     color: string;
@@ -65,14 +65,27 @@ export class SkipLinkHarness extends ComponentHarness {
 
     /** The focus ring the skip link draws, whose style is `none` when it draws none. */
     public async getFocusRing(): Promise<SkipLinkFocusRing> {
-        const host = await this.host();
-        const [style, color, width, offset] = await Promise.all([
-            host.getCssValue('outline-style'),
-            host.getCssValue('outline-color'),
-            host.getCssValue('outline-width'),
-            host.getCssValue('outline-offset'),
-        ]);
-
-        return { style, color, width, offset };
+        return await readFocusRing(await this.host());
     }
+
+    /** The focus ring of the target, the element whose id `href` names, whose style is `none` when it draws none. */
+    public async getTargetFocusRing(): Promise<SkipLinkFocusRing> {
+        const href = (await (await this.host()).getAttribute('href')) ?? '';
+        const id = decodeURIComponent(href.slice(1));
+        const target = await this.documentRootLocatorFactory().locatorFor(`#${CSS.escape(id)}`)();
+
+        return await readFocusRing(target);
+    }
+}
+
+/** Reads the focus ring that an element draws from its outline. */
+async function readFocusRing(element: TestElement): Promise<SkipLinkFocusRing> {
+    const [style, color, width, offset] = await Promise.all([
+        element.getCssValue('outline-style'),
+        element.getCssValue('outline-color'),
+        element.getCssValue('outline-width'),
+        element.getCssValue('outline-offset'),
+    ]);
+
+    return { style, color, width, offset };
 }

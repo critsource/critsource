@@ -163,6 +163,45 @@ describe('SkipLinkComponent', () => {
         await expect.element(main).toHaveAttribute('tabindex', '0');
     });
 
+    it('should mark its target until the target loses focus', async () => {
+        const { main } = await setupTest();
+
+        await userEvent.tab();
+        await userEvent.keyboard('{Enter}');
+
+        await expect.element(main).toHaveAttribute('data-dma-skip-target');
+
+        (main.element() as HTMLElement).blur();
+
+        await expect.element(main).not.toHaveAttribute('data-dma-skip-target');
+    });
+
+    it('should leave a target with a tabindex of its own unmarked', async () => {
+        const { main } = await setupTest({ mainTabIndex: 0 });
+
+        await userEvent.tab();
+        await userEvent.keyboard('{Enter}');
+
+        await expect.element(main).toHaveFocus();
+        await expect.element(main).not.toHaveAttribute('data-dma-skip-target');
+    });
+
+    it('should draw the focus ring inside the edge of its target', async () => {
+        const { harness } = await setupTest();
+
+        expect((await harness.getTargetFocusRing()).style).toBe('none');
+
+        await userEvent.tab();
+        await userEvent.keyboard('{Enter}');
+
+        expect(await harness.getTargetFocusRing()).toEqual({
+            style: 'solid',
+            color: readColorToken('--color-focus-ring'),
+            width: '2px',
+            offset: '-2px',
+        });
+    });
+
     it('should not follow the link when it moves focus', async () => {
         const { link } = await setupTest();
 
