@@ -6,12 +6,13 @@ The end-to-end tests of the [web client](../../apps/web/README.md): [Playwright]
 
 The project tests what only the running app shows: what nginx serves, that the app boots, and what happens before it does. Each spec in [`src/`](src) covers one area of the app:
 
-| Spec                                     | Covers                                                                                                                              |
-|:-----------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|
-| [`app.spec.ts`](src/app.spec.ts)         | `/` shows the landing page in the app shell without JavaScript and once it hydrates, and any other path boots the shell.            |
-| [`theme.spec.ts`](src/theme.spec.ts)     | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System.      |
-| [`csp.spec.ts`](src/csp.spec.ts)         | Every route loads with no violation of the report-only policy, with and without a saved theme, and each response has its own nonce. |
-| [`headers.spec.ts`](src/headers.spec.ts) | Both HTML files, a bundle, `build-info.json`, and a missing file carry every security header of the image.                          |
+| Spec                                         | Covers                                                                                                                              |
+|:---------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|
+| [`app.spec.ts`](src/app.spec.ts)             | `/` shows the landing page in the app shell without JavaScript and once it hydrates.                                                |
+| [`not-found.spec.ts`](src/not-found.spec.ts) | An unknown path returns 404 with the Not found page, with and without JavaScript, and a missing file returns a plain 404.           |
+| [`theme.spec.ts`](src/theme.spec.ts)         | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System.      |
+| [`csp.spec.ts`](src/csp.spec.ts)             | Every route loads with no violation of the report-only policy, with and without a saved theme, and each response has its own nonce. |
+| [`headers.spec.ts`](src/headers.spec.ts)     | Each HTML page, a bundle, `build-info.json`, and a missing file carry every security header of the image.                           |
 
 Add a test to the spec of its area, or a new `src/<area>.spec.ts` for a new area. Test the behavior of a component or service in the unit tests of the project that holds it instead.
 

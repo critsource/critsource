@@ -8,7 +8,7 @@ The shell of the web client that its domain modules build on, as [Architecture](
 
 - [`src/config/app.config.ts`](src/config/app.config.ts) holds `appConfig`, which provides the router with the routes, and hydration with event replay.
 - [`server/server.config.ts`](server/server.config.ts) holds `serverConfig`, which adds server rendering to `appConfig`, as [Prerendering](#prerendering) describes.
-- [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes. `''` loads `landingRoutes` of [`landing-web`](../../landing/web/README.md), the landing page, and then `legalRoutes` of [`legal-web`](../../legal/web/README.md), the Privacy and Accessibility pages. The router matches the routes of each module in turn, so a path that the landing page lacks falls through to the next.
+- [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes. `''` loads `landingRoutes` of [`landing-web`](../../landing/web/README.md), the landing page, and then `legalRoutes` of [`legal-web`](../../legal/web/README.md), the Privacy and Accessibility pages. The router matches the routes of each module in turn, so a path that the landing page lacks falls through to the next. `**` and the fixed `not-found` route both show `NotFoundPage`, titled "Page not found - Critsource".
 - `RootComponent`, in [`src/root/`](src/root), is the app shell: the Skip link, the Header with its Mobile menu, a `<main id="main">` around the router outlet, and the Footer, all from [`ui-web`](../../ui/web/README.md). A page adds its link to the nav of the header, in the header and in the Mobile menu, and to a link group of the footer, once its page exists.
 
 A domain module adds a route to `app.routes.ts` that loads it with `import()`, such as through `loadChildren`, so the app downloads the module only when a reader opens the route. The domain modules meet only through this router, as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. ESLint lets `core-web` import a domain module of the web platform through `import()` only, and fails on the import unless [`package.json`](package.json) declares the module in its `dependencies`. The `lint` task in [`moon.yml`](moon.yml) lists the sources of each such module as an input, since the type-aware rules read their types, and the `domains` file group of [`web`](../../../apps/web/moon.yml) lists them for its `build`, `start`, and `image` tasks, so moon reruns them when a module changes.
@@ -21,11 +21,11 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                         | Source                                 | Exports                      |
-|:-------------------------------|:---------------------------------------|:-----------------------------|
-| `@critsource/core-web`         | [`src/index.ts`](src/index.ts)         | `RootComponent`, `appConfig` |
-| `@critsource/core-web/server`  | [`server/index.ts`](server/index.ts)   | `serverConfig`               |
-| `@critsource/core-web/testing` | [`testing/index.ts`](testing/index.ts) | `RootHarness`                |
+| Import                         | Source                                 | Exports                                      |
+|:-------------------------------|:---------------------------------------|:---------------------------------------------|
+| `@critsource/core-web`         | [`src/index.ts`](src/index.ts)         | `RootComponent`, `NotFoundPage`, `appConfig` |
+| `@critsource/core-web/server`  | [`server/index.ts`](server/index.ts)   | `serverConfig`                               |
+| `@critsource/core-web/testing` | [`testing/index.ts`](testing/index.ts) | `RootHarness`, `NotFoundPageHarness`         |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 
@@ -33,12 +33,13 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 `serverConfig` merges `appConfig` with `provideServerRendering` of [`@angular/ssr`](https://angular.dev/guide/ssr) and the server routes in [`server/server.routes.ts`](server/server.routes.ts), which pick how each route renders:
 
-| Path              | Render mode | Output                                                                                              |
-|:------------------|:------------|:----------------------------------------------------------------------------------------------------|
-| `''`              | `Prerender` | `web:build` renders the landing page into `index.html`, which the app hydrates.                     |
-| `'privacy'`       | `Prerender` | `web:build` renders the Privacy page into `privacy/index.html`, which the app hydrates.             |
-| `'accessibility'` | `Prerender` | `web:build` renders the Accessibility page into `accessibility/index.html`, which the app hydrates. |
-| `**`              | `Client`    | The page renders in the browser, from the app shell in `index.csr.html`.                            |
+| Path              | Render mode | Output                                                                                                                      |
+|:------------------|:------------|:----------------------------------------------------------------------------------------------------------------------------|
+| `''`              | `Prerender` | `web:build` renders the landing page into `index.html`, which the app hydrates.                                             |
+| `'privacy'`       | `Prerender` | `web:build` renders the Privacy page into `privacy/index.html`, which the app hydrates.                                     |
+| `'accessibility'` | `Prerender` | `web:build` renders the Accessibility page into `accessibility/index.html`, which the app hydrates.                         |
+| `not-found`       | `Prerender` | `web:build` renders the Not found page into `not-found/index.html`, which nginx serves with status 404 for an unknown path. |
+| `**`              | `Client`    | The build writes the app shell to `index.csr.html`. It skips the catch-all route, so `not-found` writes the page of `**`.   |
 
 `@angular/ssr` reaches the app through the `server` entry point only, so the bundle of the browser never imports it. A component on a prerendered route renders in Node during the build, so it follows the rules of [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 

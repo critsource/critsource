@@ -4,7 +4,7 @@ const paths = [
     { path: '/', page: 'the prerendered landing page' },
     { path: '/privacy', page: 'the prerendered Privacy page' },
     { path: '/accessibility', page: 'the prerendered Accessibility page' },
-    { path: '/any/other/path', page: 'the app shell' },
+    { path: '/any/other/path', page: 'the Not found page' },
 ];
 
 /**
