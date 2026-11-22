@@ -22,7 +22,7 @@ function workspacePackages(): string[] {
     );
 }
 
-/** Matches the source of any import other than a `@dnd-mapp` package that the project lists in its `package.json`. */
+/** Matches the source of any import other than a `@critsource` package that the project lists in its `package.json`. */
 function undeclaredPackages(projectRoot: string): string {
     const packageJson = JSON.parse(readFileSync(join(projectRoot, 'package.json'), 'utf8')) as PackageJson;
     const declared = Object.keys({

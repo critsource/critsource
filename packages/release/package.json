@@ -1,7 +1,7 @@
 {
   "name": "@critsource/release",
   "version": "0.0.0",
-  "description": "The release CLI of D&D Mapp, which bumps, verifies, and lints the changelogs and manifests of the projects.",
+  "description": "The release CLI of Critsource, which bumps, verifies, and lints the changelogs and manifests of the projects.",
   "private": true,
   "license": "MIT",
   "repository": {

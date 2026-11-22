@@ -7,7 +7,7 @@ tags:
 
 project:
     title: "Web client"
-    description: "The Angular web client of D&D Mapp."
+    description: "The Angular web client of Critsource."
     owner: "@critsource/reviewers"
     maintainers:
         - "@NoNamer777"

@@ -68,7 +68,7 @@ jobs:
 
             # A merge that auto-merge makes on behalf of GITHUB_TOKEN triggers no workflows, so Push main would not run
             # and development would not deploy. The app has write access to Contents and Pull requests.
-            - name: Create a token of the dnd-mapp app
+            - name: Create a token of the critsource app
               id: app-token
               if: steps.old-base.outputs.deleted == 'true'
               uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc # v3.4.0

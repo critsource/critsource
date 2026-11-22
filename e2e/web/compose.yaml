@@ -1,6 +1,6 @@
 # The stack that web-e2e:e2e-ci runs the end-to-end tests against. global-setup.ts starts it before the tests, sets the
 # variables below, and stops it again after the tests.
-name: dnd-mapp-web-e2e
+name: critsource-web-e2e
 
 services:
     # The web image to test: the image of the latest commit of main, unless WEB_IMAGE names another, such as the image
