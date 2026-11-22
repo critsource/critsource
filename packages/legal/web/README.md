@@ -4,11 +4,11 @@ The Privacy and Accessibility pages of the [web client](../../../apps/web/README
 
 ## What belongs here
 
-The pages that tell visitors how the site treats them: the privacy statement and the accessibility statement. The Privacy page renders only its heading until its text lands, and `core-web` does not load the module yet. Build each page from the components of [`ui-web`](../../ui/web/README.md), and add a component there when another page could use it too. The header and footer around the pages belong to the shell in `core-web`.
+The pages that tell visitors how the site treats them: the privacy statement and the accessibility statement. Build each page from the components of [`ui-web`](../../ui/web/README.md), and add a component there when another page could use it too. The header and footer around the pages belong to the shell in `core-web`.
 
 The pages are prerendered during `web:build`, so every component on them follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision). [Privacy](../../../docs/privacy.md) lists where each fact on the Privacy page is enforced, so keep the two in step.
 
-- [`src/legal.routes.ts`](src/legal.routes.ts) holds `legalRoutes`, which renders `PrivacyPage` at `privacy`.
+- [`src/legal.routes.ts`](src/legal.routes.ts) holds `legalRoutes`, which renders `PrivacyPage` at `privacy`. Each route sets the `title` of the page, which the router writes into the tab, during prerendering too.
 - `PrivacyPage`, in [`src/privacy.page.ts`](src/privacy.page.ts), is the Privacy page.
 
 A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `PrivacyPage` does. Every other component takes the `Component` suffix.
@@ -30,7 +30,7 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 ## Testing
 
-The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why `ui-web` and `design-tokens` are in the `devDependencies`, and why both test tasks list their files as an input.
+The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why `design-tokens` is in the `devDependencies`, next to `ui-web` in the `dependencies`, and why both test tasks list their files as an input.
 
 ## Tasks
 

@@ -1,6 +1,6 @@
 # Critsource web
 
-The web client of [Critsource](https://github.com/critsource/critsource). The landing page is prerendered at build time and every other page renders in the browser, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The landing page and the Privacy page are prerendered at build time and every other page renders in the browser, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 
@@ -24,7 +24,7 @@ Run the newest release, and open the app at <http://localhost:4200>:
 docker run --rm -p 4200:4200 critsource/web
 ```
 
-The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and every other path without a file extension with the app shell, `index.csr.html`, so the router of the app handles it. A missing file with an extension, such as a bundle of an older release, gets `404`. nginx serves both HTML files with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and `/privacy` with the prerendered Privacy page, `privacy/index.html`. Every other path without a file extension gets the app shell, `index.csr.html`, so the router of the app handles it. A missing file with an extension, such as a bundle of an older release, gets `404`. nginx serves every HTML file with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
 
 The container runs nginx as the unprivileged `nginx` user (UID 101), needs no added capabilities, writes to `/tmp` only, and runs under any other UID too. Harden it by dropping every capability and making the root file system read-only, with a tmpfs at `/tmp`:
 
@@ -71,13 +71,13 @@ docker run --rm -p 4200:4200 -v ./security-headers.inc:/etc/nginx/security-heade
 
 ## Content Security Policy
 
-nginx sends a `Content-Security-Policy-Report-Only` header with `index.html` and `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
+nginx sends a `Content-Security-Policy-Report-Only` header with each prerendered page and with `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
 
 ```text
 default-src 'self'; script-src 'self' 'nonce-<nonce>'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 ```
 
-The nonce is the request ID of nginx, 32 random hex characters that are new for each response. The HTML holds `@CSP_NONCE@` where the nonce belongs, on the root element of the app and on its inline scripts and styles, and nginx writes the nonce of the header in its place. Cloudflare reads the nonce from the header to allow its bot check, which is why it cannot sit in a `<meta>` tag. The policy leaves out `'strict-dynamic'`, since the bot check loads from this origin, and allows inline styles, since Cloudflare adds a hidden link with a `style` attribute. nginx drops the `ETag` and `Last-Modified` of both files, so browsers fetch them in full on each visit.
+The nonce is the request ID of nginx, 32 random hex characters that are new for each response. The HTML holds `@CSP_NONCE@` where the nonce belongs, on the root element of the app and on its inline scripts and styles, and nginx writes the nonce of the header in its place. Cloudflare reads the nonce from the header to allow its bot check, which is why it cannot sit in a `<meta>` tag. The policy leaves out `'strict-dynamic'`, since the bot check loads from this origin, and allows inline styles, since Cloudflare adds a hidden link with a `style` attribute. nginx drops the `ETag` and `Last-Modified` of every HTML file, so browsers fetch them in full on each visit.
 
 To change the policy, mount your own copy of [`csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) over `/etc/nginx/csp.inc`. Keep its two `sub_filter` lines, or the inline scripts lose their nonce:
 
