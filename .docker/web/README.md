@@ -1,6 +1,6 @@
 # Critsource web
 
-The web client of [Critsource](https://github.com/critsource/critsource). The landing page is prerendered at build time and every other page renders in the browser, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The landing page and the Not found page are prerendered at build time, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 
@@ -24,7 +24,9 @@ Run the newest release, and open the app at <http://localhost:4200>:
 docker run --rm -p 4200:4200 critsource/web
 ```
 
-The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and every other path without a file extension with the app shell, `index.csr.html`, so the router of the app handles it. A missing file with an extension, such as a bundle of an older release, gets `404`. nginx serves both HTML files with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and every other path that matches no file with status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates, so crawlers don't index a broken link as a page. A missing file with an extension, such as a bundle of an older release, gets a plain `404` without the page. nginx serves the prerendered HTML files, the Not found page included, with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+
+Under another base path, such as `/pr-42/` from the `BASE_HREF` build argument, the same holds for the paths under it. The Not found page serves only as that error page: a request for `/pr-42/not-found/` returns `404` with the page too.
 
 The container runs nginx as the unprivileged `nginx` user (UID 101), needs no added capabilities, writes to `/tmp` only, and runs under any other UID too. Harden it by dropping every capability and making the root file system read-only, with a tmpfs at `/tmp`:
 
@@ -71,7 +73,7 @@ docker run --rm -p 4200:4200 -v ./security-headers.inc:/etc/nginx/security-heade
 
 ## Content Security Policy
 
-nginx sends a `Content-Security-Policy-Report-Only` header with `index.html` and `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
+nginx sends a `Content-Security-Policy-Report-Only` header with `index.html`, `index.csr.html`, and the Not found page. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
 
 ```text
 default-src 'self'; script-src 'self' 'nonce-<nonce>'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
