@@ -12,7 +12,7 @@ import {
     setupTestEnvironment,
 } from '@critsource/ui-web/testing';
 
-const LICENSE = '© D&D Mapp contributors. Released under the MIT License.';
+const LICENSE = '© Critsource contributors. Released under the MIT License.';
 
 const ATTRIBUTION =
     'This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC ' +
@@ -21,7 +21,7 @@ const ATTRIBUTION =
     'https://creativecommons.org/licenses/by/4.0/legalcode.';
 
 const NOTICE =
-    'D&D Mapp is an unofficial fan project and is not affiliated with Wizards of the Coast. Dungeons & Dragons and D&D ' +
+    'Critsource is an unofficial fan project and is not affiliated with Wizards of the Coast. Dungeons & Dragons and D&D ' +
     'are trademarks of Wizards of the Coast LLC.';
 
 describe('FooterComponent', () => {
@@ -99,8 +99,8 @@ describe('FooterComponent', () => {
         const { harness } = await setupTest();
         const logo = await harness.getLogo();
 
-        expect(await logo.getName()).toBe('D&D Mapp');
-        expect(await logo.getWordmarkText()).toBe('D&D Mapp');
+        expect(await logo.getName()).toBe('Critsource');
+        expect(await logo.getWordmarkText()).toBe('Critsource');
         expect(await logo.getMarkSize()).toEqual({ width: 32, height: 32 });
         expect(await harness.getText('tagline')).toBe(
             'An open-source app for players and dungeon masters of D&D 5th edition.',

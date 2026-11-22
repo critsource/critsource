@@ -28,20 +28,20 @@ describe('LogoComponent', () => {
     }
 
     describe.each<LogoKind>(Object.values(LogoKind))('of kind %s', (kind) => {
-        it.each<LogoSize>(Object.values(LogoSize))('should be named D&D Mapp at size %s', async (size) => {
+        it.each<LogoSize>(Object.values(LogoSize))('should be named Critsource at size %s', async (size) => {
             const { host } = await setupTest(TestComponent);
             host.kind.set(kind);
             host.size.set(size);
             TestBed.tick();
 
-            await expect.element(page.getByRole('img', { name: 'D&D Mapp' })).toBeInTheDocument();
+            await expect.element(page.getByRole('img', { name: 'Critsource' })).toBeInTheDocument();
         });
     });
 
     it('should show the wordmark by default', async () => {
         const { harness } = await setupTest(DefaultTestComponent);
 
-        expect(await harness.getWordmarkText()).toBe('D&D Mapp');
+        expect(await harness.getWordmarkText()).toBe('Critsource');
     });
 
     it('should show the mark alone', async () => {
@@ -77,7 +77,7 @@ describe('LogoComponent', () => {
         const { harness, host } = await setupTest(TestComponent);
         host.kind.set('unknown' as LogoKind);
 
-        expect(await harness.getWordmarkText()).toBe('D&D Mapp');
+        expect(await harness.getWordmarkText()).toBe('Critsource');
     });
 
     it('should draw the large mark for a size it does not know', async () => {
