@@ -30,6 +30,7 @@
     "@angular/compiler-cli": "catalog:angular",
     "@critsource/config-eslint": "workspace:*",
     "@critsource/config-typescript": "workspace:*",
+    "@critsource/design-tokens": "workspace:*",
     "@critsource/ui-web": "workspace:*",
     "@types/node": "catalog:node",
     "@vitest/browser-playwright": "catalog:vitest",

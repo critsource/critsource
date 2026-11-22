@@ -30,7 +30,7 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 ## Testing
 
-The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test. That is why `ui-web` is in the `devDependencies`, and why both test tasks list its sources as an input.
+The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why `ui-web` and `design-tokens` are in the `devDependencies`, and why both test tasks list their files as an input.
 
 ## Tasks
 
