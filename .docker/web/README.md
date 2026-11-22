@@ -1,6 +1,6 @@
 # Critsource web
 
-The web client of [Critsource](https://github.com/critsource/critsource). The app renders in the browser only, so the image serves its static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The landing page is prerendered at build time and every other page renders in the browser, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 
@@ -24,7 +24,7 @@ Run the newest release, and open the app at <http://localhost:4200>:
 docker run --rm -p 4200:4200 critsource/web
 ```
 
-The container serves the app on port 4200, under the path `/`. It answers every path without a file extension with `index.html`, so the router of the app handles it, and a missing file with an extension, such as a bundle of an older release, with `404`. nginx serves `index.html` with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and every other path without a file extension with the app shell, `index.csr.html`, so the router of the app handles it. A missing file with an extension, such as a bundle of an older release, gets `404`. nginx serves both HTML files with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
 
 The container runs nginx as the unprivileged `nginx` user (UID 101), needs no added capabilities, writes to `/tmp` only, and runs under any other UID too. Harden it by dropping every capability and making the root file system read-only, with a tmpfs at `/tmp`:
 
