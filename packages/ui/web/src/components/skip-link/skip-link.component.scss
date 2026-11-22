@@ -1,6 +1,9 @@
+// The component turns encapsulation off to style its target, so every rule starts with a selector of its own.
+$host: 'a[dma-skip-link]';
+
 // Hidden until it gets focus. The clip hides the link from sight only, so it stays in the accessibility tree and in
 // the tab order, where `display: none` or `visibility: hidden` would remove it from both.
-:host {
+#{$host} {
     position: fixed;
     top: var(--space-16);
     left: var(--space-16);
@@ -11,9 +14,9 @@
     white-space: nowrap;
 }
 
-// The focused look, the only one Penpot draws: the colors of the primary Button, pinned to the top left above the
-// header. Penpot has no token for the stacking order, so the z-index is a number of its own.
-:host(:focus) {
+// The focused look of the link: the colors of the primary Button, pinned to the top left above the header. Penpot has
+// no token for the stacking order, so the z-index is a number of its own.
+#{$host}:focus {
     z-index: 1000;
     display: inline-flex;
     align-items: center;
@@ -35,4 +38,13 @@
     line-height: var(--typography-button-line-height);
     text-decoration: var(--typography-button-text-decoration);
     text-transform: var(--typography-button-text-case);
+}
+
+// The focused look of the target, such as `<main>`, which the link marks while it has focus. The ring lies inside its
+// edge, since an outward offset would push the ring of a target as wide as the viewport off-screen, or let a parent
+// with `overflow: hidden` clip it. It matches `:focus`, as the link does, since browsers apply `:focus-visible` to
+// programmatic focus by heuristics that differ between them.
+[data-dma-skip-target]:focus {
+    outline: var(--border-width-focus) solid var(--color-focus-ring);
+    outline-offset: calc(-1 * var(--border-width-focus));
 }

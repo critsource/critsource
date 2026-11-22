@@ -45,6 +45,21 @@ export const Focus: Story = {
     parameters: { pseudo: { focus: true } },
 };
 
+/** The target with focus once the skip link moved focus to it, the look of the Target board in Penpot. */
+export const Target: Story = {
+    args: { label: 'Skip to main content' },
+    parameters: { pseudo: { focus: ['main'] } },
+    render: (args) => ({
+        props: args,
+        template: `
+            <a dma-skip-link href="#story-target">{{ label }}</a>
+            <main id="story-target" data-dma-skip-target tabindex="-1" style="padding: var(--space-24) var(--space-32)">
+                Main content
+            </main>
+        `,
+    }),
+};
+
 /** The skip link as the first focusable item of a page. Press Tab in the story to show it, then Enter to skip. */
 export const OnPage: Story = {
     args: { label: 'Skip to main content' },
