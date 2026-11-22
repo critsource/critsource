@@ -573,6 +573,9 @@ importers:
       '@angular/ssr':
         specifier: catalog:angular
         version: 22.3.0(1e1999155bfcb4d610e730fef3407622)
+      '@critsource/landing-web':
+        specifier: workspace:*
+        version: link:../../landing/web
       rxjs:
         specifier: catalog:angular
         version: 7.8.2

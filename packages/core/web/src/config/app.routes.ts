@@ -1,3 +1,5 @@
 import { type Routes } from '@angular/router';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    { path: '', loadChildren: async () => (await import('@critsource/landing-web')).landingRoutes },
+];

@@ -30,6 +30,9 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
+            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
+            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
+            - "/packages/landing/web/src/**/*"
             - project: "design-tokens"
               group: "css"
 
@@ -40,6 +43,9 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
+            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
+            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
+            - "/packages/landing/web/src/**/*"
             - project: "design-tokens"
               group: "css"
         outputs:
@@ -68,6 +74,9 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
+            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
+            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
+            - "/packages/landing/web/src/**/*"
             - project: "design-tokens"
               group: "css"
             - "/.dockerignore"
