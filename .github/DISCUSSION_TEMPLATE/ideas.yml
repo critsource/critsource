@@ -4,7 +4,7 @@ body:
     - type: markdown
       attributes:
           value: >
-              Share a problem D&D Mapp could solve, even when you have no solution yet. A rough idea is welcome: the
+              Share a problem Critsource could solve, even when you have no solution yet. A rough idea is welcome: the
               discussion below is where it takes shape. Upvote an existing idea rather than posting it again.
 
 
@@ -21,13 +21,13 @@ body:
           required: true
       attributes:
           label: Problem
-          description: What do you want to do that D&D Mapp makes hard or impossible today?
+          description: What do you want to do that Critsource makes hard or impossible today?
 
     - type: textarea
       id: solution
       attributes:
           label: Proposed solution
-          description: How you picture D&D Mapp solving it. Leave this empty when you are not sure yet.
+          description: How you picture Critsource solving it. Leave this empty when you are not sure yet.
 
     - type: textarea
       id: alternatives

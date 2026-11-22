@@ -1,6 +1,6 @@
 # Governance
 
-This document describes how D&D Mapp is run today: who holds which role, how decisions are made and recorded, how roles change hands, and how disagreements are resolved. One person leads the project, and the roles below are written so they still hold once more maintainers join.
+This document describes how Critsource is run today: who holds which role, how decisions are made and recorded, how roles change hands, and how disagreements are resolved. One person leads the project, and the roles below are written so they still hold once more maintainers join.
 
 ## Roles
 
@@ -11,7 +11,7 @@ Everyone in every role is accountable for what they submit, whatever tools helpe
 The lead maintainer is a maintainer with the final say on every decision. On top of the maintainer responsibilities, the lead maintainer:
 
 - Sets the direction and the roadmap of the project.
-- Administers the critsource GitHub organization and the settings of its repository, such as rulesets, secrets, and teams.
+- Administers the `critsource` GitHub organization and the settings of its repository, such as rulesets, secrets, and teams.
 - Handles security advisories.
 - Enforces the [code of conduct](CODE_OF_CONDUCT.md).
 
@@ -79,7 +79,7 @@ A maintainer steps down by opening a pull request that moves them from [People](
 
 ### Succession
 
-When the lead maintainer steps down, they hand the role, and the ownership of the critsource GitHub organization, to a maintainer. When no maintainer can take over, they archive the repository.
+When the lead maintainer steps down, they hand the role, and the ownership of the `critsource` GitHub organization, to a maintainer. When no maintainer can take over, they archive the repository.
 
 No successor exists today, so the project stops if the lead maintainer can no longer lead it.
 

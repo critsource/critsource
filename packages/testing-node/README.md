@@ -1,6 +1,6 @@
 # Node test helpers
 
-Helpers for the tests of the Node projects of D&D Mapp. The helpers mock built-in modules of Node.js, so browser tests cannot use them. [`moon.yml`](moon.yml) defines the tasks below.
+Helpers for the tests of the Node projects of Critsource. The helpers mock built-in modules of Node.js, so browser tests cannot use them. [`moon.yml`](moon.yml) defines the tasks below.
 
 ## Using the package
 

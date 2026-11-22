@@ -19,7 +19,7 @@ body:
           required: true
       attributes:
           label: Problem
-          description: What users want to do that D&D Mapp makes hard or impossible today.
+          description: What users want to do that Critsource makes hard or impossible today.
 
     - type: textarea
       id: solution
@@ -27,7 +27,7 @@ body:
           required: true
       attributes:
           label: Solution
-          description: How D&D Mapp will solve the problem.
+          description: How Critsource will solve the problem.
 
     - type: textarea
       id: acceptance-criteria

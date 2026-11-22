@@ -1,6 +1,6 @@
 # Web
 
-The web client of D&D Mapp: an [Angular](https://angular.dev) app that renders in the browser only. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../packages/config-eslint/README.md), which holds the rules.
+The web client of Critsource: an [Angular](https://angular.dev) app that renders in the browser only. [`angular.json`](angular.json) configures the Angular CLI, and [`eslint.config.ts`](eslint.config.ts) applies the `angular` preset of [`@critsource/config-eslint`](../../packages/config-eslint/README.md), which holds the rules.
 
 ## What belongs here
 

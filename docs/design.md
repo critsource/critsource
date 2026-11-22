@@ -1,10 +1,10 @@
 # Design
 
-This guide says where the designs of D&D Mapp live, who can open them, and how a design becomes code. [Architecture](architecture.md) covers where that code goes.
+This guide says where the designs of Critsource live, who can open them, and how a design becomes code. [Architecture](architecture.md) covers where that code goes.
 
 ## Where the designs live
 
-The designs live in [Penpot](https://penpot.app), in the D&D Mapp project of the D&D Mapp team. Each file has a view link that opens without a Penpot account:
+The designs live in [Penpot](https://penpot.app), in the Critsource project of the Critsource team. Each file has a view link that opens without a Penpot account:
 
 | File                       | Pages                                           | Holds                                                                                                                            | View link             |
 |:---------------------------|:------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|:----------------------|
@@ -17,7 +17,7 @@ The design system is a shared library: Desktop and Mobile use its components, so
 
 ## Who can open them
 
-Anyone can open the view links and use their Inspect tab to read the sizes, colors, and CSS of each shape. Only members of the D&D Mapp team can edit or comment on the files; ask a [maintainer](../GOVERNANCE.md#maintainers) when you need access.
+Anyone can open the view links and use their Inspect tab to read the sizes, colors, and CSS of each shape. Only members of the Critsource team can edit or comment on the files; ask a [maintainer](../GOVERNANCE.md#maintainers) when you need access.
 
 ## Source of truth
 

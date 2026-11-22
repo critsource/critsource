@@ -1,6 +1,6 @@
 # Support
 
-This page lists where each kind of request about D&D Mapp goes, and what response to expect.
+This page lists where each kind of request about Critsource goes, and what response to expect.
 
 ## Where to go
 
@@ -18,4 +18,4 @@ Before you open a discussion or a bug report, search for an existing one. When y
 
 ## What to expect
 
-D&D Mapp is a volunteer project with one maintainer, so replies come when time allows, and no response time is promised. [`SECURITY.md`](SECURITY.md#after-you-report) sets its own goals for vulnerability reports.
+Critsource is a volunteer project with one maintainer, so replies come when time allows, and no response time is promised. [`SECURITY.md`](SECURITY.md#after-you-report) sets its own goals for vulnerability reports.

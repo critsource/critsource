@@ -1,6 +1,6 @@
 # TypeScript config
 
-The TypeScript config presets that the projects of D&D Mapp extend, so each `tsconfig.json` sets only the options specific to its project. The package has no tasks.
+The TypeScript config presets that the projects of Critsource extend, so each `tsconfig.json` sets only the options specific to its project. The package has no tasks.
 
 ## Using the package
 

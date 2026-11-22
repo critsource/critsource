@@ -2,7 +2,7 @@
 
 ## Our pledge
 
-We pledge to make the D&D Mapp community welcoming, safe, and equitable for all.
+We pledge to make the Critsource community welcoming, safe, and equitable for all.
 
 We foster an environment that respects and promotes the dignity, rights, and contributions of every individual. That holds regardless of race, ethnicity, caste, color, age, physical characteristics, neurodiversity, or disability. It holds regardless of sex or gender, gender identity or expression, sexual orientation, language, philosophy or religion, national or social origin, socio-economic position, level of education, or other status. Everyone who takes part in good faith and follows this code of conduct has the same privileges of participation.
 
@@ -44,7 +44,7 @@ Tensions can arise between community members even when they try their best to co
 
 When an incident does occur, report it promptly by email to [conduct@critsource.com](mailto:conduct@critsource.com). The [lead maintainer](GOVERNANCE.md#lead-maintainer) reads every report and keeps it private. When your report concerns the lead maintainer, you can also [report the content to GitHub](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam).
 
-The lead maintainer takes every report seriously and responds as soon as they can, though D&D Mapp is a volunteer project and promises no response time. They investigate every report, which can include reviewing messages and logs and talking to witnesses and other participants. They keep investigations and enforcement as transparent as possible while putting safety and confidentiality first. Enforcement therefore happens in private with the people involved, though a resolution they agree on can include telling the whole community.
+The lead maintainer takes every report seriously and responds as soon as they can, though Critsource is a volunteer project and promises no response time. They investigate every report, which can include reviewing messages and logs and talking to witnesses and other participants. They keep investigations and enforcement as transparent as possible while putting safety and confidentiality first. Enforcement therefore happens in private with the people involved, though a resolution they agree on can include telling the whole community.
 
 ## Addressing and repairing harm
 
@@ -78,7 +78,7 @@ These steps are a guideline. They do not limit the lead maintainer's discretion 
 
 ## Scope
 
-This code of conduct applies in every space of the [critsource GitHub organization](https://github.com/critsource): the [repository](https://github.com/critsource/critsource), its issues, pull requests, and [Discussions](https://github.com/critsource/critsource/discussions), and the [Critsource project](https://github.com/orgs/critsource/projects/10). It also applies to anyone officially representing D&D Mapp in public, such as by using an official email address, posting from an official social media account, or acting as an appointed representative at an online or offline event.
+This code of conduct applies in every space of the [`critsource` GitHub organization](https://github.com/critsource): the [repository](https://github.com/critsource/critsource), its issues, pull requests, and [Discussions](https://github.com/critsource/critsource/discussions), and the [Critsource project](https://github.com/orgs/critsource/projects/10). It also applies to anyone officially representing Critsource in public, such as by using an official email address, posting from an official social media account, or acting as an appointed representative at an online or offline event.
 
 ## Attribution
 

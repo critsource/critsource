@@ -1,6 +1,6 @@
 # Design tokens
 
-The design tokens of D&D Mapp, which the [design system](../../docs/design.md) in Penpot holds: the colors, sizes, type, and shadows that every component and theme reads. [ADR 0001](../../docs/adr/0001-ui-and-token-packages.md) records why the tokens live in a package of their own.
+The design tokens of Critsource, which the [design system](../../docs/design.md) in Penpot holds: the colors, sizes, type, and shadows that every component and theme reads. [ADR 0001](../../docs/adr/0001-ui-and-token-packages.md) records why the tokens live in a package of their own.
 
 `tokens.json` is the single-file token export of the Design system file, committed as Penpot writes it. Change a token in Penpot and export it again, as [Design tokens](../../docs/design.md#design-tokens) describes, rather than editing the file. [`src/fonts.ts`](src/fonts.ts) configures the fonts, and [`src/breakpoints.ts`](src/breakpoints.ts) the desktop breakpoint. The [`build`](#tasks) task generates the files that the package exports from these three. [ADR 0006](../../docs/adr/0006-design-token-pipeline.md) records how the pipeline works and why, [ADR 0008](../../docs/adr/0008-theme-mapping.md) how the themes switch, and [ADR 0010](../../docs/adr/0010-font-loading.md) how the app loads its fonts.
 

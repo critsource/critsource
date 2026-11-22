@@ -1,6 +1,6 @@
 # Development
 
-This guide sets up a machine to work on D&D Mapp, from the tools to install to a running dev server, and covers the tasks, git hooks, and editor settings that every project shares. Each project's README lists its own tasks, as the [Projects](../README.md#projects) section of the README links them.
+This guide sets up a machine to work on Critsource, from the tools to install to a running dev server, and covers the tasks, git hooks, and editor settings that every project shares. Each project's README lists its own tasks, as the [Projects](../README.md#projects) section of the README links them.
 
 ## Prerequisites
 
