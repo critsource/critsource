@@ -9,7 +9,7 @@ The shell of the web client that its domain modules build on, as [Architecture](
 - [`src/config/app.config.ts`](src/config/app.config.ts) holds `appConfig`, which provides the router with the routes, and hydration with event replay.
 - [`server/server.config.ts`](server/server.config.ts) holds `serverConfig`, which adds server rendering to `appConfig`, as [Prerendering](#prerendering) describes.
 - [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes, which are empty until the first domain module lands.
-- `RootComponent`, in [`src/root/`](src/root), is a placeholder until the shell gets its layout.
+- `RootComponent`, in [`src/root/`](src/root), is the app shell: the Skip link, the Header with its Mobile menu, a `<main id="main">` around the router outlet, and the Footer, all from [`ui-web`](../../ui/web/README.md). A page adds its link to the nav of the header, in the header and in the Mobile menu, and to a link group of the footer, once its page exists.
 
 A domain module adds a route to `app.routes.ts` that loads it with `import()`, such as through `loadChildren`, so the app downloads the module only when a reader opens the route. The domain modules meet only through this router, as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. ESLint lets `core-web` import a domain module of the web platform through `import()` only, and fails on the import unless [`package.json`](package.json) declares the module.
 
@@ -42,7 +42,7 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 ## Testing
 
-The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test. That is why `ui-web` is in the `devDependencies`, and why both test tasks list its sources as an input.
+The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test. That is why both test tasks list the sources of `ui-web` as an input.
 
 ## Tasks
 
