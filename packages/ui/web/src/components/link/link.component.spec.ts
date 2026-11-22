@@ -44,6 +44,14 @@ function readLooks(): Record<LinkKind, { default: Look; hover: Look }> {
     };
 }
 
+/**
+ * How the quiet kind looks on the current page, as Penpot draws it. Penpot draws no hovered or focused current page, which
+ * keeps this look, and the other kinds draw no current state.
+ */
+function readCurrentLook(): Look {
+    return { color: readColorToken('--color-foreground-default'), underlined: false, fontWeight: '600' };
+}
+
 describe('LinkComponent', () => {
     @Component({
         template: `<div class="frame"><a dma-link href="#rules">Rules</a></div>`,
@@ -53,18 +61,24 @@ describe('LinkComponent', () => {
     class DefaultTestComponent {}
 
     @Component({
-        template: `<div class="frame"><a dma-link [kind]="kind()" href="#rules">Rules</a></div>`,
+        template: `
+            <div class="frame">
+                <a dma-link [kind]="kind()" [attr.aria-current]="current() ? 'page' : null" href="#rules">Rules</a>
+            </div>
+        `,
         styles: FRAME,
         imports: [LinkComponent],
     })
     class TestComponent {
         public readonly kind = signal<LinkKind>(LinkKind.Inline);
+        public readonly current = signal(false);
     }
 
-    async function setupTest(kind: LinkKind) {
+    async function setupTest(kind: LinkKind, current = false) {
         const { fixture, harness } = await setupTestEnvironment({ host: TestComponent, harness: LinkHarness });
 
         fixture.componentInstance.kind.set(kind);
+        fixture.componentInstance.current.set(current);
         TestBed.tick();
 
         return { harness, link: page.getByRole('link', { name: 'Rules', exact: true }) };
@@ -129,7 +143,60 @@ describe('LinkComponent', () => {
 
             expect(await readLook(harness)).toEqual(readLooks()[kind].default);
         });
+
+        it('should mark no page by default', async () => {
+            const { harness, link } = await setupTest(kind);
+
+            await expect.element(link).not.toHaveAttribute('aria-current');
+            expect(await harness.isCurrent()).toBe(false);
+        });
     });
+
+    describe('of kind quiet on the current page', () => {
+        it('should mark the current page to assistive technology', async () => {
+            const { harness, link } = await setupTest(LinkKind.Quiet, true);
+
+            await expect.element(link).toHaveAttribute('aria-current', 'page');
+            expect(await harness.isCurrent()).toBe(true);
+            expect(await harness.getText()).toBe('Rules');
+        });
+
+        it('should draw its current look', async () => {
+            const { harness } = await setupTest(LinkKind.Quiet, true);
+
+            expect(await readLook(harness)).toEqual(readCurrentLook());
+        });
+
+        it('should keep its current look on hover', async () => {
+            const { harness, link } = await setupTest(LinkKind.Quiet, true);
+
+            await userEvent.hover(link);
+            const look = await readLook(harness);
+            await userEvent.unhover(link);
+
+            expect(look).toEqual(readCurrentLook());
+        });
+
+        it('should keep its current look and draw the focus ring on keyboard focus', async () => {
+            const { harness, link } = await setupTest(LinkKind.Quiet, true);
+
+            await userEvent.tab();
+
+            await expect.element(link).toHaveFocus();
+            expect(await readLook(harness)).toEqual(readCurrentLook());
+            expect((await harness.getFocusRing()).style).toBe('solid');
+        });
+    });
+
+    it.each<LinkKind>([LinkKind.Inline, LinkKind.Standalone])(
+        'should keep the default look of the %s kind on the current page',
+        async (kind) => {
+            const { harness } = await setupTest(kind, true);
+
+            expect(await harness.isCurrent()).toBe(true);
+            expect(await readLook(harness)).toEqual(readLooks()[kind].default);
+        },
+    );
 
     it('should draw the inline kind by default', async () => {
         const { harness } = await setupTestEnvironment({ host: DefaultTestComponent, harness: LinkHarness });
