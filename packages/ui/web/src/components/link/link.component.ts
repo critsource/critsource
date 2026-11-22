@@ -4,7 +4,7 @@ import { IconArrowRightComponent } from '../icon';
 
 /**
  * A link to another page or site, drawn on the `<a>` it is placed on. Whoever places it adds `routerLink` or `href`,
- * so the link needs no router.
+ * so the link needs no router, and `aria-current="page"` on a quiet link to the current page.
  */
 @Component({
     selector: 'a[dma-link]',

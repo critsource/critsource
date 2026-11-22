@@ -55,3 +55,9 @@ dma-icon-arrow-right {
     color: var(--color-foreground-default);
     @include typography(link);
 }
+
+// The quiet link to the current page: bold in the default foreground color. It keeps that look on hover and focus.
+:host(.quiet[aria-current='page']) {
+    color: var(--color-foreground-default);
+    @include typography(body-strong);
+}

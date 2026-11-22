@@ -33,6 +33,11 @@ export class LinkHarness extends ComponentHarness {
         return (await (await this.host()).getCssValue('text-decoration-line')) === 'underline';
     }
 
+    /** Whether the link marks the current page, through `aria-current="page"`. */
+    public async isCurrent(): Promise<boolean> {
+        return (await (await this.host()).getAttribute('aria-current')) === 'page';
+    }
+
     /** The focus ring the link draws, whose style is `none` when it draws none. */
     public async getFocusRing(): Promise<LinkFocusRing> {
         const host = await this.host();
