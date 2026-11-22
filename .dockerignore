@@ -2,6 +2,7 @@
 # copy. Each Dockerfile reaches the daemon whether or not this file lists it.
 *
 !.docker/web/nginx.conf
+!.docker/web/csp.inc
 
 # The web image builds the app from source, so it needs the sources of the apps and packages. It keeps the manifest of
 # every workspace project, so the workspace matches the lockfile.

@@ -6,10 +6,11 @@ The end-to-end tests of the [web client](../../apps/web/README.md): [Playwright]
 
 The project tests what only the running app shows: what nginx serves, that the app boots, and what happens before it does. Each spec in [`src/`](src) covers one area of the app:
 
-| Spec                                 | Covers                                                                                                                         |
-|:-------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------|
-| [`app.spec.ts`](src/app.spec.ts)     | `/` shows its prerendered content without JavaScript and hydrates without errors, and any other path boots the app shell.      |
-| [`theme.spec.ts`](src/theme.spec.ts) | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System. |
+| Spec                                 | Covers                                                                                                                              |
+|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|
+| [`app.spec.ts`](src/app.spec.ts)     | `/` shows its prerendered content without JavaScript and hydrates without errors, and any other path boots the app shell.           |
+| [`theme.spec.ts`](src/theme.spec.ts) | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System.      |
+| [`csp.spec.ts`](src/csp.spec.ts)     | Every route loads with no violation of the report-only policy, with and without a saved theme, and each response has its own nonce. |
 
 Add a test to the spec of its area, or a new `src/<area>.spec.ts` for a new area. Test the behavior of a component or service in the unit tests of the project that holds it instead.
 

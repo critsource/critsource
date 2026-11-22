@@ -50,6 +50,22 @@ services:
         restart: unless-stopped
 ```
 
+## Content Security Policy
+
+nginx sends a `Content-Security-Policy-Report-Only` header with `index.html` and `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
+
+```text
+default-src 'self'; script-src 'self' 'nonce-<nonce>'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+```
+
+The nonce is the request ID of nginx, 32 random hex characters that are new for each response. The HTML holds `@CSP_NONCE@` where the nonce belongs, on the root element of the app and on its inline scripts and styles, and nginx writes the nonce of the header in its place. Cloudflare reads the nonce from the header to allow its bot check, which is why it cannot sit in a `<meta>` tag. The policy leaves out `'strict-dynamic'`, since the bot check loads from this origin, and allows inline styles, since Cloudflare adds a hidden link with a `style` attribute. nginx drops the `ETag` and `Last-Modified` of both files, so browsers fetch them in full on each visit.
+
+To change the policy, mount your own copy of [`csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) over `/etc/nginx/csp.inc`. Keep its two `sub_filter` lines, or the inline scripts lose their nonce:
+
+```bash
+docker run --rm -p 4200:4200 -v ./csp.inc:/etc/nginx/csp.inc:ro critsource/web
+```
+
 ## Health check
 
 The container answers `/healthz` with an empty `200`, and leaves the request out of its access log. The `HEALTHCHECK` of the image probes that path, so `docker ps` shows whether the container is `healthy`. Kubernetes ignores `HEALTHCHECK`, so point the probes of a deployment at `/healthz` on port 4200.
@@ -66,4 +82,4 @@ nginx serves the file with `Cache-Control: no-store`, so neither browsers nor pr
 
 ## Source
 
-The image is built from [`.docker/web/Dockerfile`](https://github.com/critsource/critsource/blob/main/.docker/web/Dockerfile), and [`.docker/web/nginx.conf`](https://github.com/critsource/critsource/blob/main/.docker/web/nginx.conf) configures nginx. The [README of the web app](https://github.com/critsource/critsource/blob/main/apps/web/README.md) explains how to build the image yourself, for example under another base path. Report problems in the [issues](https://github.com/critsource/critsource/issues) of the repository. The image is licensed under the [MIT License](https://github.com/critsource/critsource/blob/main/LICENSE).
+The image is built from [`.docker/web/Dockerfile`](https://github.com/critsource/critsource/blob/main/.docker/web/Dockerfile), and [`.docker/web/nginx.conf`](https://github.com/critsource/critsource/blob/main/.docker/web/nginx.conf) and [`.docker/web/csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) configure nginx. The [README of the web app](https://github.com/critsource/critsource/blob/main/apps/web/README.md) explains how to build the image yourself, for example under another base path. Report problems in the [issues](https://github.com/critsource/critsource/issues) of the repository. The image is licensed under the [MIT License](https://github.com/critsource/critsource/blob/main/LICENSE).
