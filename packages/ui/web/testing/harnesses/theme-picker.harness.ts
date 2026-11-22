@@ -11,6 +11,7 @@ export class ThemePickerHarness extends ComponentHarness {
     public static readonly hostSelector = 'fieldset[dma-theme-picker]';
 
     private readonly optionsLocator = this.locatorForAll(ThemeOptionHarness);
+    private readonly optionElementsLocator = this.locatorForAll('dma-theme-option');
 
     /** The options of the picker, in the order it shows them. */
     public async getOptions(): Promise<ThemeOptionHarness[]> {
@@ -62,5 +63,36 @@ export class ThemePickerHarness extends ComponentHarness {
         const { width, height } = await (await this.host()).getDimensions();
 
         return { width, height };
+    }
+
+    /** The width in pixels that the picker leaves for its options, inside its border and padding. */
+    public async getContentWidth(): Promise<number> {
+        const host = await this.host();
+        const [{ width }, ...edges] = await Promise.all([
+            host.getDimensions(),
+            ...['border-left-width', 'padding-left', 'padding-right', 'border-right-width'].map(
+                async (property) => await host.getCssValue(property),
+            ),
+        ]);
+
+        return width - edges.reduce((sum, edge) => sum + Number.parseFloat(edge), 0);
+    }
+
+    /** How far in pixels the last option runs past the end of the content of the picker, or 0 when it fits. */
+    public async getOverflow(): Promise<number> {
+        const host = await this.host();
+        const options = await this.optionElementsLocator();
+        const [{ left, width }, ...edges] = await Promise.all([
+            host.getDimensions(),
+            ...['padding-right', 'border-right-width'].map(async (property) => await host.getCssValue(property)),
+        ]);
+        const last = await options.at(-1)?.getDimensions();
+
+        if (!last) {
+            return 0;
+        }
+        const contentEnd = left + width - edges.reduce((sum, edge) => sum + Number.parseFloat(edge), 0);
+
+        return Math.max(0, last.left + last.width - contentEnd);
     }
 }

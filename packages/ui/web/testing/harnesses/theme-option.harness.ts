@@ -78,9 +78,12 @@ export class ThemeOptionHarness extends ComponentHarness {
         return { width, height };
     }
 
-    /** Whether the option shows its label, rather than its icon alone. */
+    /**
+     * Whether the option shows its label, rather than its icon alone. The icons display and a picker too narrow for its
+     * labels both hide the label by shrinking it to 1 px, so this reads its width instead of a class.
+     */
     public async isLabelShown(): Promise<boolean> {
-        return !(await (await this.labelLocator()).hasClass('cdk-visually-hidden'));
+        return (await (await this.labelLocator()).getDimensions()).width > 1;
     }
 
     /** The focus ring the option draws, whose style is `none` when it draws none. */

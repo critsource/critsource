@@ -224,6 +224,33 @@ describe('FooterComponent', () => {
         });
     });
 
+    describe.each([
+        { width: 280, labelsShown: false },
+        { width: 320, labelsShown: false },
+        { width: 360, labelsShown: true },
+    ])('at $width px', ({ width, labelsShown }) => {
+        const { innerWidth, innerHeight } = window;
+
+        beforeEach(async () => {
+            await page.viewport(width, 800);
+        });
+
+        afterEach(async () => {
+            await page.viewport(innerWidth, innerHeight);
+        });
+
+        it(`should show the Theme picker with ${labelsShown ? 'labels' : 'icons'}, inside its border`, async () => {
+            const { harness } = await setupTest();
+            const picker = await harness.getThemePicker();
+            const options = await picker.getOptions();
+
+            expect(await Promise.all(options.map((option) => option.isLabelShown()))).toEqual(
+                options.map(() => labelsShown),
+            );
+            expect(await picker.getOverflow()).toBeCloseTo(0, 0);
+        });
+    });
+
     describe('on wide screens', () => {
         const { innerWidth, innerHeight } = window;
 
