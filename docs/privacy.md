@@ -1,6 +1,6 @@
 # Privacy
 
-The Privacy page of the site tells visitors which personal data Critsource processes, who else sees it, and how long it's kept. This guide lists where each of those promises is enforced, so a change to the site or its server keeps the page true. The page's text lives on the Privacy page of the Desktop file, as [Design](design.md#where-the-designs-live) describes.
+The Privacy page of the site tells visitors which personal data Critsource processes, who else sees it, and how long it's kept. This guide lists where each of those promises is enforced, so a change to the site or its server keeps the page true. The page lives in [`privacy.page.html`](../packages/legal/web/src/privacy.page.html) of `legal-web`, and its design on the Privacy page of the Desktop file, as [Design](design.md#where-the-designs-live) describes.
 
 ## What the site processes
 

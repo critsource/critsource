@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@critsource/landing-web": "workspace:*",
+    "@critsource/legal-web": "workspace:*",
     "@critsource/ui-web": "workspace:*"
   },
   "peerDependencies": {

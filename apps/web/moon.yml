@@ -23,6 +23,7 @@ fileGroups:
     # group lists the files.
     domains:
         - "/packages/landing/web/src/**/*"
+        - "/packages/legal/web/src/**/*"
 
 tasks:
     start:

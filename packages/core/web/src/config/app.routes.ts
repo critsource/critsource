@@ -6,6 +6,7 @@ const notFoundRoute: Route = { component: NotFoundPage, title: 'Page not found -
 
 export const routes: Routes = [
     { path: '', loadChildren: async () => (await import('@critsource/landing-web')).landingRoutes },
+    { path: '', loadChildren: async () => (await import('@critsource/legal-web')).legalRoutes },
     { path: 'not-found', ...notFoundRoute },
     { path: '**', ...notFoundRoute },
 ];

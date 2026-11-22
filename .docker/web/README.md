@@ -1,6 +1,6 @@
 # Critsource web
 
-The web client of [Critsource](https://github.com/critsource/critsource). The landing page and the Not found page are prerendered at build time, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The landing page, the Privacy page, and the Not found page are prerendered at build time, so the image serves static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 
@@ -24,7 +24,7 @@ Run the newest release, and open the app at <http://localhost:4200>:
 docker run --rm -p 4200:4200 critsource/web
 ```
 
-The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and every other path that matches no file with status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates, so crawlers don't index a broken link as a page. A missing file with an extension, such as a bundle of an older release, gets a plain `404` without the page. nginx serves the prerendered HTML files, the Not found page included, with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
+The container serves the app on port 4200, under the path `/`. It answers `/` with the prerendered landing page, `index.html`, and `/privacy` with the prerendered Privacy page, `privacy/index.html`. Every other path that matches no file gets status `404` and the prerendered Not found page, `not-found/index.html`, which the app hydrates, so crawlers don't index a broken link as a page. A missing file with an extension, such as a bundle of an older release, gets a plain `404` without the page. nginx serves every prerendered HTML file, the Not found page included, with `Cache-Control: no-cache`, so browsers check for a new release on every visit.
 
 Under another base path, such as `/pr-42/` from the `BASE_HREF` build argument, the same holds for the paths under it. The Not found page serves only as that error page: a request for `/pr-42/not-found/` returns `404` with the page too.
 
@@ -73,13 +73,13 @@ docker run --rm -p 4200:4200 -v ./security-headers.inc:/etc/nginx/security-heade
 
 ## Content Security Policy
 
-nginx sends a `Content-Security-Policy-Report-Only` header with `index.html`, `index.csr.html`, and the Not found page. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
+nginx sends a `Content-Security-Policy-Report-Only` header with each prerendered page, the Not found page included, and with `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
 
 ```text
 default-src 'self'; script-src 'self' 'nonce-<nonce>'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 ```
 
-The nonce is the request ID of nginx, 32 random hex characters that are new for each response. The HTML holds `@CSP_NONCE@` where the nonce belongs, on the root element of the app and on its inline scripts and styles, and nginx writes the nonce of the header in its place. Cloudflare reads the nonce from the header to allow its bot check, which is why it cannot sit in a `<meta>` tag. The policy leaves out `'strict-dynamic'`, since the bot check loads from this origin, and allows inline styles, since Cloudflare adds a hidden link with a `style` attribute. nginx drops the `ETag` and `Last-Modified` of both files, so browsers fetch them in full on each visit.
+The nonce is the request ID of nginx, 32 random hex characters that are new for each response. The HTML holds `@CSP_NONCE@` where the nonce belongs, on the root element of the app and on its inline scripts and styles, and nginx writes the nonce of the header in its place. Cloudflare reads the nonce from the header to allow its bot check, which is why it cannot sit in a `<meta>` tag. The policy leaves out `'strict-dynamic'`, since the bot check loads from this origin, and allows inline styles, since Cloudflare adds a hidden link with a `style` attribute. nginx drops the `ETag` and `Last-Modified` of every HTML file, so browsers fetch them in full on each visit.
 
 To change the policy, mount your own copy of [`csp.inc`](https://github.com/critsource/critsource/blob/main/.docker/web/csp.inc) over `/etc/nginx/csp.inc`. Keep its two `sub_filter` lines, or the inline scripts lose their nonce:
 
