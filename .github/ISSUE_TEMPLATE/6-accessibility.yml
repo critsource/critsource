@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
 
 name: Accessibility barrier
-description: Report something in D&D Mapp that you can't use with your assistive technology, keyboard, or settings.
+description: Report something in Critsource that you can't use with your assistive technology, keyboard, or settings.
 type: Bug
 labels:
     - accessibility
@@ -9,7 +9,7 @@ body:
     - type: markdown
       attributes:
           value: >
-              Report a barrier that keeps you from using D&D Mapp, such as content your screen reader skips, a control
+              Report a barrier that keeps you from using Critsource, such as content your screen reader skips, a control
               you can't reach with a keyboard, or text you can't read at a high zoom level.
 
 

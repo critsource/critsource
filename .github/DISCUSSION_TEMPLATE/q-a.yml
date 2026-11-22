@@ -4,11 +4,11 @@ body:
     - type: markdown
       attributes:
           value: >
-              Ask anything about using, running, or contributing to D&D Mapp, including how its engine handles a rule of
-              the game. Rulings at your own table that have no tie to D&D Mapp belong in a D&D community instead.
+              Ask anything about using, running, or contributing to Critsource, including how its engine handles a rule of
+              the game. Rulings at your own table that have no tie to Critsource belong in a D&D community instead.
 
 
-              When D&D Mapp handles a rule differently from the rulebook, or something else is broken, open an issue
+              When Critsource handles a rule differently from the rulebook, or something else is broken, open an issue
               instead.
 
 
@@ -35,7 +35,7 @@ body:
       id: environment
       attributes:
           label: Environment
-          description: Where you run D&D Mapp, if your question depends on it.
+          description: Where you run Critsource, if your question depends on it.
           options:
               - Production (www.critsource.com)
               - Staging (staging.critsource.com)
@@ -47,7 +47,7 @@ body:
       id: area
       attributes:
           label: Area
-          description: The part of D&D Mapp your question is about, if any.
+          description: The part of Critsource your question is about, if any.
           options:
               - Web app
               - Docker image
