@@ -173,6 +173,47 @@
             "problemMatcher": "$tsc"
         },
         {
+            "label": "legal-web:test",
+            "type": "shell",
+            "command": "pnpm moon run legal-web:test",
+            "isBackground": true,
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "typescript",
+                "pattern": "$tsc",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": {
+                        "regexp": "\bRERUN\b"
+                    },
+                    "endsPattern": {
+                        "regexp": "(Waiting|Watching) for file changes"
+                    }
+                }
+            }
+        },
+        {
+            "label": "legal-web:test-ci",
+            "type": "shell",
+            "command": "pnpm moon run legal-web:test-ci",
+            "problemMatcher": []
+        },
+        {
+            "label": "legal-web:lint",
+            "type": "shell",
+            "command": "pnpm moon run legal-web:lint",
+            "problemMatcher": "$eslint-stylish"
+        },
+        {
+            "label": "legal-web:typecheck",
+            "type": "shell",
+            "command": "pnpm moon run legal-web:typecheck",
+            "problemMatcher": "$tsc"
+        },
+        {
             "label": "web-e2e:e2e",
             "type": "shell",
             "command": "pnpm moon run web-e2e:e2e",

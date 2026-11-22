@@ -8,6 +8,8 @@
             "@critsource/design-tokens/breakpoints": ["./packages/design-tokens/src/breakpoints.ts"],
             "@critsource/landing-web": ["./packages/landing/web/src/index.ts"],
             "@critsource/landing-web/testing": ["./packages/landing/web/testing/index.ts"],
+            "@critsource/legal-web": ["./packages/legal/web/src/index.ts"],
+            "@critsource/legal-web/testing": ["./packages/legal/web/testing/index.ts"],
             "@critsource/testing-node/file-system": ["./packages/testing-node/src/file-system/index.ts"],
             "@critsource/testing-node/git": ["./packages/testing-node/src/git/index.ts"],
             "@critsource/ui-web": ["./packages/ui/web/src/index.ts"],
