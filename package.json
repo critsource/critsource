@@ -1,5 +1,5 @@
 {
-  "name": "dnd-mapp",
+  "name": "critsource",
   "description": "The monorepo for D&D Mapp: all packages and applications of the project.",
   "private": true,
   "license": "MIT",
