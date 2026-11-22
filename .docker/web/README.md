@@ -1,6 +1,6 @@
-# D&D Mapp web
+# Critsource web
 
-The web client of [D&D Mapp](https://github.com/critsource/critsource). The app renders in the browser only, so the image serves its static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
+The web client of [Critsource](https://github.com/critsource/critsource). The app renders in the browser only, so the image serves its static files with [nginx](https://nginx.org) and needs no other service. Each tag holds an image for `linux/amd64` and `linux/arm64`.
 
 ## Tags
 

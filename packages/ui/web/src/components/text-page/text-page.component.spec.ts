@@ -19,7 +19,7 @@ describe('TextPageComponent', () => {
                         <p>Last updated <time datetime="2026-11-11">November 11, 2026</time></p>
                     </header>
                     <h2>Who is responsible</h2>
-                    <p>D&amp;D Mapp is an open-source project, run by its maintainers.</p>
+                    <p>Critsource is an open-source project, run by its maintainers.</p>
                     <p>Questions about your data go to the support address.</p>
                     <h3>Contact</h3>
                     <p>Write to the support address.</p>
@@ -88,7 +88,7 @@ describe('TextPageComponent', () => {
             <div class="container" [style.width.px]="width()">
                 <article dma-text-page>
                     <h2 id="who-is-responsible">Who is responsible</h2>
-                    <p>D&amp;D Mapp is an open-source project, run by its maintainers.</p>
+                    <p>Critsource is an open-source project, run by its maintainers.</p>
                     @if (summary()) {
                         <section dma-summary>
                             <h2 dma-summary-title>In short</h2>
@@ -138,7 +138,7 @@ describe('TextPageComponent', () => {
                         <li><a dma-on-this-page-link href="#who-is-responsible">Who is responsible</a></li>
                     </nav>
                     <h2 id="who-is-responsible">Who is responsible</h2>
-                    <p class="long">D&amp;D Mapp is an open-source project, run by its maintainers.</p>
+                    <p class="long">Critsource is an open-source project, run by its maintainers.</p>
                 </article>
             </div>
         `,

@@ -167,7 +167,7 @@ describe('MobileMenuComponent', () => {
 
         // The Close button opens where the click on the Menu button left the pointer, so the pointer moves to the link
         // home, which draws no hover state, before the test reads the default look.
-        await userEvent.hover(page.getByRole('dialog').getByRole('link', { name: 'D&D Mapp', exact: true }));
+        await userEvent.hover(page.getByRole('dialog').getByRole('link', { name: 'Critsource', exact: true }));
 
         expect((await button.getText()).trim()).toBe('Close');
         expect(icons).toHaveLength(1);

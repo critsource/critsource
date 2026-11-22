@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { DEFAULT_LOGO_KIND, DEFAULT_LOGO_SIZE, logoKindAttr, logoSizeAttr } from './logo.types';
 
 /**
- * The D&D Mapp logo. It names itself "D&D Mapp" to assistive technology in every variant, so a link around it takes
+ * The Critsource logo. It names itself "Critsource" to assistive technology in every variant, so a link around it takes
  * that name. The link home stays with whoever places the logo.
  */
 @Component({
@@ -11,7 +11,7 @@ import { DEFAULT_LOGO_KIND, DEFAULT_LOGO_SIZE, logoKindAttr, logoSizeAttr } from
     styleUrl: './logo.component.scss',
     host: {
         'role': 'img',
-        'aria-label': 'D&D Mapp',
+        'aria-label': 'Critsource',
         '[class.small]': "size() === 'small'",
     },
 })

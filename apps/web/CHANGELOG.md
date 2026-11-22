@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- The app is now called Critsource instead of D&D Mapp, and a red d20 replaces the M as its logo, favicon, home screen icon, and link preview. The old addresses on `dndmapp.nl.eu.org` redirect to the same pages on `critsource.com` until February 22, 2027, so update your bookmarks and links before then.
+
 ## [0.3.0] - 2026-11-21
 
 ### Changed

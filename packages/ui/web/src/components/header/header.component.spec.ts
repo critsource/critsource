@@ -57,7 +57,7 @@ describe('HeaderComponent', () => {
         const { harness } = await setupTest();
 
         expect(await harness.getLogo()).not.toBeNull();
-        await expect.element(page.getByRole('link', { name: 'D&D Mapp', exact: true })).toBeInTheDocument();
+        await expect.element(page.getByRole('link', { name: 'Critsource', exact: true })).toBeInTheDocument();
     });
 
     it('should draw no underline under the logo of the link home', async () => {
@@ -93,7 +93,7 @@ describe('HeaderComponent', () => {
 
         await userEvent.tab();
 
-        await expect.element(page.getByRole('link', { name: 'D&D Mapp', exact: true })).toHaveFocus();
+        await expect.element(page.getByRole('link', { name: 'Critsource', exact: true })).toHaveFocus();
         expect(await harness.getHomeFocusRing()).toEqual({
             style: 'solid',
             color: readColorToken('--color-focus-ring'),

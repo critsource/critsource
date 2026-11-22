@@ -91,9 +91,9 @@ target "web-gha" {
 function "web_labels" {
     params = []
     result = {
-        "maintainer"                           = "D&D Mapp"
-        "org.opencontainers.image.title"       = "D&D Mapp web"
-        "org.opencontainers.image.description" = "The web client of D&D Mapp."
+        "maintainer"                           = "Critsource"
+        "org.opencontainers.image.title"       = "Critsource web"
+        "org.opencontainers.image.description" = "The web client of Critsource."
         "org.opencontainers.image.licenses"    = "MIT"
         "org.opencontainers.image.source"      = "https://github.com/critsource/critsource"
         "org.opencontainers.image.url"         = "https://github.com/critsource/critsource"

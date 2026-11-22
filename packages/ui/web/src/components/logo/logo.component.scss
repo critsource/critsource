@@ -8,7 +8,7 @@
     gap: var(--space-8);
 }
 
-// The mark keeps a square box, as in Penpot, and the hexagon centers in it.
+// The mark keeps a square box, as in Penpot, and the die centers in it.
 .mark {
     flex-shrink: 0;
     width: 2.5rem;
@@ -20,15 +20,22 @@
     }
 }
 
-// The mark is brand art, so it takes the brand colors in both color schemes, as the mark in Penpot does.
-.border,
-.silhouette {
-    fill: var(--color-brand-black);
+// The mark is brand art, so it keeps the colors of the mark in Penpot in both color schemes. The faces carry their own
+// shades of red, and the edges and cracks take the brand black, round at their ends like the strokes in Penpot.
+.edges,
+.cracks {
+    fill: none;
+    stroke: var(--color-brand-black);
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-.band,
-.faces {
-    fill: var(--color-brand-red);
+.edges {
+    stroke-width: 0.52;
+}
+
+.cracks {
+    stroke-width: 0.3;
 }
 
 .wordmark {
