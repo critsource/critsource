@@ -47,6 +47,10 @@ Below the breakpoint, every part stacks in one column, with the columns 32 px ap
 
 <Canvas of={FooterStories.Mobile} story={{ inline: false, height: '68rem' }} />
 
+The Theme picker shows its labels while they fit. When its width inside the border drops below 17.5rem (280 px), the options show their icons alone and keep their labels for assistive technology, as the Theme picker describes. At this width, that happens in a viewport narrower than 328 px:
+
+<Canvas of={FooterStories.Narrow} story={{ inline: false, height: '70rem' }} />
+
 ## Focus
 
 The footer takes no focus itself. Its links draw their own hover and focus states, as the docs page of Link shows, and so do the options of the Theme picker. Penpot draws the two URLs of the attribution as plain text; the footer underlines them, so color is not the only cue that they are links, and draws the focus ring of Link around them.

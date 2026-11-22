@@ -59,3 +59,16 @@ export const Desktop: Story = {};
 export const Mobile: Story = {
     globals: { viewport: { value: 'mobile1', isRotated: false } },
 };
+
+/**
+ * The Theme picker at 280 px, narrower than its labels need: its options show the icons alone, so they stay inside its
+ * border. The docs page shows the story in an iframe of that width.
+ */
+export const Narrow: Story = {
+    globals: { viewport: { value: 'narrow', isRotated: false } },
+    parameters: {
+        viewport: {
+            options: { narrow: { name: '280 px', styles: { width: '280px', height: '640px' }, type: 'mobile' } },
+        },
+    },
+};

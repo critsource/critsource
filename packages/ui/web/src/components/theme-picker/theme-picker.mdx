@@ -47,6 +47,19 @@ Each picker gives its radio inputs a name of its own, so a page can hold more th
 
 <Canvas of={ThemePickerStories.IconsFocus} />
 
+### Narrow containers
+
+Where a layout stretches the picker across its parent, the labels can run past its border on a narrow screen. A picker that fills its parent therefore switches to the icons display by itself when its width inside the border drops below 17.5rem (280 px), the 274 px that the three options with labels need, rounded up. The options keep their labels for assistive technology, and the `display` input stays as it is.
+
+The picker always names itself the container `dma-theme-picker`, but a size container ignores the width of its content, so the placement opts in with `container-type: inline-size` next to the rules that stretch the picker. Footer does it below the desktop breakpoint, and Mobile menu always. A picker that sizes to its content, as in Header and in Footer from the desktop breakpoint up, is no container and keeps the `display` it has. A page that stretches a picker itself does the same:
+
+```scss
+.settings > [dma-theme-picker] {
+    display: flex;
+    container-type: inline-size;
+}
+```
+
 ## Focus
 
 Tab moves focus to the selected option, and the arrow keys move the choice to the next or previous option, as in any group of radio inputs. The option with focus draws the focus ring outside itself, and keeps the look of its state.
@@ -59,4 +72,4 @@ The picker is 44 px tall, the minimum target size, and each option inside it 36 
 
 ## Testing
 
-`ThemePickerHarness` from `@critsource/ui-web/testing` reads a picker in a test: its themes, its selected theme, the names of its radio inputs, its look and size, its options, and the option of a theme. `ThemeOptionHarness` reads each option: its theme, whether it is checked, the name of its radio input, and its look, size, icon size, label, and focus ring. `ThemeOptionHarness.with({ theme })` finds the option of a theme.
+`ThemePickerHarness` from `@critsource/ui-web/testing` reads a picker in a test: its themes, its selected theme, the names of its radio inputs, its look and size, the width it leaves inside its border, how far its last option runs past that width, its options, and the option of a theme. `ThemeOptionHarness` reads each option: its theme, whether it is checked, the name of its radio input, and its look, size, icon size, label, and focus ring. `ThemeOptionHarness.with({ theme })` finds the option of a theme.

@@ -97,9 +97,11 @@ $host: 'dialog[dma-mobile-menu]';
     @include typography(caps);
 }
 
-// The Theme picker fills the width of the body, and its options share it equally, as in Footer.
+// The Theme picker fills the width of the body, and its options share it equally, as in Footer. It is a size container,
+// so its options show the icons alone where the labels no longer fit.
 #{$host} > .body > .theme > [dma-theme-picker] {
     display: flex;
+    container-type: inline-size;
 }
 
 #{$host} > .body > .theme > [dma-theme-picker] > dma-theme-option {

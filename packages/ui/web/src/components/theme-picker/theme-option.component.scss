@@ -44,6 +44,31 @@
     padding-inline: 0;
 }
 
+// Where the picker is a size container narrower than its labels need, the option draws as in the icons display, and the
+// label stays in the page for assistive technology. The 17.5rem is the 274 px that the three options with labels need,
+// rounded up, and the spec of the picker checks that they fit in it. The box takes the width of its option, so a picker
+// that stretches its options keeps the selected state around the whole option, and 36 px at least, so the icon has room.
+@container dma-theme-picker (inline-size < 17.5rem) {
+    .box {
+        min-inline-size: var(--option-size);
+        padding-inline: 0;
+    }
+
+    .label {
+        position: absolute;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        clip: rect(0 0 0 0);
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
 // The icon draws smaller than the 24 px of the Icon component, as in Penpot, and takes the color of the option.
 dma-icon-monitor,
 dma-icon-sun,

@@ -93,9 +93,11 @@ $host: 'footer[dma-footer]';
     outline-offset: var(--focus-offset);
 }
 
-// Below the desktop breakpoint, the Theme picker fills the width of the footer, and its options share it equally.
+// Below the desktop breakpoint, the Theme picker fills the width of the footer, and its options share it equally. It is a
+// size container there, so its options show the icons alone where the labels no longer fit.
 #{$host} > .bottom > [dma-theme-picker] {
     display: flex;
+    container-type: inline-size;
 }
 
 #{$host} > .bottom > [dma-theme-picker] > dma-theme-option {
@@ -122,9 +124,11 @@ $host: 'footer[dma-footer]';
         flex: 1 1 auto;
     }
 
+    // The picker sizes to its options, which always fit, so it is no size container.
     #{$host} > .bottom > [dma-theme-picker] {
         display: inline-flex;
         flex: none;
+        container-type: normal;
     }
 
     #{$host} > .bottom > [dma-theme-picker] > dma-theme-option {

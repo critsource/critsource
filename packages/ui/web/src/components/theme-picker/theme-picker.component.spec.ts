@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { page, userEvent } from 'vitest/browser';
 import { ThemePickerComponent } from './theme-picker.component';
@@ -50,6 +50,20 @@ describe('ThemePickerComponent', () => {
         imports: [ThemePickerComponent],
     })
     class TwoPickersTestComponent {}
+
+    /** Brings the body font along, since the setup leaves fonts.css out and the labels set in the wider fallback font. */
+    @Component({
+        template: `<div class="frame"><fieldset dma-theme-picker></fieldset></div>`,
+        styles: [
+            FRAME,
+            `
+                @import '@critsource/design-tokens/fonts.css';
+            `,
+        ],
+        encapsulation: ViewEncapsulation.None,
+        imports: [ThemePickerComponent],
+    })
+    class FontsTestComponent {}
 
     interface SetupOptions {
         display?: ThemePickerDisplay;
@@ -194,6 +208,20 @@ describe('ThemePickerComponent', () => {
             });
             expect((await harness.getSize()).height).toBe(44);
         });
+    });
+
+    it('should fit its labels in the 17.5rem where a picker that fills its parent switches to the icons', async () => {
+        const { harness } = await setupTestEnvironment({
+            host: FontsTestComponent,
+            harness: ThemePickerHarness,
+            providers: [provideBrowserStorage(new InMemoryStorage())],
+        });
+
+        await document.fonts.load('600 15px "Source Sans 3"', 'System Light Dark');
+        TestBed.tick();
+        const threshold = 17.5 * Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+        expect(await harness.getContentWidth()).toBeLessThanOrEqual(threshold);
     });
 
     it('should show the labels display by default', async () => {

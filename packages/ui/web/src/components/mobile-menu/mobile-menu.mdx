@@ -28,6 +28,10 @@ A template reference points at the component rather than the `<dialog>`, so the 
 
 The menu places each child by its selector: an `a[dma-nav-link]` in its nav, an `a[dma-button]` after the nav, and anything else, the link home, at the start of its bar. It draws the Close button and the Theme picker itself, since every page shows them the same. Below the nav, the GitHub button and the Theme picker fill the width of the menu, and the options of the picker share it equally.
 
+The Theme picker shows its labels while they fit. When its width inside the border drops below 17.5rem (280 px), which a viewport narrower than 328 px does, the options show their icons alone and keep their labels for assistive technology, as the Theme picker describes:
+
+<Canvas of={MobileMenuStories.OpenNarrow} story={{ inline: false, height: '640px' }} />
+
 Press Menu to open the menu below Header, and Close or Escape to close it:
 
 <Canvas of={MobileMenuStories.WithHeader} story={{ inline: false, height: '812px' }} />
