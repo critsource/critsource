@@ -18,6 +18,11 @@ fileGroups:
         - "public/**/*"
         - "angular.json"
         - "scripts/**/*"
+    # The sources of the domain modules that the router of core-web lazy-loads, which the build compiles and
+    # prerenders. moon takes the file groups of direct dependencies only, and the app depends on core-web, so the
+    # group lists the files.
+    domains:
+        - "/packages/landing/web/src/**/*"
 
 tasks:
     start:
@@ -30,9 +35,7 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
-            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
-            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
-            - "/packages/landing/web/src/**/*"
+            - "@group(domains)"
             - project: "design-tokens"
               group: "css"
 
@@ -43,9 +46,7 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
-            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
-            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
-            - "/packages/landing/web/src/**/*"
+            - "@group(domains)"
             - project: "design-tokens"
               group: "css"
         outputs:
@@ -74,9 +75,7 @@ tasks:
             - "@group(configs)"
             - project: "core-web"
               group: "sources"
-            # The router of core-web lazy-loads landing-web, which the build compiles and prerenders at /. moon takes the
-            # file groups of direct dependencies only, and the app depends on core-web, so the inputs list the files.
-            - "/packages/landing/web/src/**/*"
+            - "@group(domains)"
             - project: "design-tokens"
               group: "css"
             - "/.dockerignore"
