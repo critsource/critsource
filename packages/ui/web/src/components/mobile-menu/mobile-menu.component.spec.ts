@@ -247,6 +247,25 @@ describe('MobileMenuComponent', () => {
         }
     });
 
+    it.each([
+        { width: 280, labelsShown: false },
+        { width: 320, labelsShown: false },
+        { width: 360, labelsShown: true },
+    ])(
+        'should show the Theme picker at $width px with the labels shown: $labelsShown, inside its border',
+        async ({ width, labelsShown }) => {
+            await page.viewport(width, 812);
+            const { harness } = await setupOpenTest();
+            const picker = await harness.getThemePicker();
+            const options = await picker.getOptions();
+
+            expect(await Promise.all(options.map((option) => option.isLabelShown()))).toEqual(
+                options.map(() => labelsShown),
+            );
+            expect(await picker.getOverflow()).toBeCloseTo(0, 0);
+        },
+    );
+
     it('should pad the body 24 px below the Theme picker', async () => {
         const { harness } = await setupOpenTest();
         const [body, picker] = await Promise.all([harness.getBodyBox('body'), harness.getBodyBox('themePicker')]);
