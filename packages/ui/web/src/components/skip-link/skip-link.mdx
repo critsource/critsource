@@ -29,11 +29,21 @@ The skip link stays hidden until it gets focus. It hides from sight only, so it 
 
 <Canvas of={SkipLinkStories.Hidden} />
 
-On focus, the skip link pins to the top left of the viewport, 16 px from both edges and above the header. It draws the colors of the primary Button and the focus ring, and hides again once it loses focus. Penpot draws this state only, since the link shows only while it has focus; the story at the top of this page shows it.
+On focus, the skip link pins to the top left of the viewport, 16 px from both edges and above the header. It draws the colors of the primary Button and the focus ring, and hides again once it loses focus. Penpot draws the link in this state only, since the link shows only while it has focus; the story at the top of this page shows it.
 
 Press Tab in the story below to show the skip link, then Enter to move focus to the main content:
 
 <Canvas of={SkipLinkStories.OnPage} />
+
+## Target
+
+A target that can't take focus by itself, such as `<main>`, draws the focus ring while the skip link has moved focus to it, as the Target board in Penpot shows. Without a ring, nothing would show where focus went.
+
+<Canvas of={SkipLinkStories.Target} />
+
+The ring has the color and width of the focus ring of the other components, but lies inside the edge of the target rather than outside it. A `<main>` as wide as the viewport would push an outer ring off-screen at the sides, and a parent with `overflow: hidden` would clip it.
+
+The skip link marks the target with `data-dma-skip-target` until the target loses focus, and ships the rule that draws the ring, so a page needs no style of its own. The rule matches `:focus` rather than `:focus-visible`, since browsers apply `:focus-visible` to programmatic focus by heuristics that differ between them. A target with a `tabindex` of its own stays unmarked and keeps its own focus style.
 
 ## Accessibility
 
@@ -41,4 +51,4 @@ The projected content names the skip link to assistive technology. Write a label
 
 ## Testing
 
-`SkipLinkHarness` from `@critsource/ui-web/testing` reads a skip link in a test: its text, whether it shows, its colors and font weight, its place, height, padding, and corners, and its focus ring.
+`SkipLinkHarness` from `@critsource/ui-web/testing` reads a skip link in a test: its text, whether it shows, its colors and font weight, its place, height, padding, and corners, and the focus rings of the link and its target.
