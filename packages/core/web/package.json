@@ -15,6 +15,9 @@
     "./server": "./server/index.ts",
     "./testing": "./testing/index.ts"
   },
+  "dependencies": {
+    "@critsource/landing-web": "workspace:*"
+  },
   "peerDependencies": {
     "@angular/cdk": "catalog:angular",
     "@angular/common": "catalog:angular",

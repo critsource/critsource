@@ -34,7 +34,7 @@ moon lets a project depend on projects of a lower row in this table, and on proj
 ## Dependency rules
 
 - An app depends on the `core` and the `ui` module of its platform only.
-- A module may depend on the `core` and the `ui` module of its platform, on the `domain` package of its own domain, and on the `domain` package of `core`.
+- A module may depend on the `ui` module of its platform, on the `domain` package of its own domain, and on the `domain` package of `core`. A domain module never depends on the `core` module of its platform, which declares each domain module that its router lazy-loads, so the dependency would form a cycle, which moon refuses.
 - The `ui` module of a platform, such as `ui-web`, depends on packages for the whole workspace only. That keeps the UI components below `core` and the domain modules, so none of them forms a cycle with it, as [ADR 0001](adr/0001-ui-and-token-packages.md) records.
 - A `domain` package may depend on other `domain` packages only.
 - Domain modules never depend on the platform packages of another domain. They meet through the router of `core`, which lazy-loads them with `import()`, or through `domain` packages.

@@ -8,10 +8,10 @@ The shell of the web client that its domain modules build on, as [Architecture](
 
 - [`src/config/app.config.ts`](src/config/app.config.ts) holds `appConfig`, which provides the router with the routes, and hydration with event replay.
 - [`server/server.config.ts`](server/server.config.ts) holds `serverConfig`, which adds server rendering to `appConfig`, as [Prerendering](#prerendering) describes.
-- [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes, which are empty until the first domain module lands.
-- `RootComponent`, in [`src/root/`](src/root), is a placeholder until the shell gets its layout.
+- [`src/config/app.routes.ts`](src/config/app.routes.ts) holds the routes. `''` loads `landingRoutes` of [`landing-web`](../../landing/web/README.md), the landing page.
+- `RootComponent`, in [`src/root/`](src/root), renders the page of the current route in a `<router-outlet />`, until the shell gets its layout.
 
-A domain module adds a route to `app.routes.ts` that loads it with `import()`, such as through `loadChildren`, so the app downloads the module only when a reader opens the route. The domain modules meet only through this router, as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. ESLint lets `core-web` import a domain module of the web platform through `import()` only, and fails on the import unless [`package.json`](package.json) declares the module.
+A domain module adds a route to `app.routes.ts` that loads it with `import()`, such as through `loadChildren`, so the app downloads the module only when a reader opens the route. The domain modules meet only through this router, as the [dependency rules](../../../docs/architecture.md#dependency-rules) require. ESLint lets `core-web` import a domain module of the web platform through `import()` only, and fails on the import unless [`package.json`](package.json) declares the module in its `dependencies`. The `lint` task in [`moon.yml`](moon.yml) lists the sources of each such module as an input, since the type-aware rules read their types, and the `domains` file group of [`web`](../../../apps/web/moon.yml) lists them for its `build`, `start`, and `image` tasks, so moon reruns them when a module changes.
 
 ## Using the package
 
@@ -33,10 +33,10 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 `serverConfig` merges `appConfig` with `provideServerRendering` of [`@angular/ssr`](https://angular.dev/guide/ssr) and the server routes in [`server/server.routes.ts`](server/server.routes.ts), which pick how each route renders:
 
-| Path | Render mode | Output                                                                    |
-|:-----|:------------|:--------------------------------------------------------------------------|
-| `''` | `Prerender` | `web:build` renders the page into `index.html`, which the app hydrates.   |
-| `**` | `Client`    | The page renders in the browser, from the app shell in `index.csr.html`.  |
+| Path | Render mode | Output                                                                          |
+|:-----|:------------|:--------------------------------------------------------------------------------|
+| `''` | `Prerender` | `web:build` renders the landing page into `index.html`, which the app hydrates. |
+| `**` | `Client`    | The page renders in the browser, from the app shell in `index.csr.html`.        |
 
 `@angular/ssr` reaches the app through the `server` entry point only, so the bundle of the browser never imports it. A component on a prerendered route renders in Node during the build, so it follows the rules of [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 

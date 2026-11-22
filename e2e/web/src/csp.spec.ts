@@ -24,9 +24,10 @@ async function violationsOn(page: Page, path: string): Promise<string[]> {
 
     await page.goto(path);
 
-    // The app has booted once the prerendered page hydrates, or the app shell fills its root element.
+    // The app has booted once Angular stamps its version on the root element, and the prerendered page has hydrated
+    // once the root element drops its hydration marker.
     const root = page.locator('dma-root');
-    await expect(root).toHaveText('root works!');
+    await expect(root).toHaveAttribute('ng-version');
     await expect(root).not.toHaveAttribute('ngh');
     return violations;
 }

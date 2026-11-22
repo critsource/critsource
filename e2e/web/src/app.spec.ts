@@ -8,7 +8,7 @@ test.describe('app', () => {
             await page.goto('/');
 
             await expect(page).toHaveTitle('Critsource');
-            await expect(page.locator('dma-root')).toHaveText('root works!');
+            await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
         });
     });
 
@@ -27,6 +27,7 @@ test.describe('app', () => {
         const root = page.locator('dma-root');
         await expect(root).toHaveAttribute('ng-server-context', 'ssg');
         await expect(root).not.toHaveAttribute('ngh');
+        await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
         expect(errors).toEqual([]);
     });
 
@@ -36,6 +37,7 @@ test.describe('app', () => {
         await expect(page).toHaveTitle('Critsource');
         // The app shell holds an empty root element, so the content comes from the app once it boots.
         expect(await response?.text()).toMatch(/<dma-root [^>]*><\/dma-root>/);
-        await expect(page.locator('dma-root')).toHaveText('root works!');
+        // No route matches the path until the Not found page lands, so the shell boots without a page.
+        await expect(page.locator('dma-root')).toHaveAttribute('ng-version');
     });
 });
