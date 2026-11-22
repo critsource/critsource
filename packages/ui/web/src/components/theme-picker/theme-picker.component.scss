@@ -4,8 +4,11 @@
 @include cdk.a11y-visually-hidden;
 
 // The picker draws its border inside its 44 px height, as the inner stroke in Penpot does, so its padding gives up the
-// width of the border.
+// width of the border. It names itself as a container, so its options can switch to the icons when the labels no longer
+// fit. The container only takes effect where a placement also sets `container-type`: a size container ignores the width
+// of its content, so only a picker that a layout stretches can be one.
 :host {
+    container-name: dma-theme-picker;
     position: relative;
     display: inline-flex;
     align-items: center;
