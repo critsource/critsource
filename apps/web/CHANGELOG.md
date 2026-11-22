@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- The image sends a `Content-Security-Policy-Report-Only` header with the app's HTML, so browsers report in their console each script or style that neither the app nor Cloudflare's bot check loads, and block nothing. Mount your own copy of `/etc/nginx/csp.inc` to change the policy. A later release enforces it.
+
 ### Changed
 
 - The landing page at `/` now arrives with its content in the HTML, so it shows before the app loads, and search engines and link previews that run no JavaScript see it too.

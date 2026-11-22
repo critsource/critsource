@@ -36,7 +36,7 @@ test.describe('app', () => {
 
         await expect(page).toHaveTitle('Critsource');
         // The app shell holds an empty root element, so the content comes from the app once it boots.
-        expect(await response?.text()).toContain('<dma-root></dma-root>');
+        expect(await response?.text()).toMatch(/<dma-root [^>]*><\/dma-root>/);
         // No route matches the path until the Not found page lands, so the shell boots without a page.
         await expect(page.locator('dma-root')).toHaveAttribute('ng-version');
     });

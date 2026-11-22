@@ -9,7 +9,7 @@
             flash of Dark while the app boots. ThemeService in @critsource/ui-web owns the key and the values, and
             boot-script.spec.ts there keeps this script in step with it.
         -->
-        <script>
+        <script nonce="@CSP_NONCE@">
             try {
                 const theme = localStorage.getItem('dma-theme');
 
@@ -51,6 +51,6 @@
         <link rel="apple-touch-icon" href="icon-180.png" sizes="180x180" />
     </head>
     <body>
-        <dma-root></dma-root>
+        <dma-root ngCspNonce="@CSP_NONCE@"></dma-root>
     </body>
 </html>

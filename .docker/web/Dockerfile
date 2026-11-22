@@ -67,6 +67,10 @@ ARG BASE_HREF=/
 
 COPY .docker/web/nginx.conf /etc/nginx/conf.d/default.conf
 
+# The Content Security Policy that nginx.conf includes in its HTML locations. It sits outside conf.d, which the main
+# configuration includes in full, since a location holds it.
+COPY .docker/web/csp.inc /etc/nginx/csp.inc
+
 RUN sed -i "s|@BASE_HREF@|${BASE_HREF}|g" /etc/nginx/conf.d/default.conf \
     && ! grep -q '@BASE_HREF@' /etc/nginx/conf.d/default.conf
 
