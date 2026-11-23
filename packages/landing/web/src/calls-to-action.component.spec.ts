@@ -47,7 +47,7 @@ describe('CallsToActionComponent', () => {
         const buttons = await harness.getButtons();
 
         expect(await Promise.all(buttons.map((button) => button.getText()))).toEqual([
-            'Star D&D Mapp on GitHub',
+            'Star Critsource on GitHub',
             'Share an idea in Discussions',
         ]);
     });
@@ -76,7 +76,7 @@ describe('CallsToActionComponent', () => {
         await setupTest();
 
         await expect
-            .element(page.getByRole('link', { name: 'Star D&D Mapp on GitHub', exact: true }))
+            .element(page.getByRole('link', { name: 'Star Critsource on GitHub', exact: true }))
             .toHaveAttribute('href', 'https://github.com/critsource/critsource');
     });
 

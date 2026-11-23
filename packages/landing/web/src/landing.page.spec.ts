@@ -63,7 +63,7 @@ describe('LandingPage', () => {
         const buttons = await (await harness.getCallsToAction()).getButtons();
 
         expect(await Promise.all(buttons.map((button) => button.getText()))).toEqual([
-            'Star D&D Mapp on GitHub',
+            'Star Critsource on GitHub',
             'Share an idea in Discussions',
         ]);
     });

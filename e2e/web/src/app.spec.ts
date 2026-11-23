@@ -17,7 +17,7 @@ async function expectHero(page: Page) {
     await expect(landing.getByRole('heading', { level: 1 })).toHaveText(
         'Prepare, play, and remember your 5e campaign in one open-source app',
     );
-    await expect(landing.getByRole('link', { name: 'Star D&D Mapp on GitHub' })).toBeVisible();
+    await expect(landing.getByRole('link', { name: 'Star Critsource on GitHub' })).toBeVisible();
     await expect(landing.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
 }
 
