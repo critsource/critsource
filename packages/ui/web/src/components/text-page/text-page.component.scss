@@ -81,8 +81,10 @@ $nav: 'nav[dma-on-this-page]';
 }
 
 // An h2 draws the h3 typography, since the h2 typography is too heavy under the title of the page in long text, and
-// an h3 draws the title typography.
+// an h3 draws the title typography. A jump to a heading, such as from On this page, stops it space.24 below the top of
+// the viewport, where the nav sticks, rather than flush against it.
 #{$host} > .prose > :is(h2, h3) {
+    scroll-margin-block-start: var(--space-24);
     color: var(--color-foreground-default);
 }
 
