@@ -4,11 +4,13 @@ $narrow-bar-width: 16.5rem;
 
 // Where the size container `$container` is narrower than `$narrow-bar-width`, the button `$button` draws as a square
 // around its icon, and its `.label` stays in the page for assistive technology, as the Theme picker does with its
-// options.
+// options. The width keeps the square where a parent takes the width of its content, as the end group of Header does,
+// since that parent reads the width of the button rather than its flex basis.
 @mixin narrow-bar-button($container, $button) {
     @container #{$container} (inline-size < #{$narrow-bar-width}) {
         #{$button} {
             flex-basis: var(--size-target-min);
+            inline-size: var(--size-target-min);
             padding-inline: 0;
         }
 

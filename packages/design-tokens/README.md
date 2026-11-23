@@ -79,7 +79,7 @@ h1 {
 }
 ```
 
-`scss/narrow-bar.scss` holds `$narrow-bar-width` and the `narrow-bar-button($container, $button)` mixin, so the bars of the UI library switch their buttons at one width. Where the size container named `$container` has less than `$narrow-bar-width` inside its padding, the mixin draws `$button` as a square around its icon, and keeps its `.label` in the page for assistive technology. The bar of Mobile menu uses it:
+`scss/narrow-bar.scss` holds `$narrow-bar-width` and the `narrow-bar-button($container, $button)` mixin, so the bars of the UI library switch their buttons at one width. Where the size container named `$container` has less than `$narrow-bar-width` inside its padding, the mixin draws `$button` as a square around its icon, and keeps its `.label` in the page for assistive technology. Header and the bar of Mobile menu use it, as Mobile menu does here:
 
 ```scss
 @use '@critsource/design-tokens/narrow-bar.scss' as *;

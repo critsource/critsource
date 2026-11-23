@@ -39,3 +39,16 @@ export const Desktop: Story = {};
 export const Mobile: Story = {
     globals: { viewport: { value: 'mobile1', isRotated: false } },
 };
+
+/**
+ * The header at 280 px, narrower than the label of the Menu button needs: the button shows its icon alone, so it stays
+ * clear of the link home.
+ */
+export const MobileNarrow: Story = {
+    globals: { viewport: { value: 'narrow', isRotated: false } },
+    parameters: {
+        viewport: {
+            options: { narrow: { name: '280 px', styles: { width: '280px', height: '640px' }, type: 'mobile' } },
+        },
+    },
+};

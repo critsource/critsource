@@ -60,7 +60,10 @@ export const OpenNarrow: Story = {
     },
 };
 
-/** The closed menu below Header. Press Menu to open it, and Close or Escape to close it again. */
+/**
+ * The closed menu below Header. Press Menu to open it, and Close or Escape to close it again. Below 304 px, Menu and
+ * Close both show their icons alone, so the bar keeps its look when the menu opens.
+ */
 export const WithHeader: Story = {
     render: () => ({
         template: `

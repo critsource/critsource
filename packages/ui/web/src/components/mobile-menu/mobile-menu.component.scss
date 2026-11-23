@@ -51,7 +51,8 @@ $host: 'dialog[dma-mobile-menu]';
 }
 
 // Where the bar has less than `$narrow-bar-width` inside its padding, Close draws as a square around its icon, and keeps
-// its label for assistive technology. The spec of the menu checks that the parts fit at that width.
+// its label for assistive technology. The Menu button of Header switches at the same width, so the bar does not jump
+// when the menu opens. The spec of the menu checks that the parts fit at that width.
 @include narrow-bar-button(dma-mobile-menu-bar, '#{$host} > .bar > .close');
 
 // The link home takes the size of the logo and draws no underline, with the focus ring of Link, as in Header.
