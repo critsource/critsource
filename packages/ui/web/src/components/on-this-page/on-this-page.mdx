@@ -74,6 +74,12 @@ The link fills its container. Stacked, the indicators at their starts draw a tra
 
 <Canvas of={OnThisPageStories.Links} />
 
+### Clicking a link
+
+A click scrolls the heading into view, moves focus to it, and adds the hash to the path of the page, such as `/privacy#your-rights`, rather than following the link. The `<base href="/">` of the app would resolve the `href` against the root, which leaves the page. A heading that can't take focus by itself gets `tabindex="-1"` until it loses focus. When no element has the id that the `href` names, or the `href` leads to another page, the link behaves as a native link.
+
+Until it loses focus, the link also marks the heading with `data-dma-on-this-page-target`, and the nav ships the rule that draws the focus ring 2 px inside the heading, since the heading spans the width of the prose. The rule matches `:focus-visible`, so a jump by keyboard draws the ring and a click draws none. A heading with a `tabindex` of its own stays unmarked and keeps its own focus style. In a Text page, the heading stops 24 px below the top of the viewport.
+
 ### Hover
 
 The label turns to the default foreground color. The link draws no fill.

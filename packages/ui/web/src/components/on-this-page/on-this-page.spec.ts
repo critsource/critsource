@@ -1,3 +1,5 @@
+import { APP_BASE_HREF, Location, PlatformLocation } from '@angular/common';
+import { MOCK_PLATFORM_LOCATION_CONFIG, MockPlatformLocation } from '@angular/common/testing';
 import { Component, signal, type Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { page, userEvent } from 'vitest/browser';
@@ -194,6 +196,141 @@ describe('OnThisPageLinkComponent', () => {
             expect((await harness.getFocusRing()).style).toBe('solid');
             expect(await harness.getLook()).toEqual(readLooks().current);
             await expectIndicator(harness, '--color-accent-text');
+        });
+    });
+
+    /**
+     * Links to the sections of a long article on `/privacy`. The article is taller than the viewport, so a heading
+     * starts out of view. The address of the page comes from a mock, as the `<base href="/">` of the app sets its base,
+     * so the test can read it without changing the address of the test runner.
+     */
+    describe('when clicked', () => {
+        @Component({
+            template: `
+                <a dma-on-this-page-link href="#your-rights">Your rights</a>
+                <a dma-on-this-page-link href="#cookies">Cookies</a>
+                <a dma-on-this-page-link href="/rules">Rules</a>
+                <p class="part">Introduction</p>
+                <h2 id="your-rights" [attr.tabindex]="headingTabIndex()">Your rights</h2>
+                <p class="part">Your rights</p>
+            `,
+            styles: `
+                .part {
+                    height: 2000px;
+                }
+            `,
+            imports: [OnThisPageLinkComponent],
+        })
+        class ArticleTestComponent {
+            public readonly headingTabIndex = signal<number | null>(null);
+        }
+
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        async function setupArticle(headingTabIndex: number | null = null) {
+            const { fixture } = await setupTestEnvironment({
+                host: ArticleTestComponent,
+                harness: OnThisPageLinkHarness,
+                providers: [
+                    { provide: APP_BASE_HREF, useValue: '/' },
+                    { provide: PlatformLocation, useClass: MockPlatformLocation },
+                    { provide: MOCK_PLATFORM_LOCATION_CONFIG, useValue: { startUrl: 'http://localhost/privacy' } },
+                ],
+            });
+
+            fixture.componentInstance.headingTabIndex.set(headingTabIndex);
+            TestBed.tick();
+
+            return {
+                location: TestBed.inject(Location),
+                heading: page.getByRole('heading', { name: 'Your rights', exact: true }),
+            };
+        }
+
+        /** Clicks the link named `name`, and reports whether it let the browser follow the link. */
+        function clickAndCheckFollowed(name: string): boolean {
+            const link = page.getByRole('link', { name, exact: true }).element() as HTMLAnchorElement;
+            let followed = false;
+
+            // Listens on the document, so it runs after the listener of the link, and stops the navigation itself.
+            document.addEventListener(
+                'click',
+                (event) => {
+                    followed = !event.defaultPrevented;
+                    event.preventDefault();
+                },
+                { once: true },
+            );
+            link.click();
+
+            return followed;
+        }
+
+        it('should scroll its heading to the top of the viewport, rather than follow the link', async () => {
+            const { heading } = await setupArticle();
+            expect((heading.element() as HTMLElement).getBoundingClientRect().top).toBeGreaterThan(window.innerHeight);
+
+            expect(clickAndCheckFollowed('Your rights')).toBe(false);
+            expect((heading.element() as HTMLElement).getBoundingClientRect().top).toBeCloseTo(0, 0);
+        });
+
+        it('should add the hash to the path of the page', async () => {
+            const { location } = await setupArticle();
+
+            clickAndCheckFollowed('Your rights');
+
+            expect(location.path(true)).toBe('/privacy#your-rights');
+        });
+
+        it('should add no entry to the history when the page already shows the hash', async () => {
+            const { location } = await setupArticle();
+            const go = vi.spyOn(location, 'go');
+
+            clickAndCheckFollowed('Your rights');
+            clickAndCheckFollowed('Your rights');
+
+            expect(go).toHaveBeenCalledOnce();
+        });
+
+        it('should move focus to its heading, which stays focusable and marked until it loses focus', async () => {
+            const { heading } = await setupArticle();
+
+            clickAndCheckFollowed('Your rights');
+
+            await expect.element(heading).toHaveFocus();
+            await expect.element(heading).toHaveAttribute('tabindex', '-1');
+            await expect.element(heading).toHaveAttribute('data-dma-on-this-page-target');
+
+            (heading.element() as HTMLElement).blur();
+
+            await expect.element(heading).not.toHaveAttribute('tabindex');
+            await expect.element(heading).not.toHaveAttribute('data-dma-on-this-page-target');
+        });
+
+        it('should keep the tabindex that its heading already has, and leave the heading unmarked', async () => {
+            const { heading } = await setupArticle(0);
+
+            clickAndCheckFollowed('Your rights');
+            await expect.element(heading).toHaveFocus();
+            await expect.element(heading).not.toHaveAttribute('data-dma-on-this-page-target');
+            (heading.element() as HTMLElement).blur();
+
+            await expect.element(heading).toHaveAttribute('tabindex', '0');
+        });
+
+        it('should follow the link when no element has the id it names', async () => {
+            const { location } = await setupArticle();
+
+            expect(clickAndCheckFollowed('Cookies')).toBe(true);
+            expect(location.path(true)).toBe('/privacy');
+        });
+
+        it('should follow a link to another page', async () => {
+            await setupArticle();
+
+            expect(clickAndCheckFollowed('Rules')).toBe(true);
         });
     });
 });
@@ -652,6 +789,56 @@ describe('OnThisPageComponent', () => {
             expect(await harness.getLinks()).toHaveLength(4);
             expect(await harness.getCurrentLinkTexts()).toEqual([]);
             expect(observe).not.toHaveBeenCalled();
+        });
+    });
+
+    // The nav ships the rule that draws the focus ring of the heading a link moves focus to.
+    describe('when a link moves focus to its heading', () => {
+        const { innerWidth, innerHeight } = window;
+
+        beforeEach(async () => {
+            await page.viewport(1280, 800);
+        });
+
+        afterEach(async () => {
+            await page.viewport(innerWidth, innerHeight);
+        });
+
+        /** The outline of the heading named `name`, as the harness of a link reads its focus ring. */
+        function getHeadingRing(name: string) {
+            const style = getComputedStyle(page.getByRole('heading', { name, exact: true }).element());
+
+            return {
+                style: style.outlineStyle,
+                color: style.outlineColor,
+                width: style.outlineWidth,
+                offset: style.outlineOffset,
+            };
+        }
+
+        it('should draw the focus ring inside the heading after a jump by keyboard', async () => {
+            await setupTestEnvironment({ host: ArticleTestComponent, harness: OnThisPageHarness });
+
+            await userEvent.tab();
+            await userEvent.tab();
+            await userEvent.keyboard('{Enter}');
+
+            await expect.element(page.getByRole('heading', { name: 'What we process' })).toHaveFocus();
+            expect(getHeadingRing('What we process')).toEqual({
+                style: 'solid',
+                color: readColorToken('--color-focus-ring'),
+                width: '2px',
+                offset: '-2px',
+            });
+        });
+
+        it('should draw no focus ring on the heading after a click', async () => {
+            await setupTestEnvironment({ host: ArticleTestComponent, harness: OnThisPageHarness });
+
+            await userEvent.click(page.getByRole('link', { name: 'What we process' }));
+
+            await expect.element(page.getByRole('heading', { name: 'What we process' })).toHaveFocus();
+            expect(getHeadingRing('What we process').style).toBe('none');
         });
     });
 });

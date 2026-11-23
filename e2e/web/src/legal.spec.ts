@@ -96,5 +96,26 @@ for (const legalPage of legalPages) {
             await expect(page).toHaveURL('/');
             await expect(page).toHaveTitle('Critsource');
         });
+
+        test('jumps to a section from On this page without leaving the page', async ({ page }) => {
+            await page.goto(path);
+            // Hydration removes ngh, so the links handle the click from here on.
+            await expect(page.locator('dma-root')).not.toHaveAttribute('ngh');
+            let pageLoads = 0;
+            page.on('domcontentloaded', () => {
+                pageLoads += 1;
+            });
+            const link = page.getByRole('navigation', { name: 'On this page' }).getByRole('link').nth(1);
+            const hash = await link.getAttribute('href');
+            const heading = page.locator(`[id="${hash?.slice(1) ?? ''}"]`);
+
+            await link.click();
+
+            await expect(page).toHaveURL(`${path}${hash ?? ''}`);
+            await expect(heading).toBeInViewport();
+            await expect(heading).toBeFocused();
+            await expect(link).toHaveAttribute('aria-current', 'location');
+            expect(pageLoads).toBe(0);
+        });
     });
 }

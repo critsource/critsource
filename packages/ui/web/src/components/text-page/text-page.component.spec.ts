@@ -303,6 +303,16 @@ describe('TextPageComponent', () => {
         expect(prose.bottom).toBeCloseTo(last?.bottom ?? 0);
     });
 
+    it('should stop a jump to a heading 24 px below the top of the viewport', async () => {
+        await setupTest();
+
+        for (const name of ['Your rights', 'Contact']) {
+            const heading = page.getByRole('heading', { name, exact: true }).element();
+
+            expect(getComputedStyle(heading).scrollMarginBlockStart).toBe('24px');
+        }
+    });
+
     it('should project the lists and their items', async () => {
         const { harness } = await setupListsTest();
 

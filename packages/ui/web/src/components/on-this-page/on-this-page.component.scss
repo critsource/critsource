@@ -61,3 +61,12 @@ $host: 'nav[dma-on-this-page]';
         padding: 0;
     }
 }
+
+// The focused look of a heading that a link of the nav moved focus to, which the link marks while it has focus. The
+// ring lies inside its edge, as the ring of the target of Skip link does, since the heading spans the width of the
+// prose. It matches `:focus-visible`, so a jump by keyboard draws the ring and a click doesn't, in place of the default
+// ring of the browser. The rule lives here, since the link keeps encapsulation and is only placed in the nav.
+[data-dma-on-this-page-target]:focus-visible {
+    outline: var(--border-width-focus) solid var(--color-focus-ring);
+    outline-offset: calc(-1 * var(--border-width-focus));
+}
