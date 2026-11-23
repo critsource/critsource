@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - The theme picker in the footer and the menu on narrow screens now shows only its icons when its labels no longer fit, so its options no longer run past its border.
+- The Close button of the menu on narrow screens no longer runs into the logo. Below 304 px it shows only its icon.
 
 ## [0.5.0] - 2026-11-22
 

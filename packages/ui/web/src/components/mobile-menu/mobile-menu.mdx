@@ -28,6 +28,8 @@ A template reference points at the component rather than the `<dialog>`, so the 
 
 The menu places each child by its selector: an `a[dma-nav-link]` in its nav, an `a[dma-button]` after the nav, and anything else, the link home, at the start of its bar. It draws the Close button and the Theme picker itself, since every page shows them the same. Below the nav, the GitHub button and the Theme picker fill the width of the menu, and the options of the picker share it equally.
 
+The bar keeps at least 16 px between the link home and Close. When the bar has less than 16.5rem (264 px) inside its padding, which a viewport narrower than 304 px gives, Close shows its icon alone, as a square of 44 px, and keeps its label for assistive technology. The menu supports viewports from 280 px up.
+
 The Theme picker shows its labels while they fit. When its width inside the border drops below 17.5rem (280 px), which a viewport narrower than 328 px does, the options show their icons alone and keep their labels for assistive technology, as the Theme picker describes:
 
 <Canvas of={MobileMenuStories.OpenNarrow} story={{ inline: false, height: '640px' }} />
@@ -50,10 +52,10 @@ The menu also closes itself when the window grows to the desktop breakpoint, sin
 
 The menu is a dialog named "Menu". The link home takes its name, "Critsource", from the logo. The nav links sit in a navigation landmark named "Main", as in Header; the header is inert while the menu is open, so only one of them is exposed at a time.
 
-The Close button is named by its label, and is 44 px tall, the minimum target size.
+The Close button is named by its label, also where it shows its icon alone, and is 44 px tall, the minimum target size.
 
 The Theme picker is a group named "Theme" by its legend. The visible Theme title above it is hidden from assistive technology, so the name isn't read twice.
 
 ## Testing
 
-`MobileMenuHarness` from `@critsource/ui-web/testing` reads a menu in a test: whether it is open and modal, its look and place in the viewport, the logo in its link home, the `ButtonHarness` of its Close button, the look of its bar, and how far each part of the bar sits from the edges of the menu. For the body, it reads the `NavLinkHarness` of each row, the `ButtonHarness` of the GitHub button, the `ThemePickerHarness`, the look of the divider and the Theme title, and where each part sits in the menu. `pressClose()` presses the Close button.
+`MobileMenuHarness` from `@critsource/ui-web/testing` reads a menu in a test: whether it is open and modal, its look and place in the viewport, the logo in its link home, the `ButtonHarness` of its Close button, the look of its bar, how far each part of the bar sits from the edges of the menu, the gap between the link home and Close, and whether Close shows its label. For the body, it reads the `NavLinkHarness` of each row, the `ButtonHarness` of the GitHub button, the `ThemePickerHarness`, the look of the divider and the Theme title, and where each part sits in the menu. `pressClose()` presses the Close button.

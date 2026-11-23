@@ -35,15 +35,37 @@ $host: 'dialog[dma-mobile-menu]';
 }
 
 // The bar of Header, with the Close button in place of the Menu button: the link home at the start and Close at the
-// end, centered in a bar 68 px tall, with the divider along its bottom edge.
+// end, centered in a bar 68 px tall, with the divider along its bottom edge. The gap keeps them apart on a narrow screen.
+// The bar is a size container, so Close can drop its label where the bar runs out of room.
 #{$host} > .bar {
     box-sizing: border-box;
     display: flex;
     flex: none;
     align-items: center;
     justify-content: space-between;
+    column-gap: var(--space-16);
     padding: var(--space-12) var(--space-page-inline) calc(var(--space-12) - var(--border-width-default));
     border-block-end: var(--border-width-default) solid var(--color-border-divider);
+    container: dma-mobile-menu-bar / inline-size;
+}
+
+// Where the bar is narrower than the link home, the gap, and Close with its label need, Close draws as a square around
+// its icon, and its label stays in the page for assistive technology, as the Theme picker does with its options. The
+// 16.5rem is the 259 px they need with the fonts of the app, rounded up, and the spec of the menu checks that they fit in it.
+@container dma-mobile-menu-bar (inline-size < 16.5rem) {
+    #{$host} > .bar > .close {
+        flex-basis: var(--size-target-min);
+        padding-inline: 0;
+    }
+
+    #{$host} > .bar > .close > .label {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }
 
 // The link home takes the size of the logo and draws no underline, with the focus ring of Link, as in Header.

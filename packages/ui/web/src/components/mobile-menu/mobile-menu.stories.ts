@@ -47,8 +47,8 @@ export const Open: Story = {
 };
 
 /**
- * The menu open at 280 px, narrower than the labels of the Theme picker need: its options show the icons alone, so they
- * stay inside its border.
+ * The menu open at 280 px, narrower than the labels of Close and the Theme picker need: Close shows its icon alone, so it
+ * stays clear of the link home, and the options of the picker show theirs, so they stay inside its border.
  */
 export const OpenNarrow: Story = {
     ...Open,

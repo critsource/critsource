@@ -77,6 +77,7 @@ export class MobileMenuHarness extends ComponentHarness {
 
     private readonly barLocator = this.locatorFor('.bar');
     private readonly closeLocator = this.locatorFor(BAR_PART_SELECTORS.close);
+    private readonly closeLabelLocator = this.locatorFor(`${BAR_PART_SELECTORS.close} > .label`);
     private readonly closeButtonLocator = this.locatorFor(
         new HarnessPredicate(ButtonHarness, { selector: BAR_PART_SELECTORS.close }),
     );
@@ -108,6 +109,24 @@ export class MobileMenuHarness extends ComponentHarness {
     /** The harness of the Close button. */
     public async getCloseButton(): Promise<ButtonHarness> {
         return await this.closeButtonLocator();
+    }
+
+    /**
+     * Whether the Close button shows its label, rather than its icon alone. A bar too narrow for the label hides it by
+     * shrinking it to 1 px, so this reads its width instead of a class.
+     */
+    public async isCloseLabelShown(): Promise<boolean> {
+        return (await (await this.closeLabelLocator()).getDimensions()).width > 1;
+    }
+
+    /** The space between the link home and the Close button, in pixels, which is negative where they overlap. */
+    public async getBarGap(): Promise<number> {
+        const [home, close] = await Promise.all([
+            (await this.locatorFor(BAR_PART_SELECTORS.home)()).getDimensions(),
+            (await this.closeLocator()).getDimensions(),
+        ]);
+
+        return close.left - (home.left + home.width);
     }
 
     /** Presses the Close button with the pointer. */
