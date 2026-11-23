@@ -4,12 +4,12 @@ The landing page of the [web client](../../../apps/web/README.md), which the rou
 
 ## What belongs here
 
-The page at `/` and its sections. The page renders a placeholder until the sections fill it in. Build each section from the components of [`ui-web`](../../ui/web/README.md), and add a component there when another page could use it too. The header and footer around the page belong to the shell in `core-web`.
+The page at `/` and its sections. Build each section from the components of [`ui-web`](../../ui/web/README.md), and add a component there when another page could use it too. The header and footer around the page belong to the shell in `core-web`.
 
 The page is prerendered during `web:build`, so every component on it follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 
 - [`src/landing.routes.ts`](src/landing.routes.ts) holds `landingRoutes`, which renders `LandingPage` at the root of the routes.
-- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page.
+- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page. Its hero, the first section, holds the status chip, the heading, and the lede.
 
 A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `LandingPage` does. Every other component takes the `Component` suffix.
 
@@ -30,7 +30,7 @@ The `testing` entry point holds the [component harnesses](https://angular.dev/gu
 
 ## Testing
 
-The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. That entry point loads the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md). That is why `ui-web` and `design-tokens` are in the `devDependencies`, and why both test tasks list their files as an input.
+The tests load the [pointer setup file](../../../docs/testing.md#the-pointer-setup-file) of `ui-web` through the `setupFiles` of the `test` target in [`angular.json`](angular.json), which moves the pointer away before each test, and set each test up with `setupTestEnvironment` from `@critsource/ui-web/testing`, as the tests of `ui-web` do. The page builds on the components of `ui-web`, which import the breakpoint of [`@critsource/design-tokens`](../../design-tokens/README.md), as the styles of the page do, so both packages are in the `dependencies`. The tests load `tokens.css` through the `setupFiles` in [`vitest.config.ts`](vitest.config.ts), as [Design tokens](../../../docs/testing.md#design-tokens) describes, and both test tasks list the files of `ui-web` and `design-tokens` as an input.
 
 ## Tasks
 
