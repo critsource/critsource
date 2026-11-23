@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The landing page at `/` now says what Critsource is and that there is nothing to try yet, and links to the repository on GitHub to star it and to Discussions to share an idea. It explains how to watch the repository for releases.
 - The landing page has a Features section that links to every planned feature in the README.
 
+### Changed
+
+- The image now enforces its Content Security Policy: it sends the policy as `Content-Security-Policy` instead of `Content-Security-Policy-Report-Only`, so browsers block each script or style that neither the app nor Cloudflare's bot check loads. If you mount your own copy of `/etc/nginx/csp.inc`, change its header name to match.
+
 ### Fixed
 
 - The theme picker in the footer and the menu on narrow screens now shows only its icons when its labels no longer fit, so its options no longer run past its border.

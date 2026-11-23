@@ -8,9 +8,9 @@ const paths = [
 ];
 
 /**
- * Loads the path, and returns every violation of the content security policy that the page reports. The policy only
- * reports, so the page still runs. The listener must sit in place before the first script of the page runs, since a
- * violation fires as soon as the browser meets the blocked resource.
+ * Loads the path, and returns every violation of the content security policy that the page reports. The browser blocks
+ * what violates the policy, so a violation can keep the app from booting. The listener must sit in place before the
+ * first script of the page runs, since a violation fires as soon as the browser meets the blocked resource.
  */
 async function violationsOn(page: Page, path: string): Promise<string[]> {
     const violations: string[] = [];
@@ -61,7 +61,7 @@ test.describe('content security policy', () => {
         test(`writes the nonce of the header into ${name}`, async ({ request }) => {
             const response = await request.get(path);
 
-            const policy = response.headers()['content-security-policy-report-only'] ?? '';
+            const policy = response.headers()['content-security-policy'] ?? '';
             const nonce = /script-src 'self' 'nonce-([0-9a-f]{32})';/.exec(policy)?.[1] ?? '';
             expect(nonce).toMatch(/^[0-9a-f]{32}$/);
             const html = await response.text();
@@ -76,7 +76,7 @@ test.describe('content security policy', () => {
 
         for (let attempt = 0; attempt < 3; attempt++) {
             const response = await request.get('/');
-            policies.add(response.headers()['content-security-policy-report-only'] ?? '');
+            policies.add(response.headers()['content-security-policy'] ?? '');
         }
 
         expect(policies.size).toBe(3);

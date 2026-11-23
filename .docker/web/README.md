@@ -73,7 +73,7 @@ docker run --rm -p 4200:4200 -v ./security-headers.inc:/etc/nginx/security-heade
 
 ## Content Security Policy
 
-nginx sends a `Content-Security-Policy-Report-Only` header with each prerendered page, the Not found page included, and with `index.csr.html`. The browser reports each script or style that neither the app nor Cloudflare's bot check loads in its console, and blocks nothing:
+nginx sends a `Content-Security-Policy` header with each prerendered page, the Not found page included, and with `index.csr.html`. The browser blocks each script or style that neither the app nor Cloudflare's bot check loads, and logs the violation in its console:
 
 ```text
 default-src 'self'; script-src 'self' 'nonce-<nonce>'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
