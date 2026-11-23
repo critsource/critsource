@@ -25,7 +25,7 @@ A button on `<a>` looks the same as one on `<button>`:
 
 <Canvas of={ButtonStories.OnLink} />
 
-A `<button>` in a form submits it unless it has `type="button"`, as in any form, so give every other button that type.
+A `<button>` in a form submits it unless it has `type="button"`, as in any form, and Button keeps that behavior. Set `type` on every `<button dma-button>`: `type="submit"` on the button that submits its form, and `type="button"` on every other one. The `button-has-type` lint rule fails a button without a `type`.
 
 ## Kind
 
