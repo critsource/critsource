@@ -96,9 +96,9 @@ li::before {
     color: var(--color-accent-text);
 }
 
-// A concept preview of the group, one step above it: the header, then what the feature shows. Below the desktop
-// breakpoint it is padded space.16 with its parts space.12 apart; from it up, padded space.16 by space.20 with its parts
-// space.8 apart.
+// A concept preview of the group, one step above it: the header, then the stats, the roll box, or the note. Below the
+// desktop breakpoint it is padded space.16 with its parts space.12 apart; from it up, padded space.16 by space.20 with
+// its parts space.8 apart.
 .preview {
     display: flex;
     flex-direction: column;
@@ -116,7 +116,7 @@ li::before {
 }
 
 // The header: the title and its context at the start, the Concept chip at the end, both at the top. Only the room left
-// over spaces them, as in Penpot.
+// over spaces them, as in Penpot, so the context of Session 12 fits on one line beside the chip at 390 px wide.
 .header {
     display: flex;
     align-items: flex-start;
@@ -167,6 +167,37 @@ dd {
     color: var(--color-foreground-default);
 }
 
+// The roll box on the sunken surface: the command at the start and its result at the end, padded space.12 below the
+// desktop breakpoint and space.12 by space.16 from it up.
+.roll {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+    padding: var(--space-12);
+    border-radius: var(--radius-sm);
+    background: var(--color-background-sunken);
+}
+
+code {
+    @include typography(mono);
+
+    color: var(--color-foreground-default);
+}
+
+.result {
+    @include typography(mono-strong);
+
+    color: var(--color-accent-text);
+}
+
+.note {
+    @include typography(body-sm);
+
+    color: var(--color-foreground-default);
+}
+
 @media (min-width: breakpoints.$breakpoint-desktop) {
     .slot {
         gap: var(--space-48);
@@ -188,5 +219,9 @@ dd {
     .preview {
         gap: var(--space-8);
         padding: var(--space-16) var(--space-20);
+    }
+
+    .roll {
+        padding: var(--space-12) var(--space-16);
     }
 }

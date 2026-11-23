@@ -1,3 +1,7 @@
+<!--
+    The roll box keeps the space between its command and its result with &ngsp;, since Angular drops the whitespace
+    between elements.
+-->
 <section dma-section id="features">
     <hgroup dma-section-intro>
         <p>Features</p>
@@ -58,6 +62,16 @@
                     <li><span>Look up any rule in the compendium</span></li>
                     <li><span>Track combat with a 5e rules engine</span></li>
                 </ul>
+                <div class="preview">
+                    <div class="header">
+                        <div class="title">
+                            <p>Fireball damage</p>
+                            <p>Rolled by Borin, seen by the party</p>
+                        </div>
+                        <dma-chip>Concept</dma-chip>
+                    </div>
+                    <p class="roll"><code>/roll 8d6</code>&ngsp;<span class="result">28 fire</span></p>
+                </div>
             </div>
             <div class="group">
                 <hgroup>
@@ -70,6 +84,18 @@
                     <li><span>Share worlds, maps, and notes with your party</span></li>
                     <li><span>Make any of them public</span></li>
                 </ul>
+                <div class="preview">
+                    <div class="header">
+                        <div class="title">
+                            <p>Session 12</p>
+                            <p>The Sunken Keep · shared with the party</p>
+                        </div>
+                        <dma-chip>Concept</dma-chip>
+                    </div>
+                    <p class="note">
+                        The party struck a deal with the river hag: safe passage in exchange for the silver bell.
+                    </p>
+                </div>
             </div>
         </div>
         <a dma-link kind="standalone" [href]="plannedFeaturesUrl">See every planned feature in the README</a>
