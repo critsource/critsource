@@ -1,0 +1,175 @@
+@use '@critsource/design-tokens/typography.scss' as *;
+
+// The Tabbed preview board of Penpot: a raised surface, padded space.16, with the tabs, the panel, and the caption
+// space.16 apart, each across its width.
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    padding: var(--space-16);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-surface);
+    box-shadow: var(--shadow-raised);
+}
+
+// A panel draws one step above the preview, padded space.16 by space.20, with its parts space.12 apart. A hidden panel
+// stays hidden, since the Tab panel hides itself with a more specific rule.
+dma-tab-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    padding: var(--space-16) var(--space-20);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-raised);
+}
+
+// The gaps space the parts, so none keeps the margin of its element.
+p {
+    margin: 0;
+}
+
+// The header: the title and its context on the left, the Concept chip on the right, both at the top.
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-12);
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.title > :first-child {
+    @include typography(title);
+
+    color: var(--color-foreground-default);
+}
+
+.title > :last-child {
+    @include typography(body-sm);
+
+    color: var(--color-foreground-muted);
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+// A row: who or what on the left, its number on the right, padded space.12 by space.16. Every row draws a border, so all
+// rows measure the same, as Penpot's inner strokes do; only the current row colors it, and fills itself.
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+    padding: calc(var(--space-12) - var(--border-width-default)) calc(var(--space-16) - var(--border-width-default));
+    border: var(--border-width-default) solid transparent;
+    border-radius: var(--radius-sm);
+}
+
+li.current {
+    border-color: var(--color-accent-text);
+    background: var(--color-background-surface);
+}
+
+// The name, then the tag of the current row space.12 after it. The tag is text, so the current row never relies on
+// its border alone.
+.who {
+    @include typography(body);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-12);
+    color: var(--color-foreground-default);
+}
+
+.current .who > :first-child {
+    @include typography(body-strong);
+}
+
+.tag {
+    @include typography(label);
+
+    color: var(--color-accent-text);
+}
+
+.value {
+    @include typography(mono);
+
+    color: var(--color-foreground-muted);
+    white-space: nowrap;
+}
+
+.current .value {
+    color: var(--color-foreground-default);
+}
+
+// A caption, then chips space.8 apart. The highlighted chip outlines its text in the secondary color, padded space.4 by
+// space.12, and leaves room for its border inside that, as the Chip does.
+.chips {
+    @include typography(caption);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-8);
+    color: var(--color-foreground-muted);
+}
+
+.highlight {
+    @include typography(label);
+
+    padding: calc(var(--space-4) - var(--border-width-default)) calc(var(--space-12) - var(--border-width-default));
+    border: var(--border-width-default) solid var(--color-secondary-default);
+    border-radius: var(--radius-pill);
+    color: var(--color-secondary-default);
+    white-space: nowrap;
+}
+
+// An inset on the sunken surface, padded space.12 by space.16: the roll box, a command and its result space.12 apart,
+// or a note.
+.inset {
+    padding: var(--space-12) var(--space-16);
+    border-radius: var(--radius-sm);
+    background: var(--color-background-sunken);
+}
+
+.roll {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-12);
+}
+
+code {
+    @include typography(mono);
+
+    color: var(--color-foreground-default);
+}
+
+.result {
+    @include typography(mono-strong);
+
+    color: var(--color-accent-text);
+}
+
+.note {
+    @include typography(body-sm);
+
+    color: var(--color-foreground-default);
+}
+
+.caption {
+    @include typography(caption);
+
+    color: var(--color-foreground-muted);
+}

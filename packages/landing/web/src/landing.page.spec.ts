@@ -117,6 +117,12 @@ describe('LandingPage', () => {
         );
     });
 
+    it('should preview the app in the hero, starting on Play', async () => {
+        const { harness } = await setupTest();
+
+        expect(await (await (await harness.getPreview()).getTabList()).getSelectedLabel()).toBe('Play');
+    });
+
     it('should follow the hero with the features section', async () => {
         const { harness } = await setupTest();
 
@@ -175,6 +181,25 @@ describe('LandingPage', () => {
             expect(await harness.getHintOffset()).toBeCloseTo(20);
         });
 
+        it('should set the preview below the text, 28 px under it and as wide', async () => {
+            const { harness } = await setupTest();
+
+            const [text, preview] = await Promise.all([harness.getTextBox(), (await harness.getPreview()).getBox()]);
+
+            expect(preview.top - (text.top + text.height)).toBeCloseTo(28);
+            expect(preview.left).toBe(text.left);
+            expect(preview.width).toBe(text.width);
+        });
+
+        it('should keep the three tabs of the preview in one row, with no scroll buttons', async () => {
+            const { harness } = await setupTest();
+
+            const tabList = await (await harness.getPreview()).getTabList();
+
+            expect(await tabList.isScrollable()).toBe(false);
+            expect(await tabList.getScrollButtonEdges()).toEqual([]);
+        });
+
         it('should stack the calls to action at full width, the primary first', async () => {
             const { harness } = await setupTest();
 
@@ -204,6 +229,16 @@ describe('LandingPage', () => {
             const { harness } = await setupTest();
 
             expect(await harness.getHintOffset()).toBeCloseTo(24);
+        });
+
+        it('should set the preview 64 px beside the text, centered on it', async () => {
+            const { harness } = await setupTest();
+
+            const [text, preview] = await Promise.all([harness.getTextBox(), (await harness.getPreview()).getBox()]);
+
+            expect(text.width).toBe(580);
+            expect(preview.left - (text.left + text.width)).toBeCloseTo(64);
+            expect(preview.top + preview.height / 2).toBeCloseTo(text.top + text.height / 2, 0);
         });
     });
 });
