@@ -52,7 +52,7 @@ export function mergeSets(sets: TokenSets, names: readonly string[]): TokenGroup
     const merged: TokenGroup = {};
 
     for (const name of names) {
-        mergeGroup(merged, getSet(sets, name), [], name);
+        mergeGroup(merged, getSet(sets, name), [], name, 'fail');
     }
     return merged;
 }
@@ -66,7 +66,10 @@ function getSet(sets: TokenSets, name: string) {
     return set;
 }
 
-function mergeGroup(target: TokenGroup, source: TokenGroup, path: readonly string[], setName: string) {
+/** What a merge does with a token that the tree already holds: fail, replace it, or keep it. */
+type Collision = 'fail' | 'replace' | 'keep';
+
+function mergeGroup(target: TokenGroup, source: TokenGroup, path: readonly string[], setName: string, on: Collision) {
     for (const [key, node] of Object.entries(source)) {
         const existing = target[key];
         const nodePath = [...path, key];
@@ -74,39 +77,39 @@ function mergeGroup(target: TokenGroup, source: TokenGroup, path: readonly strin
         if (existing === undefined) {
             target[key] = structuredClone(node);
         } else if (!isToken(existing) && !isToken(node)) {
-            mergeGroup(existing, node, nodePath, setName);
-        } else {
+            mergeGroup(existing, node, nodePath, setName, on);
+        } else if (on === 'replace') {
+            target[key] = structuredClone(node);
+        } else if (on === 'fail') {
             throw new Error(`Set ${setName} holds ${nodePath.join('.')}, which an earlier set already holds.`);
         }
     }
 }
 
 /**
- * Picks the sets that resolve the tokens of some sets, which may reference the tokens of others. A set that overrides
- * another one, such as `color/light` over `color/dark`, holds the same tokens, so it takes that set's place, while the
- * sets it shares no token with stay.
+ * Merges some sets over others into one token tree, as Style Dictionary reads it. A token of `top` replaces the token at
+ * the same path of `base`, while the other tokens of `base` stay. A set that overrides only some tokens of another, such
+ * as `viewport/tablet` over `viewport/mobile`, so still resolves its references to the rest. The tree keeps the order of
+ * `base`, with the sets of `top` that it lacks at the end.
  * @param sets - The sets of the export.
  * @param base - The names of the sets that apply unless another set overrides them.
- * @param top - The names of the sets to resolve.
- * @returns The names of the sets to merge, in the order of `base` with the sets of `top` that it lacks at the end.
+ * @param top - The names of the sets that override them.
+ * @returns A copy of the tokens of the named sets in one tree. It fails as `mergeSets` does within `base` or `top`.
  */
-export function overlaySets(sets: TokenSets, base: readonly string[], top: readonly string[]): string[] {
-    const kept = base.filter(
-        (name) => top.includes(name) || !top.some((other) => sharesToken(getSet(sets, name), getSet(sets, other))),
+export function overlaySets(sets: TokenSets, base: readonly string[], top: readonly string[]): TokenGroup {
+    mergeSets(
+        sets,
+        base.filter((name) => !top.includes(name)),
     );
+    mergeSets(sets, top);
 
-    return [...kept, ...top.filter((name) => !kept.includes(name))];
-}
+    const merged: TokenGroup = {};
 
-function sharesToken(first: TokenGroup, second: TokenGroup): boolean {
-    return Object.entries(first).some(([key, node]) => {
-        const other = second[key];
-
-        if (other === undefined) {
-            return false;
-        }
-        return isToken(node) || isToken(other) || sharesToken(node, other);
-    });
+    for (const name of [...base, ...top.filter((name) => !base.includes(name))]) {
+        // The checks above leave only collisions between a set of top and one of base, which the set of top wins.
+        mergeGroup(merged, getSet(sets, name), [], name, top.includes(name) ? 'replace' : 'keep');
+    }
+    return merged;
 }
 
 /** Where a token of the merged tree comes from. */
