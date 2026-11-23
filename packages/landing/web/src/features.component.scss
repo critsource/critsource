@@ -34,7 +34,7 @@
 }
 
 // A group draws as a raised surface, padded space.24 by space.20 below the desktop breakpoint and space.28 from it up,
-// with its eyebrow, heading, and list space.16 apart.
+// with its eyebrow, heading, list, and preview space.16 apart.
 .group {
     display: flex;
     flex-direction: column;
@@ -96,6 +96,77 @@ li::before {
     color: var(--color-accent-text);
 }
 
+// A concept preview of the group, one step above it: the header, then what the feature shows. Below the desktop
+// breakpoint it is padded space.16 with its parts space.12 apart; from it up, padded space.16 by space.20 with its parts
+// space.8 apart.
+.preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    padding: var(--space-16);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-raised);
+}
+
+// The gaps space the parts, so none keeps the margin of its element.
+.preview p,
+.preview dl,
+.preview dd {
+    margin: 0;
+}
+
+// The header: the title and its context at the start, the Concept chip at the end, both at the top. Only the room left
+// over spaces them, as in Penpot.
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.title > :first-child {
+    @include typography(title-sm);
+
+    color: var(--color-foreground-default);
+}
+
+.title > :last-child {
+    @include typography(caption);
+
+    color: var(--color-foreground-muted);
+}
+
+// The stats of the spell side by side, space.20 apart, each label space.4 above its value. They wrap onto a new row
+// when the preview is too narrow for all three.
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-20);
+}
+
+.stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+dt {
+    @include typography(caps);
+
+    color: var(--color-foreground-muted);
+}
+
+dd {
+    @include typography(nav);
+
+    color: var(--color-foreground-default);
+}
+
 @media (min-width: breakpoints.$breakpoint-desktop) {
     .slot {
         gap: var(--space-48);
@@ -112,5 +183,10 @@ li::before {
 
     li::before {
         margin-inline-end: 0;
+    }
+
+    .preview {
+        gap: var(--space-8);
+        padding: var(--space-16) var(--space-20);
     }
 }
