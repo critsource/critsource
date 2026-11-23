@@ -1,6 +1,6 @@
 # 0008. Media queries and a saved `data-theme` switch the Penpot themes
 
-- **Status:** Accepted
+- **Status:** Partly superseded by [0014](0014-tablet-page-margin.md)
 - **Date:** 2026-11-12
 - **Built in:** [#210](https://github.com/dnd-mapp/dnd-mapp/issues/210) and [#211](https://github.com/dnd-mapp/dnd-mapp/issues/211)
 
