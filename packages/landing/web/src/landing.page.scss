@@ -11,7 +11,8 @@
 }
 
 // The Hero text board of Penpot: a column space.20 apart below the desktop breakpoint and space.24 from it up, at the
-// width of its content, and at most the 580 px that Penpot fixes it at on Desktop, which no token holds.
+// width of its content, and at most the 580 px that Penpot fixes it at on Desktop, which no token holds. The calls to
+// action fill it, so their buttons can fill the width below the desktop breakpoint.
 .text {
     display: flex;
     flex-direction: column;
@@ -31,6 +32,10 @@
     margin: 0;
 }
 
+dma-calls-to-action {
+    align-self: stretch;
+}
+
 h1 {
     @include typography(h1);
 
@@ -39,6 +44,12 @@ h1 {
 
 .lede {
     @include typography(lead);
+
+    color: var(--color-foreground-muted);
+}
+
+.hint {
+    @include typography(body-sm);
 
     color: var(--color-foreground-muted);
 }
