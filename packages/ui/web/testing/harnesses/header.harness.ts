@@ -47,6 +47,7 @@ export class HeaderHarness extends ComponentHarness {
 
     private readonly homeLocator = this.locatorFor(PART_SELECTORS.home);
     private readonly menuLocator = this.locatorFor(PART_SELECTORS.menu);
+    private readonly menuLabelLocator = this.locatorFor(`${PART_SELECTORS.menu} > .label`);
     private readonly menuButtonLocator = this.locatorFor(new HarnessPredicate(ButtonHarness, { selector: '.menu' }));
     private readonly gitHubButtonLocator = this.locatorForOptional(
         new HarnessPredicate(ButtonHarness, { selector: PART_SELECTORS.github }),
@@ -88,6 +89,24 @@ export class HeaderHarness extends ComponentHarness {
     /** The harness of the Menu button. */
     public async getMenuButton(): Promise<ButtonHarness> {
         return await this.menuButtonLocator();
+    }
+
+    /**
+     * Whether the Menu button shows its label, rather than its icon alone. A header too narrow for the label hides it by
+     * shrinking it to 1 px, so this reads its width instead of a class.
+     */
+    public async isMenuLabelShown(): Promise<boolean> {
+        return (await (await this.menuLabelLocator()).getDimensions()).width > 1;
+    }
+
+    /** The space between the link home and the Menu button, in pixels, which is negative where they overlap. */
+    public async getBarGap(): Promise<number> {
+        const [home, menu] = await Promise.all([
+            (await this.homeLocator()).getDimensions(),
+            (await this.menuLocator()).getDimensions(),
+        ]);
+
+        return menu.left - (home.left + home.width);
     }
 
     /** Presses the Menu button with the pointer. */

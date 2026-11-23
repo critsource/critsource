@@ -33,6 +33,10 @@ The header places each child by its selector: an `a[dma-nav-link]` in its nav, a
 
 The layout follows the viewport, and switches at the desktop breakpoint, `$breakpoint-desktop` from `@critsource/design-tokens/breakpoints.scss`. Each layout hides the parts of the other, which also hides them from assistive technology. Below the breakpoint, Mobile menu holds the nav links, the GitHub button, and the Theme picker.
 
+The header keeps at least 16 px between the link home and the Menu button. The header is a size container: when it has less than 16.5rem (264 px) inside its padding, which a viewport narrower than 304 px gives, the Menu button shows its icon alone, as a square of 44 px. Close in Mobile menu switches at the same width, since both use the `narrow-bar-button()` mixin of `@critsource/design-tokens/narrow-bar.scss`, so the bar keeps its look when the menu opens. The header supports viewports from 280 px up:
+
+<Canvas of={HeaderStories.MobileNarrow} story={{ inline: false, height: '120px' }} />
+
 ## Focus
 
 The link home takes the size of the logo, and draws the focus ring of Link when it has keyboard focus, since Penpot draws no focus state for it. The nav links, the buttons, and the Theme picker draw their own focus states.
@@ -41,12 +45,12 @@ The link home takes the size of the logo, and draws the focus ring of Link when 
 
 The header is the banner landmark of the page. The link home takes its name, "Critsource", from the logo. The nav links sit in a navigation landmark named "Main". The Theme picker saves the choice of the reader itself, as it does wherever it sits.
 
-The Menu button is named by its label, and sets `aria-haspopup="dialog"`, since Mobile menu is a modal dialog. It is 44 px tall, the minimum target size.
+The Menu button is named by its label, and sets `aria-haspopup="dialog"`, since Mobile menu is a modal dialog. It is 44 px tall, the minimum target size. When it shows its icon alone, its label stays in the page for assistive technology, so its name stays "Menu".
 
 The Menu button focuses itself when pressed, before the header emits `menuPressed`. Safari doesn't focus a button that the reader clicks or taps, so without it Mobile menu has no focus to return to when it closes. Mobile menu leaves the focus return to the browser.
 
 ## Testing
 
-`HeaderHarness` from `@critsource/ui-web/testing` reads a header in a test: its look and size, the logo in its link home, the `NavLinkHarness` of each nav link, the `ButtonHarness` of the GitHub button and of the Menu button, the `ThemePickerHarness` of its Theme picker, which parts the current layout shows, how far each part sits from the edges of the header, and the focus ring of the link home. `pressMenu()` presses the Menu button.
+`HeaderHarness` from `@critsource/ui-web/testing` reads a header in a test: its look and size, the logo in its link home, the `NavLinkHarness` of each nav link, the `ButtonHarness` of the GitHub button and of the Menu button, the `ThemePickerHarness` of its Theme picker, which parts the current layout shows, how far each part sits from the edges of the header, the space between the link home and the Menu button, whether the Menu button shows its label, and the focus ring of the link home. `pressMenu()` presses the Menu button.
 
 A spec that renders a header provides a storage with `provideBrowserStorage`, so the Theme picker saves no choice in `localStorage`.

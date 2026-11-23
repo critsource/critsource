@@ -74,7 +74,7 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ### Shared Sass
 
-Sass that more than one component needs lives in [`@critsource/design-tokens`](../../design-tokens/README.md#the-sass), next to the tokens it reads, and a stylesheet imports it with `@use`. The package has two partials: `breakpoints.scss` for the desktop breakpoint, and `typography.scss` for the `typography($name)` mixin, which sets the font properties of a `--typography-*` token. A component stylesheet defines no copy of either:
+Sass that more than one component needs lives in [`@critsource/design-tokens`](../../design-tokens/README.md#the-sass), next to the tokens it reads, and a stylesheet imports it with `@use`. The package has three partials: `breakpoints.scss` for the desktop breakpoint, `typography.scss` for the `typography($name)` mixin, which sets the font properties of a `--typography-*` token, and `narrow-bar.scss` for the `narrow-bar-button($container, $button)` mixin, which shows the button of a narrow bar as its icon alone. A component stylesheet defines no copy of any of them:
 
 ```scss
 @use '@critsource/design-tokens/typography.scss' as *;

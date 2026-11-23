@@ -157,6 +157,36 @@ describe('HeaderComponent', () => {
             expect((await button.getSize()).height).toBe(44);
         });
 
+        // The header switches at 16.5rem of content width, which a viewport of 304 px gives inside the 20 px of padding.
+        it.each([
+            { width: 280, labelShown: false },
+            { width: 303, labelShown: false },
+            { width: 304, labelShown: true },
+            { width: 375, labelShown: true },
+            { width: 1023, labelShown: true },
+        ])(
+            'should keep the Menu button at least 16 px from the link home at $width px, with its label shown: $labelShown',
+            async ({ width, labelShown }) => {
+                await page.viewport(width, 800);
+                const { harness } = await setupTest();
+
+                expect(await harness.isMenuLabelShown()).toBe(labelShown);
+                expect(await harness.getBarGap()).toBeGreaterThanOrEqual(16);
+                expect(await harness.getInsets('menu')).toEqual(expect.objectContaining({ top: 12, right: 20 }));
+            },
+        );
+
+        it('should draw the Menu button as a 44 px square around its icon on a narrow screen, and keep its name', async () => {
+            await page.viewport(280, 800);
+            const { harness } = await setupTest();
+            const button = await harness.getMenuButton();
+
+            expect(await button.getSize()).toEqual({ width: 44, height: 44 });
+            expect(await button.getIcons()).toHaveLength(1);
+            await expect.element(page.getByRole('button', { name: 'Menu', exact: true })).toBeInTheDocument();
+            expect(await harness.getMenuAttribute('aria-haspopup')).toBe('dialog');
+        });
+
         it('should tell assistive technology that the Menu button opens a dialog', async () => {
             const { harness } = await setupTest();
 

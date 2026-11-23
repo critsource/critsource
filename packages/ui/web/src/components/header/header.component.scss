@@ -1,19 +1,23 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/narrow-bar.scss' as *;
 
 // The component turns encapsulation off to style its projected children, so every rule starts with its selector.
 $host: 'header[dma-header]';
 
 // The start group sits at the start and the end group at the end, both centered in a bar 68 px tall: the 44 px of the
 // buttons with the block padding around them. Penpot lays its divider over the bottom edge, so the bottom border takes
-// its place, and the block-end padding gives up the width of the border.
+// its place, and the block-end padding gives up the width of the border. The gap keeps the groups apart on a narrow
+// screen, and the header is a size container, so the Menu button can drop its label where the bar runs out of room.
 #{$host} {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: var(--space-16);
     padding: var(--space-12) var(--space-page-inline) calc(var(--space-12) - var(--border-width-default));
     border-block-end: var(--border-width-default) solid var(--color-border-divider);
     background: var(--color-background-page);
+    container: dma-header / inline-size;
 }
 
 // The link home and the nav, then the nav links in a row.
@@ -48,6 +52,11 @@ $host: 'header[dma-header]';
         outline-offset: var(--focus-offset);
     }
 }
+
+// Where the header has less than `$narrow-bar-width` inside its padding, the Menu button draws as a square around its
+// icon, and keeps its label for assistive technology. Close in Mobile menu switches at the same width, so the bar does
+// not jump when the menu opens. The spec of the header checks that the parts fit at that width.
+@include narrow-bar-button(dma-header, '#{$host} > .end > .menu');
 
 // Each layout hides the parts of the other, which also takes them out of the accessibility tree.
 @media (width < breakpoints.$breakpoint-desktop) {
