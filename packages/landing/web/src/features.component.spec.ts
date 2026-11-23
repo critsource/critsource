@@ -2,11 +2,47 @@ import { type ElementDimensions } from '@angular/cdk/testing';
 import { Component } from '@angular/core';
 import { page } from 'vitest/browser';
 import { FeaturesComponent } from './features.component';
-import { type FeatureGroupHarness, type FeatureItemHarness, FeaturesHarness } from '@critsource/landing-web/testing';
+import {
+    type FeatureGroupHarness,
+    type FeatureItemHarness,
+    type FeaturePreviewHarness,
+    FeaturesHarness,
+} from '@critsource/landing-web/testing';
 import { readColorToken, setupTestEnvironment } from '@critsource/ui-web/testing';
 
 /** The item of a group that holds the DM chip. */
 const DM_ITEM = 'Build encounters and custom monsters';
+
+/** What the preview of each group shows, in the order of the groups, as Penpot draws it. */
+const PREVIEWS = [
+    {
+        group: 'Prepare',
+        title: 'Fireball',
+        context: '3rd-level evocation',
+        stats: [
+            { term: 'Casting time', value: '1 action' },
+            { term: 'Range', value: '150 feet' },
+            { term: 'Damage', value: '8d6 fire' },
+        ],
+    },
+];
+
+/** What a preview shows, read the way `PREVIEWS` spells it. */
+async function readPreview(preview: FeaturePreviewHarness) {
+    const [title, context, stats] = await Promise.all([preview.getTitle(), preview.getContext(), preview.getStats()]);
+
+    return { title, context, stats };
+}
+
+/** The preview of the Prepare group, the first group. */
+async function getPreparePreview(harness: FeaturesHarness): Promise<FeaturePreviewHarness> {
+    const [prepare] = await harness.getGroups();
+
+    if (!prepare) {
+        throw new Error('The section has no groups.');
+    }
+    return await prepare.getPreview();
+}
 
 /** The eyebrow, heading, and item texts of a group, as Penpot lists them. */
 async function readGroup(group: FeatureGroupHarness) {
@@ -65,6 +101,7 @@ describe('FeaturesComponent', () => {
     const { innerWidth, innerHeight } = window;
 
     afterEach(async () => {
+        delete document.documentElement.dataset['theme'];
         await page.viewport(innerWidth, innerHeight);
     });
 
@@ -163,9 +200,75 @@ describe('FeaturesComponent', () => {
         expect(await harness.getLinkHref()).toBe('https://github.com/critsource/critsource#features');
     });
 
+    it.each(PREVIEWS)('should preview $title under the items of $group', async ({ group, ...expected }) => {
+        const { harness } = await setupTest();
+
+        const groups = await harness.getGroups();
+        const headings = await Promise.all(groups.map(async (each) => (await each.getHeading()).text));
+        const preview = await groups[headings.indexOf(group)]?.getPreview();
+
+        if (!preview) {
+            throw new Error(`The ${group} group has no preview.`);
+        }
+        expect(await readPreview(preview)).toEqual(expected);
+    });
+
+    it('should mark the preview as a concept, in text', async () => {
+        const { harness } = await setupTest();
+
+        const concept = await (await getPreparePreview(harness)).getConcept();
+
+        expect(await concept.getText()).toBe('Concept');
+    });
+
+    it('should leave each stat of the spell to assistive technology as a term and its definition', async () => {
+        await setupTest();
+
+        const terms = page.getByRole('term');
+        const definitions = page.getByRole('definition');
+
+        expect(terms.all()).toHaveLength(3);
+        for (const [index, { term, value }] of PREVIEWS[0]?.stats.entries() ?? []) {
+            await expect.element(terms.nth(index)).toHaveTextContent(term);
+            await expect.element(definitions.nth(index)).toHaveTextContent(value);
+        }
+    });
+
+    it('should set the preview 16 px under the items of its group', async () => {
+        const { harness } = await setupTest();
+        const [prepare] = await harness.getGroups();
+
+        if (!prepare) {
+            throw new Error('The section has no groups.');
+        }
+        const [list, preview] = await Promise.all([
+            prepare.getListBox(),
+            prepare.getPreview().then(async (each) => await each.getBox()),
+        ]);
+
+        expect(preview.top - (list.top + list.height)).toBeCloseTo(16);
+    });
+
+    it.each(['dark', 'light'])('should draw the preview in the colors of the %s theme', async (theme) => {
+        document.documentElement.dataset['theme'] = theme;
+        const { harness } = await setupTest();
+
+        const { background } = await (await getPreparePreview(harness)).getLook();
+
+        expect(background).toBe(readColorToken('--color-background-raised'));
+    });
+
     describe('on narrow screens', () => {
         beforeEach(async () => {
             await page.viewport(390, 844);
+        });
+
+        it('should pad the preview 16 px, with its parts 12 px apart', async () => {
+            const { harness } = await setupTest();
+
+            const spacing = await (await getPreparePreview(harness)).getSpacing();
+
+            expect(spacing).toEqual({ paddingBlock: 16, paddingInline: 16, gap: 12 });
         });
 
         it('should stack the groups 16 px apart in the order of the game', async () => {
@@ -215,6 +318,27 @@ describe('FeaturesComponent', () => {
             expect(remember.left - (play.left + play.width)).toBeCloseTo(24);
             expect(play.width).toBeCloseTo(prepare.width);
             expect(play.height).toBe(prepare.height);
+        });
+
+        it('should pad the preview 16 by 20 px, with its parts 8 px apart', async () => {
+            const { harness } = await setupTest();
+
+            const spacing = await (await getPreparePreview(harness)).getSpacing();
+
+            expect(spacing).toEqual({ paddingBlock: 16, paddingInline: 20, gap: 8 });
+        });
+
+        it('should set the stats of the spell side by side, 20 px apart', async () => {
+            const { harness } = await setupTest();
+
+            const boxes = await (await getPreparePreview(harness)).getStatBoxes();
+
+            expect(boxes).toHaveLength(3);
+            const [castingTime, range, damage] = boxes as [ElementDimensions, ElementDimensions, ElementDimensions];
+            expect(range.top).toBe(castingTime.top);
+            expect(damage.top).toBe(castingTime.top);
+            expect(range.left - (castingTime.left + castingTime.width)).toBeCloseTo(20);
+            expect(damage.left - (range.left + range.width)).toBeCloseTo(20);
         });
 
         it('should set the DM chip 8 px after the text of its item', async () => {
