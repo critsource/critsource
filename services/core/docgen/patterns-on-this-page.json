@@ -1,0 +1,37 @@
+{
+  "components": {
+    "patterns-on-this-page": {
+      "id": "patterns-on-this-page",
+      "name": "OnThisPageLinkComponent",
+      "path": "./src/components/on-this-page/on-this-page.stories.ts",
+      "description": "A link to a section of the page in On this page, drawn on the `<a>` it is placed on. Whoever places it adds the\n`href` of the heading of the section, such as `#your-rights`. The nav sets `aria-current=\"location\"` on the link of\nthe section in view.",
+      "jsDocTags": {},
+      "argTypes": {
+        "goToSection": {
+          "name": "goToSection",
+          "description": "Scrolls the heading that `href` names into view and moves focus to it, rather than following the link. The\n`<base href=\"/\">` of the app would resolve `#your-rights` against the root, which leaves the page. The address\nbecomes the path of the page with the hash, so the section stays linkable. When the heading can't take focus by\nitself, it gets `tabindex=\"-1\"` and the mark that draws its focus ring until it loses focus. A heading with a\n`tabindex` of its own keeps its own focus style.",
+          "type": {
+            "name": "other",
+            "value": "void"
+          },
+          "table": {
+            "category": "methods",
+            "type": {
+              "summary": "(event: MouseEvent) => void"
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "OnThisPageLinkComponent",
+        "selector": "a[dma-on-this-page-link]",
+        "standalone": true,
+        "inputs": [],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

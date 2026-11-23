@@ -1,0 +1,24 @@
+import{n as e}from"./rolldown-runtime-vtgMY1y5.js";import{E as t,N as n,R as r,T as i,gt as a,ht as o}from"./angular-platform-D63w9Bs1.js";var s;function init_vite_plugin_angular_raw_L2hvbWUvcnVubmVyL3dvcmsvY3JpdHNvdXJjZS9jcml0c291cmNlL3BhY2thZ2VzL3VpL3dlYi9zcmMvY29tcG9uZW50cy9sb2dvL2xvZ28uY29tcG9uZW50Lmh0bWw(){return(init_vite_plugin_angular_raw_L2hvbWUvcnVubmVyL3dvcmsvY3JpdHNvdXJjZS9jcml0c291cmNlL3BhY2thZ2VzL3VpL3dlYi9zcmMvY29tcG9uZW50cy9sb2dvL2xvZ28uY29tcG9uZW50Lmh0bWw=e((()=>{s=`<svg class="mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+    <path fill="#911C20" d="M26.49 3.9L26.49 20.64L38.6 18.66Z" />
+    <path fill="#C93136" d="M26.49 3.9L26.49 20.64L9.43 11.78Z" />
+    <path fill="#DB4948" d="M26.49 3.9L10.99 4.33L9.43 11.78Z" />
+    <path fill="#6E1819" d="M26.49 20.64L29.01 35.67L10.99 31.41Z" />
+    <path fill="#6E1819" d="M26.49 20.64L29.01 35.67L38.6 18.66Z" />
+    <path fill="#AC2228" d="M26.49 20.64L10.99 31.41L9.43 11.78Z" />
+    <path fill="#6E1819" d="M13.51 36.1L29.01 35.67L10.99 31.41Z" />
+    <path fill="#6E1819" d="M13.51 36.1L10.99 31.41L1.4 21.34Z" />
+    <path fill="#CA3236" d="M10.99 4.33L9.43 11.78L1.4 21.34Z" />
+    <path fill="#AD2228" d="M10.99 31.41L9.43 11.78L1.4 21.34Z" />
+    <path
+        class="edges"
+        d="M38.6 18.66L26.49 20.64L26.49 3.9L38.6 18.66L29.01 35.67L26.49 20.64L9.43 11.78L26.49 3.9L10.99 4.33L9.43 11.78L10.99 31.41L29.01 35.67L13.51 36.1L10.99 31.41L26.49 20.64M13.51 36.1L1.4 21.34L10.99 31.41M10.99 4.33L1.4 21.34L9.43 11.78"
+    />
+    <path
+        class="cracks"
+        d="M32.21 30L30.53 19.98L30.53 8.82M35.4 24.33L34.56 19.32L34.56 13.74M30.53 12.54L26.49 9.48L20.81 10.25M30.53 16.26L26.49 15.06L20.81 13.97M34.56 16.53L30.53 14.4M7.44 23.69L10.47 24.87L20.81 17.69L20.81 6.53L10.47 6.82L7.44 11.66M7.1 19.33L9.95 18.33L15.12 14.73L15.12 9.15L9.95 9.3L7.1 13.31M15.12 11.94L20.81 12.11M17.36 6.62L21.32 4.05M13.91 6.72L16.15 4.19M12.53 9.23L15.64 6.67M8.91 30.14L12.67 34.54L23 34.25L21.32 24.23L17.36 20.08M8.35 29.1L11.83 32.98L17 32.83L16.15 27.82L13.91 22.48M21.88 27.57L27.33 25.65L31.09 23.32M22.44 30.91L28.17 30.66L31.65 26.66M16.57 30.33L22.16 29.24M34.98 21.83L31.37 24.99M12.53 16.53L15.64 21.28M16.11 34.44L18.68 35.95M19.56 34.35L23.85 35.81M14.41 32.9L17.84 34.39M7.79 10L6.75 14.97L7.79 28.05L9.47 31.18M4.6 15.67L4.08 18.15L4.6 24.7L5.44 26.26M5.02 25.48L8.63 29.62M4.34 16.91L7.27 12.48M4.34 21.42L7.27 21.51"
+    />
+</svg>
+@if (kind() === 'full') {
+    <span class="wordmark">Critsource</span>
+}
+`})))()}var c;function init_logo_component(){return(init_logo_component=e((()=>{c=`:host{align-items:center;gap:var(--space-12);display:inline-flex}:host(.small){gap:var(--space-8)}.mark{flex-shrink:0;width:2.5rem;height:2.5rem}:host(.small) .mark{width:2rem;height:2rem}.edges,.cracks{fill:none;stroke:var(--color-brand-black);stroke-linecap:round;stroke-linejoin:round}.edges{stroke-width:.52px}.cracks{stroke-width:.3px}.wordmark{color:var(--color-foreground-default);font-family:var(--typography-title-font-family);font-size:var(--typography-title-font-size);font-weight:var(--typography-title-font-weight);letter-spacing:var(--typography-title-letter-spacing);line-height:var(--typography-title-line-height);-webkit-text-decoration:var(--typography-title-text-decoration);text-decoration:var(--typography-title-text-decoration);text-transform:var(--typography-title-text-case);white-space:nowrap}:host(.small) .wordmark{font-family:var(--typography-title-sm-font-family);font-size:var(--typography-title-sm-font-size);font-weight:var(--typography-title-sm-font-weight);letter-spacing:var(--typography-title-sm-letter-spacing);line-height:var(--typography-title-sm-line-height);-webkit-text-decoration:var(--typography-title-sm-text-decoration);text-decoration:var(--typography-title-sm-text-decoration);text-transform:var(--typography-title-sm-text-case)}`})))()}function logoKindAttr(e){return Object.values(l).includes(e)?e:u}function logoSizeAttr(e){return Object.values(d).includes(e)?e:f}var l,u,d,f;function init_logo_types(){return(init_logo_types=e((()=>{l={Full:`full`,Mark:`mark`},u=l.Full,d={Large:`large`,Small:`small`},f=d.Large})))()}var p;function init_logo_component$1(){return(init_logo_component$1=e((()=>{a(),init_vite_plugin_angular_raw_L2hvbWUvcnVubmVyL3dvcmsvY3JpdHNvdXJjZS9jcml0c291cmNlL3BhY2thZ2VzL3VpL3dlYi9zcmMvY29tcG9uZW50cy9sb2dvL2xvZ28uY29tcG9uZW50Lmh0bWw(),init_logo_component(),i(),init_logo_types(),p=class LogoComponent{kind=t(u,{transform:logoKindAttr});size=t(f,{transform:logoSizeAttr});static propDecorators={kind:[{type:r,args:[{isSignal:!0,alias:`kind`,required:!1}]}],size:[{type:r,args:[{isSignal:!0,alias:`size`,required:!1}]}]}},p=o([n({selector:`dma-logo`,template:s,host:{role:`img`,"aria-label":`Critsource`,"[class.small]":`size() === 'small'`},styles:[c]})],p)})))()}export{l as a,f as i,init_logo_component$1 as n,d as o,u as r,init_logo_types as s,p as t};
