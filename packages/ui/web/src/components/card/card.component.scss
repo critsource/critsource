@@ -1,17 +1,8 @@
+@use '@critsource/design-tokens/typography.scss' as *;
+
 // The component turns encapsulation off to style its projected children, so every rule starts with its selector.
 $host: 'dma-card';
 $heading: ':is(h1, h2, h3, h4, h5, h6)';
-
-// Sets the font of a typography token, such as `title` for the `--typography-title-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The Surface background. The card fills its container, such as a column of a grid, and keeps at least the minimum
 // width of Penpot, so a grid wraps to fewer columns instead of squeezing them. Penpot draws the border as an inner

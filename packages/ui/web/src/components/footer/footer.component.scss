@@ -1,19 +1,9 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
 
 // The component turns encapsulation off to style the options of its Theme picker, so every rule starts with its
 // selector.
 $host: 'footer[dma-footer]';
-
-// Sets the font of a typography token, such as `body-sm` for the `--typography-body-sm-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The inline padding follows the Viewport theme of `tokens.css`: 120 px on Desktop, and 20 px on Mobile.
 #{$host} {

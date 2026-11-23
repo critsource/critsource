@@ -6,7 +6,7 @@ The design tokens of Critsource, which the [design system](../../docs/design.md)
 
 ## Using the package
 
-Add the package to the `dependencies` of a project. It exports the four files below. `build` generates the CSS files and the Sass partial, and the repository commits them, so a project reads them without running the task:
+Add the package to the `dependencies` of a project. It exports the five files below. `build` generates the CSS files and `breakpoints.scss`, and the repository commits them, so a project reads them without running the task. `typography.scss` is written by hand:
 
 | Export                                       | Holds                                                                      |
 |:---------------------------------------------|:---------------------------------------------------------------------------|
@@ -14,6 +14,7 @@ Add the package to the `dependencies` of a project. It exports the four files be
 | `@critsource/design-tokens/fonts.css`        | The `@font-face` rules of the fonts, as [The fonts](#the-fonts) describes. |
 | `@critsource/design-tokens/breakpoints.scss` | The desktop breakpoint, as the Sass variable `$breakpoint-desktop`.        |
 | `@critsource/design-tokens/breakpoints`      | The desktop breakpoint, as the constant `desktopBreakpoint`, for a script. |
+| `@critsource/design-tokens/typography.scss`  | The `typography($name)` mixin, as [The Sass](#the-sass) describes.         |
 
 An Angular project loads both CSS files for the whole page through the `styles` option of each builder in `angular.json` that renders it, as [`apps/web/angular.json`](../../apps/web/angular.json) does for `build` and [`packages/ui/web/angular.json`](../ui/web/angular.json) for Storybook:
 
@@ -64,6 +65,18 @@ Each token becomes a variable named after its path in kebab case, with no prefix
 - **Shadows** become one `box-shadow` value each, such as `--shadow-raised`.
 - **Font families** become the full stack of their family in the [font config](#the-fonts), such as `--font-family-body: 'Source Sans 3', 'Source Sans 3 Fallback', sans-serif`.
 - **Descriptions** from Penpot become a comment above their variable.
+
+## The Sass
+
+`build` generates `scss/breakpoints.scss` from `src/breakpoints.ts`. `scss/typography.scss` is the one file of the `scss` folder that nobody generates: it holds the `typography($name)` mixin, which sets `font-family`, `font-size`, `font-weight`, `letter-spacing`, `line-height`, `text-decoration`, and `text-transform` from the `--typography-<name>-*` variables of [The CSS](#the-css). It sits here because it reads only those variables, so any project that loads `tokens.css` can use it, and a change to how a typography token applies is one edit. A stylesheet imports it without a namespace:
+
+```scss
+@use '@critsource/design-tokens/typography.scss' as *;
+
+h1 {
+    @include typography(h1);
+}
+```
 
 ## The fonts
 

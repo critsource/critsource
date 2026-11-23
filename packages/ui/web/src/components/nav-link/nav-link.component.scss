@@ -1,13 +1,4 @@
-// Sets the font and the underline of a typography token, such as `nav` for the `--typography-nav-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
+@use '@critsource/design-tokens/typography.scss' as *;
 
 // The bar kind: as wide as its label, and at least as tall as the minimum target size.
 :host {
