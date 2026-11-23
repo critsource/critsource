@@ -1,0 +1,76 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
+
+:host {
+    display: block;
+}
+
+// Below the desktop breakpoint, the cards stack space.12 apart; from it up, they sit side by side in three columns of
+// the same width, space.24 apart, and stretch to the height of the tallest.
+.cards {
+    display: grid;
+    gap: var(--space-12);
+}
+
+// A card draws as a raised surface, padded space.24 by space.20 below the desktop breakpoint and space.28 from it up,
+// with its parts space.12 apart below it and space.16 from it up.
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    padding: var(--space-24) var(--space-20);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-surface);
+    box-shadow: var(--shadow-raised);
+}
+
+// The gap spaces the parts, so none keeps the margin of its element.
+.card > * {
+    margin: 0;
+}
+
+h3 {
+    @include typography(title);
+
+    color: var(--color-foreground-default);
+}
+
+.card > p {
+    @include typography(body);
+
+    color: var(--color-foreground-muted);
+}
+
+.card > .hint {
+    @include typography(caption);
+}
+
+// A button fills the card below the desktop breakpoint, and hugs its label from it up, as Penpot draws it.
+.card > a {
+    align-self: flex-start;
+}
+
+// The links stack space.12 apart below the desktop breakpoint and space.8 from it up, each hugging its label, so the
+// space beside it is not part of the link.
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-12);
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-24);
+    }
+
+    .card {
+        gap: var(--space-16);
+        padding: var(--space-28);
+    }
+
+    .links {
+        gap: var(--space-8);
+    }
+}

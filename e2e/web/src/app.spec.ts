@@ -10,15 +10,18 @@ async function expectShell(page: Page) {
     await expect(root.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute('href', '#main');
 }
 
-/** Expects the hero of the landing page: its heading, and the calls to action that link to GitHub. */
+/**
+ * Expects the hero of the landing page: its heading, and the calls to action that link to GitHub. Later sections link
+ * to the repository too, so the check stays inside the hero.
+ */
 async function expectHero(page: Page) {
-    const landing = page.locator('dma-landing-page');
+    const hero = page.locator('dma-landing-page section.hero');
 
-    await expect(landing.getByRole('heading', { level: 1 })).toHaveText(
+    await expect(hero.getByRole('heading', { level: 1 })).toHaveText(
         'Prepare, play, and remember your 5e campaign in one open-source app',
     );
-    await expect(landing.getByRole('link', { name: 'Star Critsource on GitHub' })).toBeVisible();
-    await expect(landing.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
+    await expect(hero.getByRole('link', { name: 'Star Critsource on GitHub' })).toBeVisible();
+    await expect(hero.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
 }
 
 /** Expects the features section of the landing page, under the id the header links to: its headings and its link. */
@@ -32,6 +35,24 @@ async function expectFeatures(page: Page) {
     await expect(features.getByRole('link', { name: 'See every planned feature in the README' })).toBeVisible();
 }
 
+/** Expects the get-involved section of the landing page: its heading, the headings of its cards, and their links. */
+async function expectGetInvolved(page: Page) {
+    const section = page.locator('dma-get-involved');
+
+    await expect(section.getByRole('heading', { level: 2 })).toHaveText('Help shape Critsource before it launches');
+    await expect(section.getByRole('heading', { level: 3 })).toHaveText([
+        'Follow the project',
+        'Share an idea',
+        'Help build it',
+    ]);
+    await expect(section.getByRole('link')).toHaveText([
+        'Star Critsource on GitHub',
+        'Open Discussions',
+        'Read the contributing guide',
+        'Read the code of conduct',
+    ]);
+}
+
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
@@ -43,6 +64,7 @@ test.describe('app', () => {
             await expectShell(page);
             await expectHero(page);
             await expectFeatures(page);
+            await expectGetInvolved(page);
         });
     });
 
@@ -64,6 +86,7 @@ test.describe('app', () => {
         await expectShell(page);
         await expectHero(page);
         await expectFeatures(page);
+        await expectGetInvolved(page);
         expect(errors).toEqual([]);
     });
 });

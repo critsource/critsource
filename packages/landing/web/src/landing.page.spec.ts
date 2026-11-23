@@ -123,6 +123,14 @@ describe('LandingPage', () => {
         expect(await (await harness.getFeatures()).getId()).toBe('features');
     });
 
+    it('should follow the features section with the get-involved section', async () => {
+        const { harness } = await setupTest();
+
+        const intro = await (await harness.getGetInvolved()).getIntro();
+
+        expect(await intro.getText('heading')).toBe('Help shape Critsource before it launches');
+    });
+
     it('should hide the glow from assistive technology', async () => {
         const { harness } = await setupTest();
 
