@@ -78,14 +78,13 @@ h3 {
     list-style: none;
 }
 
-// An item: an accent bullet, space.8 before its text. The bullet is decoration, so it has no text for assistive
-// technology. A DM chip sits under the text below the desktop breakpoint, so a long item never pushes it to the edge,
-// and after the text from it up. Each part aligns to the first line of the text.
+// An item: an accent bullet, its text, and a DM chip space.8 after the text, each on the first line of the text at
+// every width. The bullet sits space.12 before the text below the desktop breakpoint and space.8 from it up. The bullet
+// is decoration, so it has no text for assistive technology.
 li {
     @include typography(body);
 
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    display: flex;
     align-items: start;
     gap: var(--space-8);
     color: var(--color-foreground-default);
@@ -93,12 +92,8 @@ li {
 
 li::before {
     content: '•' / '';
+    margin-inline-end: var(--space-4);
     color: var(--color-accent-text);
-}
-
-li > dma-chip {
-    grid-column: 2;
-    justify-self: start;
 }
 
 @media (min-width: breakpoints.$breakpoint-desktop) {
@@ -115,7 +110,7 @@ li > dma-chip {
         padding: var(--space-28);
     }
 
-    li {
-        display: flex;
+    li::before {
+        margin-inline-end: 0;
     }
 }

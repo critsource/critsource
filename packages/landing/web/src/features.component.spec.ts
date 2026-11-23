@@ -37,14 +37,16 @@ async function getDmItem(harness: FeaturesHarness): Promise<FeatureItemHarness> 
     return item;
 }
 
-/** The boxes of the text and the DM chip of the item that holds the chip. */
-async function getDmBoxes(harness: FeaturesHarness): Promise<{ text: ElementDimensions; chip: ElementDimensions }> {
-    const { text, chip } = await (await getDmItem(harness)).getBoxes();
+/** The boxes of the item that holds the DM chip, its text, and the chip. */
+async function getDmBoxes(
+    harness: FeaturesHarness,
+): Promise<{ item: ElementDimensions; text: ElementDimensions; chip: ElementDimensions }> {
+    const { item, text, chip } = await (await getDmItem(harness)).getBoxes();
 
     if (!chip) {
         throw new Error(`"${DM_ITEM}" has no chip.`);
     }
-    return { text, chip };
+    return { item, text, chip };
 }
 
 describe('FeaturesComponent', () => {
@@ -177,13 +179,23 @@ describe('FeaturesComponent', () => {
             expect(remember.top - (play.top + play.height)).toBeCloseTo(16);
         });
 
-        it('should set the DM chip under its item, aligned with its text', async () => {
+        it('should set the DM chip 8 px after the text of its item, on its first line', async () => {
             const { harness } = await setupTest();
 
             const { text, chip } = await getDmBoxes(harness);
 
-            expect(chip.top).toBeGreaterThanOrEqual(text.top + text.height);
-            expect(chip.left).toBe(text.left);
+            expect(chip.top).toBe(text.top);
+            expect(chip.left - (text.left + text.width)).toBeCloseTo(8);
+        });
+
+        it('should set the text of an item 4 px further from its bullet than on wide screens', async () => {
+            const { harness } = await setupTest();
+
+            const narrow = await getDmBoxes(harness);
+            await page.viewport(1440, 900);
+            const wide = await getDmBoxes(harness);
+
+            expect(narrow.text.left - narrow.item.left - (wide.text.left - wide.item.left)).toBeCloseTo(4);
         });
     });
 

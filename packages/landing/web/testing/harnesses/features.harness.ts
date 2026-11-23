@@ -1,7 +1,7 @@
 import { ComponentHarness, type ElementDimensions } from '@angular/cdk/testing';
 import { ChipHarness, LinkHarness, SectionIntroHarness } from '@critsource/ui-web/testing';
 
-/** An item of a feature group: its text, and where its text and chip sit on the page, in pixels. */
+/** An item of a feature group: its text, and where the item, its text, and its chip sit on the page, in pixels. */
 export class FeatureItemHarness extends ComponentHarness {
     public static readonly hostSelector = 'li';
 
@@ -18,12 +18,23 @@ export class FeatureItemHarness extends ComponentHarness {
         return await this.chipLocator();
     }
 
-    /** Where the text and the chip of the item sit, the chip `null` when the item has none. */
-    public async getBoxes(): Promise<{ text: ElementDimensions; chip: ElementDimensions | null }> {
-        const [text, chip] = await Promise.all([this.textLocator(), this.chipElementLocator()]);
-        const [textBox, chipBox] = await Promise.all([text.getDimensions(), chip?.getDimensions() ?? null]);
+    /**
+     * Where the item, its text, and its chip sit, the chip `null` when the item has none. The item starts at its bullet,
+     * so the space before the text holds the bullet and the gap after it.
+     */
+    public async getBoxes(): Promise<{
+        item: ElementDimensions;
+        text: ElementDimensions;
+        chip: ElementDimensions | null;
+    }> {
+        const [item, text, chip] = await Promise.all([this.host(), this.textLocator(), this.chipElementLocator()]);
+        const [itemBox, textBox, chipBox] = await Promise.all([
+            item.getDimensions(),
+            text.getDimensions(),
+            chip?.getDimensions() ?? null,
+        ]);
 
-        return { text: textBox, chip: chipBox };
+        return { item: itemBox, text: textBox, chip: chipBox };
     }
 }
 
