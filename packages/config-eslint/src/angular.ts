@@ -34,6 +34,11 @@ export function angular(projectRoot: string): Config[] {
         {
             files: ['**/*.html'],
             extends: [angularEslint.configs.templateRecommended, angularEslint.configs.templateAccessibility],
+            rules: {
+                // A <button> without a type submits its form, and Button keeps that native behavior, so the rule makes
+                // each button say what it does. Tab sets type="button" itself.
+                '@angular-eslint/template/button-has-type': ['error', { ignoreWithDirectives: ['dma-tab'] }],
+            },
         },
     );
 }
