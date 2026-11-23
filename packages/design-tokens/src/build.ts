@@ -2,7 +2,7 @@ import { expandTypesMap, register } from '@tokens-studio/sd-transforms';
 import StyleDictionary from 'style-dictionary';
 import type { FormatFnArguments, TransformedToken } from 'style-dictionary/types';
 import { createPropertyFormatter } from 'style-dictionary/utils';
-import { desktopBreakpoint } from './breakpoints.ts';
+import { desktopBreakpoint, tabletBreakpoint } from './breakpoints.ts';
 import { fontStack } from './fonts.ts';
 import { findSource, isToken, overlaySets, splitSets, type TokenGroup, type TokenSets } from './sets.ts';
 import { normalizeTokens } from './normalize.ts';
@@ -21,9 +21,10 @@ export interface Block {
 }
 
 /**
- * The rules of `tokens.css`, as ADR 0008 records. Dark and Mobile sit on `:root`. Light overrides Dark when the device
- * prefers light and `data-theme` doesn't ask for dark, or when `data-theme` asks for light. Desktop overrides Mobile
- * from the desktop breakpoint up.
+ * The rules of `tokens.css`, as ADR 0008 and ADR 0014 record. Dark and Mobile sit on `:root`. Light overrides Dark
+ * when the device prefers light and `data-theme` doesn't ask for dark, or when `data-theme` asks for light. Tablet
+ * overrides Mobile from the tablet breakpoint up, and Desktop overrides both from the desktop breakpoint up, so its rule
+ * comes last.
  */
 export const blocks: readonly Block[] = [
     { selectors: [':root'], sets: ['primitives', 'base'] },
@@ -35,6 +36,7 @@ export const blocks: readonly Block[] = [
         colorScheme: 'light',
     },
     { selectors: [":root[data-theme='light']"], sets: ['color/light'], colorScheme: 'light' },
+    { selectors: [`@media (min-width: ${tabletBreakpoint})`, ':root'], sets: ['viewport/tablet'] },
     { selectors: [`@media (min-width: ${desktopBreakpoint})`, ':root'], sets: ['viewport/desktop'] },
 ];
 

@@ -181,22 +181,23 @@ describe('MobileMenuComponent', () => {
         expect(await harness.getBarInsets('close')).toEqual(expect.objectContaining({ top: 12, right: 20 }));
     });
 
-    // The bar switches at 16.5rem of content width, which a viewport of 304 px gives inside the 20 px of padding.
+    // The bar switches at 16.5rem of content width, which a viewport of 304 px gives inside the 20 px of padding. From
+    // 600 px, the Tablet theme widens the padding to 48 px.
     it.each([
-        { width: 280, labelShown: false },
-        { width: 303, labelShown: false },
-        { width: 304, labelShown: true },
-        { width: 375, labelShown: true },
-        { width: 1023, labelShown: true },
+        { width: 280, labelShown: false, right: 20 },
+        { width: 303, labelShown: false, right: 20 },
+        { width: 304, labelShown: true, right: 20 },
+        { width: 375, labelShown: true, right: 20 },
+        { width: 1023, labelShown: true, right: 48 },
     ])(
         'should keep Close at least 16 px from the link home at $width px, with its label shown: $labelShown',
-        async ({ width, labelShown }) => {
+        async ({ width, labelShown, right }) => {
             await page.viewport(width, 812);
             const { harness } = await setupOpenTest();
 
             expect(await harness.isCloseLabelShown()).toBe(labelShown);
             expect(await harness.getBarGap()).toBeGreaterThanOrEqual(16);
-            expect(await harness.getBarInsets('close')).toEqual(expect.objectContaining({ top: 12, right: 20 }));
+            expect(await harness.getBarInsets('close')).toEqual(expect.objectContaining({ top: 12, right }));
         },
     );
 

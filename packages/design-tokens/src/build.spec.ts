@@ -67,6 +67,10 @@ const exported = {
     },
     'viewport/mobile': {
         font: { size: { h1: { $value: '34px', $type: 'fontSizes' } } },
+        space: { 'page-inline': { $value: '{space.16}', $type: 'spacing' } },
+    },
+    'viewport/tablet': {
+        space: { 'page-inline': { $value: '48px', $type: 'spacing' } },
     },
     '$themes': [],
     '$metadata': { activeThemes: [], activeSets: [] },
@@ -136,6 +140,7 @@ describe('buildCss', () => {
                 ['viewport/mobile', [':root']],
                 ['color/light', ['@media (prefers-color-scheme: light)', ":root:not([data-theme='dark'])"]],
                 ['color/light', [":root[data-theme='light']"]],
+                ['viewport/tablet', ['@media (min-width: 37.5em)', ':root']],
                 ['viewport/desktop', ['@media (min-width: 64em)', ':root']],
             ]);
         });
@@ -147,6 +152,7 @@ describe('buildCss', () => {
             expect(rule(css, 'color/dark')).toContain('--color-background-page: var(--color-neutral-19);');
             expect(rule(css, 'viewport/mobile')).toContain('--font-size-h1: 2.125rem;');
             expect(rule(css, 'color/light')).toContain('--color-background-page: var(--color-neutral-94);');
+            expect(rule(css, 'viewport/tablet')).toEqual(['--space-page-inline: 3rem;']);
             expect(rule(css, 'viewport/desktop')).toContain('--font-size-h1: 3.375rem;');
         });
 
@@ -184,7 +190,7 @@ describe('buildCss', () => {
             expect(rule(css, sets, index)[0]).toBe(`color-scheme: ${scheme};`);
         });
 
-        it.each(['primitives, base', 'viewport/mobile', 'viewport/desktop'])(
+        it.each(['primitives, base', 'viewport/mobile', 'viewport/tablet', 'viewport/desktop'])(
             'sets no color-scheme in rule %s',
             async (sets) => {
                 const css = await setupTest();

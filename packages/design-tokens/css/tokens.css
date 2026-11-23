@@ -445,6 +445,14 @@
     --shadow-raised: 0px 1px 3px 0px #0f172a12;
 }
 
+/* viewport/tablet */
+@media (min-width: 37.5em) {
+    :root {
+        /** Side margin of the page */
+        --space-page-inline: var(--space-48);
+    }
+}
+
 /* viewport/desktop */
 @media (min-width: 64em) {
     :root {
