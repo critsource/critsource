@@ -10,6 +10,19 @@
     text-transform: var(--typography-#{$name}-text-case);
 }
 
+// The hero positions the glow and starts a stacking context of its own, so the glow sits over its background and
+// under its text. Below the desktop breakpoint, Penpot puts the brightest point of the glow 90% across and 5% down the
+// hero, and fades it out over 55% of its size; from it up, 85% across and 10% down, over 90%.
+.hero {
+    position: relative;
+    isolation: isolate;
+}
+
+dma-glow {
+    --glow-center: 90% 5%;
+    --glow-reach: 55%;
+}
+
 // The Hero text board of Penpot: a column space.20 apart below the desktop breakpoint and space.24 from it up, at the
 // width of its content, and at most the 580 px that Penpot fixes it at on Desktop, which no token holds. The calls to
 // action fill it, so their buttons can fill the width below the desktop breakpoint.
@@ -22,6 +35,11 @@
 }
 
 @media (min-width: breakpoints.$breakpoint-desktop) {
+    dma-glow {
+        --glow-center: 85% 10%;
+        --glow-reach: 90%;
+    }
+
     .text {
         gap: var(--space-24);
     }
