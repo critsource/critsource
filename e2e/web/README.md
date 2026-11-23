@@ -10,6 +10,7 @@ The project tests what only the running app shows: what nginx serves, that the a
 |:---------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|
 | [`app.spec.ts`](src/app.spec.ts)             | `/` shows the landing page in the app shell without JavaScript and once it hydrates.                                                |
 | [`not-found.spec.ts`](src/not-found.spec.ts) | An unknown path returns 404 with the Not found page, with and without JavaScript, and a missing file returns a plain 404.           |
+| [`layout.spec.ts`](src/layout.spec.ts)       | The header, the hero, and the footer line up on the page margin of each Viewport theme, at the widths around its breakpoints.       |
 | [`theme.spec.ts`](src/theme.spec.ts)         | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System.      |
 | [`csp.spec.ts`](src/csp.spec.ts)             | Every route loads with no violation of the enforced policy, with and without a saved theme, and each response has its own nonce.    |
 | [`headers.spec.ts`](src/headers.spec.ts)     | Each HTML page, a bundle, `build-info.json`, and a missing file carry every security header of the image.                           |
