@@ -117,6 +117,12 @@ describe('LandingPage', () => {
         );
     });
 
+    it('should follow the hero with the features section', async () => {
+        const { harness } = await setupTest();
+
+        expect(await (await harness.getFeatures()).getId()).toBe('features');
+    });
+
     it('should hide the glow from assistive technology', async () => {
         const { harness } = await setupTest();
 

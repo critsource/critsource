@@ -21,6 +21,16 @@ async function expectHero(page: Page) {
     await expect(landing.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
 }
 
+/** Expects the features section of the landing page, under the id the header links to: its heading and its link. */
+async function expectFeatures(page: Page) {
+    const features = page.locator('dma-landing-page section#features');
+
+    await expect(features.getByRole('heading', { level: 2 })).toHaveText(
+        'Everything for the game, from prep to the last session',
+    );
+    await expect(features.getByRole('link', { name: 'See every planned feature in the README' })).toBeVisible();
+}
+
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
@@ -31,6 +41,7 @@ test.describe('app', () => {
             await expect(page).toHaveTitle('Critsource');
             await expectShell(page);
             await expectHero(page);
+            await expectFeatures(page);
         });
     });
 
@@ -51,6 +62,7 @@ test.describe('app', () => {
         await expect(root).not.toHaveAttribute('ngh');
         await expectShell(page);
         await expectHero(page);
+        await expectFeatures(page);
         expect(errors).toEqual([]);
     });
 });
