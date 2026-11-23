@@ -24,24 +24,48 @@ const PREVIEWS = [
             { term: 'Range', value: '150 feet' },
             { term: 'Damage', value: '8d6 fire' },
         ],
+        roll: null,
+        note: null,
+    },
+    {
+        group: 'Play',
+        title: 'Fireball damage',
+        context: 'Rolled by Borin, seen by the party',
+        stats: [],
+        roll: { command: '/roll 8d6', result: '28 fire' },
+        note: null,
+    },
+    {
+        group: 'Remember',
+        title: 'Session 12',
+        context: 'The Sunken Keep · shared with the party',
+        stats: [],
+        roll: null,
+        note: 'The party struck a deal with the river hag: safe passage in exchange for the silver bell.',
     },
 ];
 
 /** What a preview shows, read the way `PREVIEWS` spells it. */
 async function readPreview(preview: FeaturePreviewHarness) {
-    const [title, context, stats] = await Promise.all([preview.getTitle(), preview.getContext(), preview.getStats()]);
+    const [title, context, stats, roll, note] = await Promise.all([
+        preview.getTitle(),
+        preview.getContext(),
+        preview.getStats(),
+        preview.getRoll(),
+        preview.getNote(),
+    ]);
 
-    return { title, context, stats };
+    return { title, context, stats, roll, note };
 }
 
-/** The preview of the Prepare group, the first group. */
-async function getPreparePreview(harness: FeaturesHarness): Promise<FeaturePreviewHarness> {
-    const [prepare] = await harness.getGroups();
+/** The previews of the Prepare, Play, and Remember groups, in that order. */
+async function getPreviews(
+    harness: FeaturesHarness,
+): Promise<[FeaturePreviewHarness, FeaturePreviewHarness, FeaturePreviewHarness]> {
+    const previews = await Promise.all((await harness.getGroups()).map((group) => group.getPreview()));
 
-    if (!prepare) {
-        throw new Error('The section has no groups.');
-    }
-    return await prepare.getPreview();
+    expect(previews).toHaveLength(3);
+    return previews as [FeaturePreviewHarness, FeaturePreviewHarness, FeaturePreviewHarness];
 }
 
 /** The eyebrow, heading, and item texts of a group, as Penpot lists them. */
@@ -213,12 +237,14 @@ describe('FeaturesComponent', () => {
         expect(await readPreview(preview)).toEqual(expected);
     });
 
-    it('should mark the preview as a concept, in text', async () => {
+    it('should mark every preview as a concept, in text', async () => {
         const { harness } = await setupTest();
 
-        const concept = await (await getPreparePreview(harness)).getConcept();
+        const texts = await Promise.all(
+            (await getPreviews(harness)).map(async (preview) => await (await preview.getConcept()).getText()),
+        );
 
-        expect(await concept.getText()).toBe('Concept');
+        expect(texts).toEqual(['Concept', 'Concept', 'Concept']);
     });
 
     it('should leave each stat of the spell to assistive technology as a term and its definition', async () => {
@@ -234,28 +260,35 @@ describe('FeaturesComponent', () => {
         }
     });
 
-    it('should set the preview 16 px under the items of its group', async () => {
+    it('should set each preview 16 px under the items of its group', async () => {
         const { harness } = await setupTest();
-        const [prepare] = await harness.getGroups();
 
-        if (!prepare) {
-            throw new Error('The section has no groups.');
+        for (const group of await harness.getGroups()) {
+            const [list, preview] = await Promise.all([
+                group.getListBox(),
+                group.getPreview().then(async (each) => await each.getBox()),
+            ]);
+
+            expect(preview.top - (list.top + list.height)).toBeCloseTo(16);
         }
-        const [list, preview] = await Promise.all([
-            prepare.getListBox(),
-            prepare.getPreview().then(async (each) => await each.getBox()),
-        ]);
-
-        expect(preview.top - (list.top + list.height)).toBeCloseTo(16);
     });
 
-    it.each(['dark', 'light'])('should draw the preview in the colors of the %s theme', async (theme) => {
+    it.each(['dark', 'light'])('should draw the previews in the colors of the %s theme', async (theme) => {
         document.documentElement.dataset['theme'] = theme;
         const { harness } = await setupTest();
+        const [prepare, play, remember] = await getPreviews(harness);
 
-        const { background } = await (await getPreparePreview(harness)).getLook();
+        const [looks, roll, result] = await Promise.all([
+            Promise.all([prepare, play, remember].map(async (preview) => await preview.getLook())),
+            play.getLook('roll'),
+            play.getLook('result'),
+        ]);
 
-        expect(background).toBe(readColorToken('--color-background-raised'));
+        expect(looks.map(({ background }) => background)).toEqual(
+            Array(3).fill(readColorToken('--color-background-raised')),
+        );
+        expect(roll.background).toBe(readColorToken('--color-background-sunken'));
+        expect(result.color).toBe(readColorToken('--color-accent-text'));
     });
 
     describe('on narrow screens', () => {
@@ -263,12 +296,21 @@ describe('FeaturesComponent', () => {
             await page.viewport(390, 844);
         });
 
-        it('should pad the preview 16 px, with its parts 12 px apart', async () => {
+        it('should pad each preview 16 px, with its parts 12 px apart', async () => {
             const { harness } = await setupTest();
 
-            const spacing = await (await getPreparePreview(harness)).getSpacing();
+            const spacings = await Promise.all((await getPreviews(harness)).map((preview) => preview.getSpacing()));
 
-            expect(spacing).toEqual({ paddingBlock: 16, paddingInline: 16, gap: 12 });
+            expect(spacings).toEqual(Array(3).fill({ paddingBlock: 16, paddingInline: 16, gap: 12 }));
+        });
+
+        it('should pad the roll box 12 px', async () => {
+            const { harness } = await setupTest();
+            const [, play] = await getPreviews(harness);
+
+            const { paddingBlock, paddingInline } = await play.getSpacing('roll');
+
+            expect({ paddingBlock, paddingInline }).toEqual({ paddingBlock: 12, paddingInline: 12 });
         });
 
         it('should stack the groups 16 px apart in the order of the game', async () => {
@@ -320,18 +362,28 @@ describe('FeaturesComponent', () => {
             expect(play.height).toBe(prepare.height);
         });
 
-        it('should pad the preview 16 by 20 px, with its parts 8 px apart', async () => {
+        it('should pad each preview 16 by 20 px, with its parts 8 px apart', async () => {
             const { harness } = await setupTest();
 
-            const spacing = await (await getPreparePreview(harness)).getSpacing();
+            const spacings = await Promise.all((await getPreviews(harness)).map((preview) => preview.getSpacing()));
 
-            expect(spacing).toEqual({ paddingBlock: 16, paddingInline: 20, gap: 8 });
+            expect(spacings).toEqual(Array(3).fill({ paddingBlock: 16, paddingInline: 20, gap: 8 }));
+        });
+
+        it('should pad the roll box 12 by 16 px', async () => {
+            const { harness } = await setupTest();
+            const [, play] = await getPreviews(harness);
+
+            const { paddingBlock, paddingInline } = await play.getSpacing('roll');
+
+            expect({ paddingBlock, paddingInline }).toEqual({ paddingBlock: 12, paddingInline: 16 });
         });
 
         it('should set the stats of the spell side by side, 20 px apart', async () => {
             const { harness } = await setupTest();
+            const [prepare] = await getPreviews(harness);
 
-            const boxes = await (await getPreparePreview(harness)).getStatBoxes();
+            const boxes = await prepare.getStatBoxes();
 
             expect(boxes).toHaveLength(3);
             const [castingTime, range, damage] = boxes as [ElementDimensions, ElementDimensions, ElementDimensions];

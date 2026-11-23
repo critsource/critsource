@@ -1,4 +1,4 @@
-import { ComponentHarness, type ElementDimensions } from '@angular/cdk/testing';
+import { ComponentHarness, type ElementDimensions, type TestElement } from '@angular/cdk/testing';
 import { ChipHarness, LinkHarness, SectionIntroHarness } from '@critsource/ui-web/testing';
 
 /** An item of a feature group: its text, and where the item, its text, and its chip sit on the page, in pixels. */
@@ -38,20 +38,23 @@ export class FeatureItemHarness extends ComponentHarness {
     }
 }
 
-/** How a feature preview draws its box and its text. */
+/** How a part of a feature preview draws its box and its text. */
 export interface FeaturePreviewLook {
     background: string;
     color: string;
 }
 
-/** The space inside a feature preview, and between its children, in pixels. */
+/** The space inside a part of a feature preview, and between its children, in pixels. */
 export interface FeaturePreviewSpacing {
     paddingBlock: number;
     paddingInline: number;
     gap: number;
 }
 
-/** The concept preview of a feature group: its title, context, and Concept chip, then the stats it shows. */
+/**
+ * The concept preview of a feature group: its title, context, and Concept chip, then its stats, its roll box, or its
+ * note, whichever it shows.
+ */
 export class FeaturePreviewHarness extends ComponentHarness {
     public static readonly hostSelector = '.preview';
 
@@ -61,6 +64,10 @@ export class FeaturePreviewHarness extends ComponentHarness {
     private readonly statsLocator = this.locatorForAll('.stats > div');
     private readonly termsLocator = this.locatorForAll('.stats > div > dt');
     private readonly valuesLocator = this.locatorForAll('.stats > div > dd');
+    private readonly rollLocator = this.locatorForOptional('.roll');
+    private readonly commandLocator = this.locatorForOptional('.roll > code');
+    private readonly resultLocator = this.locatorForOptional('.roll > .result');
+    private readonly noteLocator = this.locatorForOptional('.note');
 
     public async getTitle(): Promise<string> {
         return await (await this.titleLocator()).text();
@@ -91,9 +98,24 @@ export class FeaturePreviewHarness extends ComponentHarness {
         return await Promise.all(stats.map(async (stat) => await stat.getDimensions()));
     }
 
-    /** How the preview draws. */
-    public async getLook(): Promise<FeaturePreviewLook> {
-        const element = await this.host();
+    /** The command and result of the roll box, or `null` when the preview shows none. */
+    public async getRoll(): Promise<{ command: string; result: string } | null> {
+        const [command, result] = await Promise.all([this.commandLocator(), this.resultLocator()]);
+
+        if (!command || !result) {
+            return null;
+        }
+        return { command: await command.text(), result: await result.text() };
+    }
+
+    /** The text of the note, or `null` when the preview shows none. */
+    public async getNote(): Promise<string | null> {
+        return (await (await this.noteLocator())?.text()) ?? null;
+    }
+
+    /** How the preview, its roll box, or the result of the roll draws. */
+    public async getLook(part: 'preview' | 'roll' | 'result' = 'preview'): Promise<FeaturePreviewLook> {
+        const element = await this.getPart(part);
         const [background, color] = await Promise.all([
             element.getCssValue('background-color'),
             element.getCssValue('color'),
@@ -102,9 +124,9 @@ export class FeaturePreviewHarness extends ComponentHarness {
         return { background, color };
     }
 
-    /** The padding of the preview, and the gap between its parts. */
-    public async getSpacing(): Promise<FeaturePreviewSpacing> {
-        const element = await this.host();
+    /** The padding of the preview or its roll box, and the gap between its children. */
+    public async getSpacing(part: 'preview' | 'roll' = 'preview'): Promise<FeaturePreviewSpacing> {
+        const element = await this.getPart(part);
         const [paddingBlock, paddingInline, gap] = await Promise.all([
             element.getCssValue('padding-block-start'),
             element.getCssValue('padding-inline-start'),
@@ -121,6 +143,19 @@ export class FeaturePreviewHarness extends ComponentHarness {
     /** Where the preview sits on the page. */
     public async getBox(): Promise<ElementDimensions> {
         return await (await this.host()).getDimensions();
+    }
+
+    private async getPart(part: 'preview' | 'roll' | 'result'): Promise<TestElement> {
+        if (part === 'preview') {
+            return await this.host();
+        }
+
+        const element = await (part === 'roll' ? this.rollLocator() : this.resultLocator());
+
+        if (!element) {
+            throw new Error(`The preview "${await this.getTitle()}" has no roll box.`);
+        }
+        return element;
     }
 }
 
