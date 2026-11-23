@@ -11,8 +11,8 @@ async function expectShell(page: Page) {
 }
 
 /**
- * Expects the hero of the landing page: its heading, and the calls to action that link to GitHub. Later sections link
- * to the repository too, so the check stays inside the hero.
+ * Expects the hero of the landing page: its heading, the calls to action that link to GitHub, and the preview, on its
+ * Play tab. Later sections link to the repository too, so the check stays inside the hero.
  */
 async function expectHero(page: Page) {
     const hero = page.locator('dma-landing-page section.hero');
@@ -22,6 +22,9 @@ async function expectHero(page: Page) {
     );
     await expect(hero.getByRole('link', { name: 'Star Critsource on GitHub' })).toBeVisible();
     await expect(hero.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
+    await expect(hero.getByRole('tab')).toHaveText(['Prepare', 'Play', 'Remember']);
+    await expect(hero.getByRole('tab', { name: 'Play' })).toHaveAttribute('aria-selected', 'true');
+    await expect(hero.getByRole('tabpanel')).toContainText('Initiative');
 }
 
 /** Expects the features section of the landing page, under the id the header links to: its headings and its link. */
@@ -106,6 +109,20 @@ test.describe('app', () => {
         await expectGetInvolved(page);
         await expectFaq(page);
         expect(errors).toEqual([]);
+    });
+
+    test('switches the preview of the hero with a click and with the arrow keys', async ({ page }) => {
+        await page.goto('/');
+
+        const preview = page.locator('dma-tabbed-preview');
+        const remember = preview.getByRole('tab', { name: 'Remember' });
+
+        await remember.click();
+        await expect(remember).toHaveAttribute('aria-selected', 'true');
+        await expect(preview.getByRole('tabpanel')).toContainText('Session 12');
+        await remember.press('ArrowRight');
+        await expect(preview.getByRole('tab', { name: 'Prepare' })).toBeFocused();
+        await expect(preview.getByRole('tabpanel')).toContainText('Encounter');
     });
 
     test('opens and closes a question of the FAQ', async ({ page }) => {
