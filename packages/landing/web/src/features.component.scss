@@ -1,0 +1,8 @@
+:host {
+    display: block;
+}
+
+// The link hugs its label, so the space beside it is not part of the link.
+a {
+    align-self: flex-start;
+}
