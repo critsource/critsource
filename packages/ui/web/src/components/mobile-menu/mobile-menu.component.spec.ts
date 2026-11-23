@@ -181,6 +181,35 @@ describe('MobileMenuComponent', () => {
         expect(await harness.getBarInsets('close')).toEqual(expect.objectContaining({ top: 12, right: 20 }));
     });
 
+    // The bar switches at 16.5rem of content width, which a viewport of 304 px gives inside the 20 px of padding.
+    it.each([
+        { width: 280, labelShown: false },
+        { width: 303, labelShown: false },
+        { width: 304, labelShown: true },
+        { width: 375, labelShown: true },
+        { width: 1023, labelShown: true },
+    ])(
+        'should keep Close at least 16 px from the link home at $width px, with its label shown: $labelShown',
+        async ({ width, labelShown }) => {
+            await page.viewport(width, 812);
+            const { harness } = await setupOpenTest();
+
+            expect(await harness.isCloseLabelShown()).toBe(labelShown);
+            expect(await harness.getBarGap()).toBeGreaterThanOrEqual(16);
+            expect(await harness.getBarInsets('close')).toEqual(expect.objectContaining({ top: 12, right: 20 }));
+        },
+    );
+
+    it('should draw Close as a 44 px square around its icon on a narrow screen, and keep its name', async () => {
+        await page.viewport(280, 812);
+        const { harness } = await setupOpenTest();
+        const button = await harness.getCloseButton();
+
+        expect(await button.getSize()).toEqual({ width: 44, height: 44 });
+        expect(await button.getIcons()).toHaveLength(1);
+        await expect.element(closeButton()).toHaveFocus();
+    });
+
     it('should stack the projected rows 4 px apart in a nav named Main, 16 px below the bar', async () => {
         const { harness } = await setupOpenTest();
         const [rows, boxes] = await Promise.all([harness.getNavLinks(), harness.getNavLinkBoxes()]);
