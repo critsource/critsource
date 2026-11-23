@@ -1,8 +1,116 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+
+@mixin typography($name) {
+    font-family: var(--typography-#{$name}-font-family);
+    font-size: var(--typography-#{$name}-font-size);
+    font-weight: var(--typography-#{$name}-font-weight);
+    letter-spacing: var(--typography-#{$name}-letter-spacing);
+    line-height: var(--typography-#{$name}-line-height);
+    text-decoration: var(--typography-#{$name}-text-decoration);
+    text-transform: var(--typography-#{$name}-text-case);
+}
+
 :host {
     display: block;
 }
 
-// The link hugs its label, so the space beside it is not part of the link.
-a {
+// The Slot board of Penpot: the groups, then the link to the README, space.28 apart below the desktop breakpoint and
+// space.48 from it up. The link hugs its label, so the space beside it is not part of the link.
+.slot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-28);
+}
+
+.slot > a {
     align-self: flex-start;
+}
+
+// Below the desktop breakpoint, the groups stack space.16 apart in the order of the game; from it up, they sit side by
+// side in three columns of the same width, space.24 apart, and stretch to the height of the tallest.
+.groups {
+    display: grid;
+    gap: var(--space-16);
+}
+
+// A group draws as a raised surface, padded space.24 by space.20 below the desktop breakpoint and space.28 from it up,
+// with its eyebrow, heading, and list space.16 apart.
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    padding: var(--space-24) var(--space-20);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-surface);
+    box-shadow: var(--shadow-raised);
+}
+
+.group > hgroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+}
+
+// The gaps space the texts and lists, so none keeps the margin or padding of its element.
+.group > hgroup,
+.group > hgroup > *,
+.group > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.group > hgroup > p {
+    @include typography(eyebrow);
+
+    color: var(--color-accent-text);
+}
+
+h3 {
+    @include typography(h3);
+
+    color: var(--color-foreground-default);
+}
+
+.group > ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    list-style: none;
+}
+
+// An item: an accent bullet, its text, and a DM chip space.8 after the text, each on the first line of the text at
+// every width. The bullet sits space.12 before the text below the desktop breakpoint and space.8 from it up. The bullet
+// is decoration, so it has no text for assistive technology.
+li {
+    @include typography(body);
+
+    display: flex;
+    align-items: start;
+    gap: var(--space-8);
+    color: var(--color-foreground-default);
+}
+
+li::before {
+    content: '•' / '';
+    margin-inline-end: var(--space-4);
+    color: var(--color-accent-text);
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .slot {
+        gap: var(--space-48);
+    }
+
+    .groups {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-24);
+    }
+
+    .group {
+        padding: var(--space-28);
+    }
+
+    li::before {
+        margin-inline-end: 0;
+    }
 }
