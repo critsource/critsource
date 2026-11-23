@@ -1,3 +1,4 @@
+@use '@critsource/design-tokens/narrow-bar.scss' as *;
 @use '@critsource/design-tokens/typography.scss' as *;
 
 // The component turns encapsulation off to style its projected children and the options of its Theme picker, so every
@@ -49,24 +50,9 @@ $host: 'dialog[dma-mobile-menu]';
     container: dma-mobile-menu-bar / inline-size;
 }
 
-// Where the bar is narrower than the link home, the gap, and Close with its label need, Close draws as a square around
-// its icon, and its label stays in the page for assistive technology, as the Theme picker does with its options. The
-// 16.5rem is the 259 px they need with the fonts of the app, rounded up, and the spec of the menu checks that they fit in it.
-@container dma-mobile-menu-bar (inline-size < 16.5rem) {
-    #{$host} > .bar > .close {
-        flex-basis: var(--size-target-min);
-        padding-inline: 0;
-    }
-
-    #{$host} > .bar > .close > .label {
-        position: absolute;
-        inline-size: 1px;
-        block-size: 1px;
-        overflow: hidden;
-        clip-path: inset(50%);
-        white-space: nowrap;
-    }
-}
+// Where the bar has less than `$narrow-bar-width` inside its padding, Close draws as a square around its icon, and keeps
+// its label for assistive technology. The spec of the menu checks that the parts fit at that width.
+@include narrow-bar-button(dma-mobile-menu-bar, '#{$host} > .bar > .close');
 
 // The link home takes the size of the logo and draws no underline, with the focus ring of Link, as in Header.
 #{$host} > .bar > a {

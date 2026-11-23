@@ -6,7 +6,7 @@ The design tokens of Critsource, which the [design system](../../docs/design.md)
 
 ## Using the package
 
-Add the package to the `dependencies` of a project. It exports the five files below. `build` generates the CSS files and `breakpoints.scss`, and the repository commits them, so a project reads them without running the task. `typography.scss` is written by hand:
+Add the package to the `dependencies` of a project. It exports the six files below. `build` generates the CSS files and `breakpoints.scss`, and the repository commits them, so a project reads them without running the task. `typography.scss` and `narrow-bar.scss` are written by hand:
 
 | Export                                       | Holds                                                                      |
 |:---------------------------------------------|:---------------------------------------------------------------------------|
@@ -15,6 +15,7 @@ Add the package to the `dependencies` of a project. It exports the five files be
 | `@critsource/design-tokens/breakpoints.scss` | The desktop breakpoint, as the Sass variable `$breakpoint-desktop`.        |
 | `@critsource/design-tokens/breakpoints`      | The desktop breakpoint, as the constant `desktopBreakpoint`, for a script. |
 | `@critsource/design-tokens/typography.scss`  | The `typography($name)` mixin, as [The Sass](#the-sass) describes.         |
+| `@critsource/design-tokens/narrow-bar.scss`  | The `narrow-bar-button()` mixin, as [The Sass](#the-sass) describes.       |
 
 An Angular project loads both CSS files for the whole page through the `styles` option of each builder in `angular.json` that renders it, as [`apps/web/angular.json`](../../apps/web/angular.json) does for `build` and [`packages/ui/web/angular.json`](../ui/web/angular.json) for Storybook:
 
@@ -68,7 +69,7 @@ Each token becomes a variable named after its path in kebab case, with no prefix
 
 ## The Sass
 
-`build` generates `scss/breakpoints.scss` from `src/breakpoints.ts`. `scss/typography.scss` is the one file of the `scss` folder that nobody generates: it holds the `typography($name)` mixin, which sets `font-family`, `font-size`, `font-weight`, `letter-spacing`, `line-height`, `text-decoration`, and `text-transform` from the `--typography-<name>-*` variables of [The CSS](#the-css). It sits here because it reads only those variables, so any project that loads `tokens.css` can use it, and a change to how a typography token applies is one edit. A stylesheet imports it without a namespace:
+`build` generates `scss/breakpoints.scss` from `src/breakpoints.ts`. Nobody generates the other two files of the `scss` folder. `scss/typography.scss` holds the `typography($name)` mixin, which sets `font-family`, `font-size`, `font-weight`, `letter-spacing`, `line-height`, `text-decoration`, and `text-transform` from the `--typography-<name>-*` variables of [The CSS](#the-css). It sits here because it reads only those variables, so any project that loads `tokens.css` can use it, and a change to how a typography token applies is one edit. A stylesheet imports it without a namespace:
 
 ```scss
 @use '@critsource/design-tokens/typography.scss' as *;
@@ -76,6 +77,18 @@ Each token becomes a variable named after its path in kebab case, with no prefix
 h1 {
     @include typography(h1);
 }
+```
+
+`scss/narrow-bar.scss` holds `$narrow-bar-width` and the `narrow-bar-button($container, $button)` mixin, so the bars of the UI library switch their buttons at one width. Where the size container named `$container` has less than `$narrow-bar-width` inside its padding, the mixin draws `$button` as a square around its icon, and keeps its `.label` in the page for assistive technology. The bar of Mobile menu uses it:
+
+```scss
+@use '@critsource/design-tokens/narrow-bar.scss' as *;
+
+dialog[dma-mobile-menu] > .bar {
+    container: dma-mobile-menu-bar / inline-size;
+}
+
+@include narrow-bar-button(dma-mobile-menu-bar, 'dialog[dma-mobile-menu] > .bar > .close');
 ```
 
 ## The fonts

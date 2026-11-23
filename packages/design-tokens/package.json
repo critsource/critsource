@@ -14,6 +14,7 @@
     "./breakpoints": "./src/breakpoints.ts",
     "./breakpoints.scss": "./scss/breakpoints.scss",
     "./fonts.css": "./css/fonts.css",
+    "./narrow-bar.scss": "./scss/narrow-bar.scss",
     "./tokens.css": "./css/tokens.css",
     "./typography.scss": "./scss/typography.scss"
   },
