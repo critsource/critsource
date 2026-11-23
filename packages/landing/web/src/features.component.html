@@ -2,6 +2,53 @@
     <hgroup dma-section-intro>
         <p>Features</p>
         <h2>Everything for the game, from prep to the last session</h2>
+        <p>
+            Grouped by when you use them. Tools marked DM are for dungeon masters; everything else is open to all
+            players.
+        </p>
     </hgroup>
-    <a dma-link kind="standalone" [href]="plannedFeaturesUrl">See every planned feature in the README</a>
+    <div class="slot">
+        <div class="groups">
+            <div class="group">
+                <hgroup>
+                    <p>Before the session</p>
+                    <h3>Prepare</h3>
+                </hgroup>
+                <ul role="list">
+                    <li><span>Build worlds and write their lore</span></li>
+                    <li><span>Draw maps of worlds and their locations</span></li>
+                    <li><span>Create characters and keep spell books</span></li>
+                    <li>
+                        <span>Build encounters and custom monsters</span>
+                        <dma-chip kind="dm">DM</dma-chip>
+                    </li>
+                </ul>
+            </div>
+            <div class="group">
+                <hgroup>
+                    <p>At the table</p>
+                    <h3>Play</h3>
+                </hgroup>
+                <ul role="list">
+                    <li><span>Run sessions on a virtual tabletop</span></li>
+                    <li><span>Roll dice where everyone can see them</span></li>
+                    <li><span>Look up any rule in the compendium</span></li>
+                    <li><span>Track combat with a 5e rules engine</span></li>
+                </ul>
+            </div>
+            <div class="group">
+                <hgroup>
+                    <p>After the session</p>
+                    <h3>Remember</h3>
+                </hgroup>
+                <ul role="list">
+                    <li><span>Keep notes of every session</span></li>
+                    <li><span>Manage campaigns and their sessions</span></li>
+                    <li><span>Share worlds, maps, and notes with your party</span></li>
+                    <li><span>Make any of them public</span></li>
+                </ul>
+            </div>
+        </div>
+        <a dma-link kind="standalone" [href]="plannedFeaturesUrl">See every planned feature in the README</a>
+    </div>
 </section>
