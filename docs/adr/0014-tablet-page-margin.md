@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-11-23
-- **Built in:** [#547](https://github.com/critsource/critsource/issues/547)
+- **Built in:** [#592](https://github.com/critsource/critsource/pull/592)
 - **Supersedes:** Part of [0008](0008-theme-mapping.md)
 
 ## Context
