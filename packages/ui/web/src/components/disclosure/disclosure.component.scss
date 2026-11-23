@@ -1,17 +1,8 @@
+@use '@critsource/design-tokens/typography.scss' as *;
+
 // The component turns encapsulation off to style its projected content, so every rule starts with its selector, and
 // uses child combinators, so a disclosure in the panel of another keeps its own look.
 $host: 'details[dma-disclosure]';
-
-// Sets the font of a typography token, such as `body` for the `--typography-body-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The disclosure fills its container up to the measure. Penpot draws the divider over the bottom padding, so the border
 // takes its width from that padding, and the disclosure keeps the height of Penpot.

@@ -72,6 +72,18 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 [tx]: src/components/text-page/text-page.component.ts
 [tp]: src/components/theme-picker/theme-picker.component.ts
 
+### Shared Sass
+
+Sass that more than one component needs lives in [`@critsource/design-tokens`](../../design-tokens/README.md#the-sass), next to the tokens it reads, and a stylesheet imports it with `@use`. The package has two partials: `breakpoints.scss` for the desktop breakpoint, and `typography.scss` for the `typography($name)` mixin, which sets the font properties of a `--typography-*` token. A component stylesheet defines no copy of either:
+
+```scss
+@use '@critsource/design-tokens/typography.scss' as *;
+
+:host {
+    @include typography(body);
+}
+```
+
 ## Theme
 
 `ThemeService` owns the color scheme that the reader picks, the one piece of state in this package that [ADR 0001](../../../docs/adr/0001-ui-and-token-packages.md) allows. [ADR 0008](../../../docs/adr/0008-theme-mapping.md) records how the choice maps to the themes of `tokens.css`. Inject the service where the reader picks a theme, such as the Theme picker:

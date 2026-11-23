@@ -17,7 +17,7 @@ fileGroups:
     sources:
         - "src/**/*"
 
-    # The files that the package exports: the generated CSS and Sass partial, and the breakpoint for scripts. The apps
+    # The files that the package exports: the generated CSS, the Sass partials, and the breakpoint for scripts. The apps
     # and the UI packages load them, so their tasks can list them as inputs.
     css:
         - "css/**/*"

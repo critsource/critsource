@@ -1,19 +1,9 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
 
 // The component turns encapsulation off to style the summary and the panel of its Disclosure, so every rule starts with
 // its selector, which also outranks the rules of the Disclosure it overrides.
 $host: 'nav[dma-on-this-page]';
-
-// Sets the font of a typography token, such as `caps` for the `--typography-caps-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The nav fills the column the page gives it. Below the desktop breakpoint, it is the Disclosure that Penpot draws for
 // Mobile, in the flow of the page. Its title hides, since the summary shows the same label, but still names the nav.

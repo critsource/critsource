@@ -1,19 +1,9 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
 
 // The component turns encapsulation off to style its projected children, so every rule starts with its selector.
 $host: 'article[dma-text-page]';
 $nav: 'nav[dma-on-this-page]';
-
-// Sets the font of a typography token, such as `body` for the `--typography-body-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The Article. It fills its container up to the measure, and stacks the title block, On this page, the Summary, and
 // the prose, in that order, as the template projects them.

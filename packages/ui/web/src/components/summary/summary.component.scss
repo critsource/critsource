@@ -1,17 +1,8 @@
+@use '@critsource/design-tokens/typography.scss' as *;
+
 // The component turns encapsulation off to style its projected children, so every rule starts with its selector.
 $host: 'section[dma-summary]';
 $title: '[dma-summary-title]';
-
-// Sets the font of a typography token, such as `title` for the `--typography-title-*` properties.
-@mixin typography($name) {
-    font-family: var(--typography-#{$name}-font-family);
-    font-size: var(--typography-#{$name}-font-size);
-    font-weight: var(--typography-#{$name}-font-weight);
-    letter-spacing: var(--typography-#{$name}-letter-spacing);
-    line-height: var(--typography-#{$name}-line-height);
-    text-decoration: var(--typography-#{$name}-text-decoration);
-    text-transform: var(--typography-#{$name}-text-case);
-}
 
 // The Surface box. The summary fills its container up to the measure, as Penpot draws it under the title block of
 // the Article. Penpot draws the border as an inner stroke, so the padding leaves room for it inside the space.24 of
