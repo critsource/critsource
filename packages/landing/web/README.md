@@ -9,7 +9,8 @@ The page at `/` and its sections. Build each section from the components of [`ui
 The page is prerendered during `web:build`, so every component on it follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 
 - [`src/landing.routes.ts`](src/landing.routes.ts) holds `landingRoutes`, which renders `LandingPage` at the root of the routes.
-- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page. Its hero, the first section, holds the status chip, the heading, and the lede.
+- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page. Its hero, the first section, holds the status chip, the heading, the lede, the calls to action, and the hint on how to follow releases.
+- `CallsToActionComponent`, in [`src/calls-to-action.component.ts`](src/calls-to-action.component.ts), is the pair of buttons that link to the repository and to the Ideas category of Discussions. The hero places it, and so will the closing call to action, so both keep the same labels and links.
 
 A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `LandingPage` does. Every other component takes the `Component` suffix.
 
@@ -21,10 +22,10 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                            | Source                                 | Exports                        |
-|:----------------------------------|:---------------------------------------|:-------------------------------|
-| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes` |
-| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `LandingPageHarness`           |
+| Import                            | Source                                 | Exports                                      |
+|:----------------------------------|:---------------------------------------|:---------------------------------------------|
+| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes`               |
+| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `CallsToActionHarness`, `LandingPageHarness` |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 
