@@ -1,0 +1,14 @@
+// Penpot draws the glow as a rectangle over the whole section, filled with a radial gradient from the accent color to
+// transparent, at the opacity of the Color scheme: brighter on the dark page than on the light one.
+:host {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+        ellipse var(--glow-reach, 100%) var(--glow-reach, 100%) at var(--glow-center, 50% 50%),
+        var(--color-accent-default),
+        transparent
+    );
+    opacity: var(--opacity-glow);
+    pointer-events: none;
+}
