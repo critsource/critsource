@@ -5,7 +5,7 @@
 // selector.
 $host: 'footer[dma-footer]';
 
-// The inline padding follows the Viewport theme of `tokens.css`: 120 px on Desktop, and 20 px on Mobile.
+// The inline padding follows the Viewport theme of `tokens.css`: 120 px on Desktop, 48 px on Tablet, and 20 px on Mobile.
 #{$host} {
     display: flex;
     flex-direction: column;

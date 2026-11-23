@@ -2,20 +2,20 @@
 
 The design tokens of Critsource, which the [design system](../../docs/design.md) in Penpot holds: the colors, sizes, type, and shadows that every component and theme reads. [ADR 0001](../../docs/adr/0001-ui-and-token-packages.md) records why the tokens live in a package of their own.
 
-`tokens.json` is the single-file token export of the Design system file, committed as Penpot writes it. Change a token in Penpot and export it again, as [Design tokens](../../docs/design.md#design-tokens) describes, rather than editing the file. [`src/fonts.ts`](src/fonts.ts) configures the fonts, and [`src/breakpoints.ts`](src/breakpoints.ts) the desktop breakpoint. The [`build`](#tasks) task generates the files that the package exports from these three. [ADR 0006](../../docs/adr/0006-design-token-pipeline.md) records how the pipeline works and why, [ADR 0008](../../docs/adr/0008-theme-mapping.md) how the themes switch, and [ADR 0010](../../docs/adr/0010-font-loading.md) how the app loads its fonts.
+`tokens.json` is the single-file token export of the Design system file, committed as Penpot writes it. Change a token in Penpot and export it again, as [Design tokens](../../docs/design.md#design-tokens) describes, rather than editing the file. [`src/fonts.ts`](src/fonts.ts) configures the fonts, and [`src/breakpoints.ts`](src/breakpoints.ts) the tablet and desktop breakpoints. The [`build`](#tasks) task generates the files that the package exports from these three. [ADR 0006](../../docs/adr/0006-design-token-pipeline.md) records how the pipeline works and why, [ADR 0008](../../docs/adr/0008-theme-mapping.md) and [ADR 0014](../../docs/adr/0014-tablet-page-margin.md) how the themes switch, and [ADR 0010](../../docs/adr/0010-font-loading.md) how the app loads its fonts.
 
 ## Using the package
 
 Add the package to the `dependencies` of a project. It exports the six files below. `build` generates the CSS files and `breakpoints.scss`, and the repository commits them, so a project reads them without running the task. `typography.scss` and `narrow-bar.scss` are written by hand:
 
-| Export                                       | Holds                                                                      |
-|:---------------------------------------------|:---------------------------------------------------------------------------|
-| `@critsource/design-tokens/tokens.css`       | The CSS custom properties of the tokens, as [The CSS](#the-css) describes. |
-| `@critsource/design-tokens/fonts.css`        | The `@font-face` rules of the fonts, as [The fonts](#the-fonts) describes. |
-| `@critsource/design-tokens/breakpoints.scss` | The desktop breakpoint, as the Sass variable `$breakpoint-desktop`.        |
-| `@critsource/design-tokens/breakpoints`      | The desktop breakpoint, as the constant `desktopBreakpoint`, for a script. |
-| `@critsource/design-tokens/typography.scss`  | The `typography($name)` mixin, as [The Sass](#the-sass) describes.         |
-| `@critsource/design-tokens/narrow-bar.scss`  | The `narrow-bar-button()` mixin, as [The Sass](#the-sass) describes.       |
+| Export                                       | Holds                                                                                       |
+|:---------------------------------------------|:--------------------------------------------------------------------------------------------|
+| `@critsource/design-tokens/tokens.css`       | The CSS custom properties of the tokens, as [The CSS](#the-css) describes.                  |
+| `@critsource/design-tokens/fonts.css`        | The `@font-face` rules of the fonts, as [The fonts](#the-fonts) describes.                  |
+| `@critsource/design-tokens/breakpoints.scss` | The breakpoints, as the Sass variables `$breakpoint-tablet` and `$breakpoint-desktop`.      |
+| `@critsource/design-tokens/breakpoints`      | The breakpoints, as the constants `tabletBreakpoint` and `desktopBreakpoint`, for a script. |
+| `@critsource/design-tokens/typography.scss`  | The `typography($name)` mixin, as [The Sass](#the-sass) describes.                          |
+| `@critsource/design-tokens/narrow-bar.scss`  | The `narrow-bar-button()` mixin, as [The Sass](#the-sass) describes.                        |
 
 An Angular project loads both CSS files for the whole page through the `styles` option of each builder in `angular.json` that renders it, as [`apps/web/angular.json`](../../apps/web/angular.json) does for `build` and [`packages/ui/web/angular.json`](../ui/web/angular.json) for Storybook:
 
@@ -27,7 +27,7 @@ An Angular project loads both CSS files for the whole page through the `styles` 
 ]
 ```
 
-A component then reads a token through `var()`, such as `var(--color-background-page)`, and uses the semantic tokens only, as [Design tokens](../../docs/design.md#design-tokens) asks. No custom property can appear in a media query, so a component whose styles change at the desktop breakpoint imports the Sass partial instead, as [`button.component.scss`](../ui/web/src/components/button/button.component.scss) does:
+A component then reads a token through `var()`, such as `var(--color-background-page)`, and uses the semantic tokens only, as [Design tokens](../../docs/design.md#design-tokens) asks. No custom property can appear in a media query, so a component whose styles change at a breakpoint imports the Sass partial instead, as [`button.component.scss`](../ui/web/src/components/button/button.component.scss) does:
 
 ```scss
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
@@ -39,7 +39,7 @@ A component then reads a token through `var()`, such as `var(--color-background-
 }
 ```
 
-A script that follows the breakpoint imports the constant instead, which Node.js and the Angular build read from the TypeScript source:
+A script that follows a breakpoint imports its constant instead, which Node.js and the Angular build read from the TypeScript source:
 
 ```ts
 import { desktopBreakpoint } from '@critsource/design-tokens/breakpoints';
@@ -59,7 +59,7 @@ inputs:
 
 Each token becomes a variable named after its path in kebab case, with no prefix and no set name: `color.accent.default` becomes `--color-accent-default`. A token that references another one keeps the reference as `var()`, so the CSS shows which primitive each semantic token takes its value from.
 
-- **Sets.** `primitives` and `base` share one rule on `:root`, and `color/dark` and `viewport/mobile` each follow in a rule of their own on `:root`. `color/light` follows twice, once for a device that prefers light and once for `data-theme="light"`, and `viewport/desktop` last, inside the desktop media query. [Themes](../../docs/design.md#themes) lists the selectors. Each rule resolves its references against the sets on `:root`, with its own set in place of the one it overrides, so `color/light` never overwrites a token of `color/dark` in the build.
+- **Sets.** `primitives` and `base` share one rule on `:root`, and `color/dark` and `viewport/mobile` each follow in a rule of their own on `:root`. `color/light` follows twice, once for a device that prefers light and once for `data-theme="light"`, then `viewport/tablet` inside the tablet media query, and `viewport/desktop` last, inside the desktop media query. [Themes](../../docs/design.md#themes) lists the selectors. Each rule resolves its references against the sets on `:root`, with the tokens of its own set over the ones they override. So `color/light` never overwrites a token of `color/dark` in the build, and `viewport/tablet`, which overrides only `space.page-inline`, resolves against the rest of `viewport/mobile`.
 - **Color scheme.** The rules of `color/dark` and `color/light` each set `color-scheme` to their scheme.
 - **Sizes** are in `rem` at 16 px to 1 rem, letter spacing included. Border widths stay in `px`.
 - **Typography tokens** become one variable per property, such as `--typography-h1-font-size: var(--font-size-h1)`.
@@ -112,7 +112,7 @@ dialog[dma-mobile-menu] > .bar {
 | `typecheck` | `tsc --project tsconfig.lib.json && tsc --project tsconfig.spec.json && tsc --project tsconfig.node.json` | yes        | yes    |
 | `lint`      | `eslint . --max-warnings 0`                                                                               | yes        | yes    |
 
-Generate the files that the package exports. Run it after each export, each change to the fonts or the breakpoint, and each update of a Fontsource package, and commit the files it writes:
+Generate the files that the package exports. Run it after each export, each change to the fonts or the breakpoints, and each update of a Fontsource package, and commit the files it writes:
 
 - `css/tokens.css`, from `tokens.json` and `src/breakpoints.ts`, with [Style Dictionary](https://styledictionary.com) and [`@tokens-studio/sd-transforms`](https://github.com/tokens-studio/sd-transforms), which read the export of Penpot.
 - `css/fonts.css`, from `src/fonts.ts` and the CSS and font files of the Fontsource packages, with Capsize for the metrics of the fallbacks and Prettier for the format.

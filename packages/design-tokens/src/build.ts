@@ -2,9 +2,9 @@ import { expandTypesMap, register } from '@tokens-studio/sd-transforms';
 import StyleDictionary from 'style-dictionary';
 import type { FormatFnArguments, TransformedToken } from 'style-dictionary/types';
 import { createPropertyFormatter } from 'style-dictionary/utils';
-import { desktopBreakpoint } from './breakpoints.ts';
+import { desktopBreakpoint, tabletBreakpoint } from './breakpoints.ts';
 import { fontStack } from './fonts.ts';
-import { findSource, isToken, mergeSets, overlaySets, splitSets, type TokenGroup, type TokenSets } from './sets.ts';
+import { findSource, isToken, overlaySets, splitSets, type TokenGroup, type TokenSets } from './sets.ts';
 import { normalizeTokens } from './normalize.ts';
 
 /** A rule of the generated CSS, which declares the tokens of some sets of the export. */
@@ -21,9 +21,10 @@ export interface Block {
 }
 
 /**
- * The rules of `tokens.css`, as ADR 0008 records. Dark and Mobile sit on `:root`. Light overrides Dark when the device
- * prefers light and `data-theme` doesn't ask for dark, or when `data-theme` asks for light. Desktop overrides Mobile
- * from the desktop breakpoint up.
+ * The rules of `tokens.css`, as ADR 0008 and ADR 0014 record. Dark and Mobile sit on `:root`. Light overrides Dark
+ * when the device prefers light and `data-theme` doesn't ask for dark, or when `data-theme` asks for light. Tablet
+ * overrides Mobile from the tablet breakpoint up, and Desktop overrides both from the desktop breakpoint up, so its rule
+ * comes last.
  */
 export const blocks: readonly Block[] = [
     { selectors: [':root'], sets: ['primitives', 'base'] },
@@ -35,6 +36,7 @@ export const blocks: readonly Block[] = [
         colorScheme: 'light',
     },
     { selectors: [":root[data-theme='light']"], sets: ['color/light'], colorScheme: 'light' },
+    { selectors: [`@media (min-width: ${tabletBreakpoint})`, ':root'], sets: ['viewport/tablet'] },
     { selectors: [`@media (min-width: ${desktopBreakpoint})`, ':root'], sets: ['viewport/desktop'] },
 ];
 
@@ -106,11 +108,9 @@ export async function buildCss(
 
     await register(StyleDictionary);
 
-    // Each rule resolves its tokens against the default sets, with its own sets in place of those they override.
+    // Each rule resolves its tokens against the default sets, with its own sets over the tokens they override.
     const css = await Promise.all(
-        rules.map(async (rule) =>
-            formatRule(rule, await declare(sets, overlaySets(sets, defaults, rule.sets), rule.sets)),
-        ),
+        rules.map(async (rule) => formatRule(rule, await declare(sets, defaults, rule.sets))),
     );
 
     return `${header}\n\n${css.join('\n')}`;
@@ -142,12 +142,14 @@ function isDefault(rule: Block) {
 /**
  * Formats the tokens of some sets as declarations.
  * @param sets - The sets of the export.
- * @param names - The names of the sets that resolve the tokens.
+ * @param defaults - The names of the sets that resolve the tokens unless the declared sets override them.
  * @param declared - The names of the sets whose tokens to declare.
  * @returns The declarations, each indented one level.
  */
-async function declare(sets: TokenSets, names: readonly string[], declared: readonly string[]) {
-    const tokens = mergeSets(sets, names);
+async function declare(sets: TokenSets, defaults: readonly string[], declared: readonly string[]) {
+    const tokens = overlaySets(sets, defaults, declared);
+    // The declared sets come first, so a token that they override is found in them.
+    const names = [...declared, ...defaults.filter((name) => !declared.includes(name))];
 
     normalizeTokens(tokens);
 

@@ -14,16 +14,23 @@ const exported = {
     },
     'base': {
         typography: { body: { $value: { fontSizes: '16px' }, $type: 'typography' } },
+        space: {
+            'page-inline': { $value: '20px', $type: 'spacing' },
+            'section-block': { $value: '56px', $type: 'spacing' },
+        },
+    },
+    'viewport/tablet': {
+        space: { 'page-inline': { $value: '48px', $type: 'spacing' } },
     },
     '$themes': [],
-    '$metadata': { tokenSetOrder: ['primitives', 'color/dark', 'color/light', 'base'] },
+    '$metadata': { tokenSetOrder: ['primitives', 'color/dark', 'color/light', 'base', 'viewport/tablet'] },
 };
 
 describe('splitSets', () => {
     it('keys each set by its name, in the order of the export', () => {
         const sets = splitSets(exported);
 
-        expect([...sets.keys()]).toEqual(['primitives', 'color/dark', 'color/light', 'base']);
+        expect([...sets.keys()]).toEqual(['primitives', 'color/dark', 'color/light', 'base', 'viewport/tablet']);
     });
 
     it('leaves out $themes and $metadata', () => {
@@ -76,16 +83,38 @@ describe('overlaySets', () => {
     const sets = splitSets(exported);
     const base = ['primitives', 'base', 'color/dark'];
 
-    it('puts a set in place of the sets it shares a token with', () => {
-        expect(overlaySets(sets, base, ['color/light'])).toEqual(['primitives', 'base', 'color/light']);
+    it('puts the tokens of the overlay in place of the tokens they share a path with', () => {
+        expect(overlaySets(sets, base, ['color/light'])).toEqual(
+            mergeSets(sets, ['primitives', 'base', 'color/light']),
+        );
+    });
+
+    it('keeps the tokens of a set that the overlay overrides only in part', () => {
+        const merged = overlaySets(sets, base, ['viewport/tablet']);
+
+        expect(merged['space']).toEqual({
+            'page-inline': { $value: '48px', $type: 'spacing' },
+            'section-block': { $value: '56px', $type: 'spacing' },
+        });
+        expect(merged['color']).toEqual(mergeSets(sets, ['primitives', 'color/dark'])['color']);
+    });
+
+    it('keeps the order of the sets', () => {
+        expect(Object.keys(overlaySets(sets, ['base', 'color/dark'], ['primitives', 'base']))).toEqual([
+            'typography',
+            'space',
+            'color',
+        ]);
+    });
+
+    it('fails when two sets of the overlay hold the same token', () => {
+        expect(() => overlaySets(sets, base, ['color/dark', 'color/light'])).toThrow(
+            'Set color/light holds color.background.page, which an earlier set already holds.',
+        );
     });
 
     it('keeps the sets when the overlay is one of them', () => {
-        expect(overlaySets(sets, base, ['color/dark'])).toEqual(base);
-    });
-
-    it('keeps a set whose groups the overlay shares, but none of its tokens', () => {
-        expect(overlaySets(sets, ['primitives'], ['color/dark'])).toEqual(['primitives', 'color/dark']);
+        expect(overlaySets(sets, base, ['color/dark'])).toEqual(mergeSets(sets, base));
     });
 
     it('fails on a set that the export does not hold', () => {

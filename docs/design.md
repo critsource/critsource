@@ -10,10 +10,11 @@ The designs live in [Penpot](https://penpot.app), in the Critsource project of t
 |:---------------------------|:------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|:----------------------|
 | Design system              | Foundations, Components, Brand                  | The design tokens, the components with the build status of each, and the logo with the favicons and Open Graph image of the app. | [Open][design-system] |
 | Desktop                    | Landing page, Privacy, Accessibility, Not found | The wireframes of every page at desktop widths.                                                                                  | [Open][desktop]       |
+| Tablet                     | Landing page, Privacy, Accessibility, Not found | The wireframes of every page at tablet widths.                                                                                   | [Open][tablet]        |
 | Mobile                     | Landing page, Privacy, Accessibility, Not found | The wireframes of every page at mobile widths.                                                                                   | [Open][mobile]        |
 | Landing page · exploration | Mood board, Wireframe                           | The mood board and the first wireframe of the landing page.                                                                      | [Open][exploration]   |
 
-The design system is a shared library: Desktop and Mobile use its components, so a change to a component reaches every page that uses it.
+The design system is a shared library: Desktop, Tablet, and Mobile use its components, so a change to a component reaches every page that uses it.
 
 ## Who can open them
 
@@ -51,18 +52,21 @@ Components use the semantic tokens only, such as `--color-background-page`, neve
 
 ## Themes
 
-The Design system file groups its themes in two: Color scheme holds Dark and Light, and Viewport holds Mobile and Desktop. `tokens.css` switches both groups with selectors, so a component reads the same variables in every theme. [ADR 0008](adr/0008-theme-mapping.md) records why.
+The Design system file groups its themes in two: Color scheme holds Dark and Light, and Viewport holds Mobile, Tablet, and Desktop. `tokens.css` switches both groups with selectors, so a component reads the same variables in every theme. [ADR 0008](adr/0008-theme-mapping.md) records why, and [ADR 0014](adr/0014-tablet-page-margin.md) why Tablet sets only the page margin.
 
 | Theme   | Selector                                                                                                    | Sets `color-scheme` |
 |:--------|:------------------------------------------------------------------------------------------------------------|:-------------------:|
 | Dark    | `:root`                                                                                                     | `dark`              |
 | Light   | `:root:not([data-theme='dark'])` in `@media (prefers-color-scheme: light)`, and `:root[data-theme='light']` | `light`             |
 | Mobile  | `:root`                                                                                                     | no                  |
+| Tablet  | `:root` in `@media (min-width: 37.5em)`                                                                     | no                  |
 | Desktop | `:root` in `@media (min-width: 64em)`                                                                       | no                  |
 
-The color scheme follows the device until the reader picks one. The `data-theme` attribute on `<html>` overrides it: `dark` picks Dark, `light` picks Light, and no attribute, or any other value, follows the device. Each color block sets `color-scheme`, so the scrollbars and form controls that the browser draws match the theme. In [Storybook](../packages/ui/web/README.md#storybook), the theme toolbar sets `data-theme`, and the viewport control switches Mobile and Desktop.
+The color scheme follows the device until the reader picks one. The `data-theme` attribute on `<html>` overrides it: `dark` picks Dark, `light` picks Light, and no attribute, or any other value, follows the device. Each color block sets `color-scheme`, so the scrollbars and form controls that the browser draws match the theme. In [Storybook](../packages/ui/web/README.md#storybook), the theme toolbar sets `data-theme`, and the viewport control switches Mobile, Tablet, and Desktop.
 
-No custom property can appear in a media query, so a component style that needs the breakpoint imports it from the Sass partial:
+The Tablet theme enables `viewport/mobile` and `viewport/tablet` together, and Tablet overrides only `space.page-inline`. The header, every Section, and the footer so get the wider margin, and keep the rest of the Mobile layout.
+
+No custom property can appear in a media query, so a component style that needs a breakpoint imports it from the Sass partial, which holds `$breakpoint-tablet` and `$breakpoint-desktop`:
 
 ```scss
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
@@ -72,9 +76,9 @@ No custom property can appear in a media query, so a component style that needs 
 }
 ```
 
-A script that follows the breakpoint, such as a `matchMedia()` query, imports `desktopBreakpoint` from `@critsource/design-tokens/breakpoints` instead.
+A script that follows a breakpoint, such as a `matchMedia()` query, imports `tabletBreakpoint` or `desktopBreakpoint` from `@critsource/design-tokens/breakpoints` instead.
 
-The breakpoint is `64em` rather than `1024px`, since an `em` in a media query follows the reader's font size setting. A reader who enlarges the text keeps the Mobile layout up to a wider window, as the `rem` sizes grow with it. [`src/breakpoints.ts`](../packages/design-tokens/src/breakpoints.ts) holds the value, and the build writes it to both the media query and the partial.
+The breakpoints are `37.5em` and `64em` rather than `600px` and `1024px`, since an `em` in a media query follows the reader's font size setting. A reader who enlarges the text keeps the Mobile layout up to a wider window, as the `rem` sizes grow with it. [`src/breakpoints.ts`](../packages/design-tokens/src/breakpoints.ts) holds the values, and the build writes them to both the media queries and the partial.
 
 ## Fonts
 
@@ -114,5 +118,6 @@ The Penpot MCP server lets an agent read and export the shapes of a file, but on
 
 [design-system]: https://design.penpot.app/?screen=viewer&file-id=17092c62-56e2-8122-8008-ed1d7fea5bf0&page-id=17092c62-56e2-8122-8008-ed1d7fea5bf1&section=interactions&index=0&share-id=a49bec04-2314-4983-ac4d-2f483f4d8e58
 [desktop]: https://design.penpot.app/?screen=viewer&file-id=51f2d744-23b9-8138-8008-edd7e2c6e857&page-id=51f2d744-23b9-8138-8008-edd7e2c6e858&section=interactions&index=0&share-id=d2842485-5e56-40a8-9efe-df5a63d91d3c
+[tablet]: https://design.penpot.app/?screen=viewer&file-id=e7ca6b81-c0d3-8029-8008-fdd9ebc3e35a&page-id=30236a8e-51bf-80ba-8008-fdda9ba4ceea&section=interactions&index=0&share-id=dd7e7b56-b6cb-4652-9ee0-1f8095c3b4b0
 [mobile]: https://design.penpot.app/?screen=viewer&file-id=110d30a4-9d92-80de-8008-edd7f79f65a1&page-id=110d30a4-9d92-80de-8008-edd7f79f65a2&section=interactions&index=0&share-id=ecd810d5-8de8-4fc6-9285-31c76e35bf13
 [exploration]: https://design.penpot.app/?screen=viewer&file-id=275e4692-9a43-8087-8008-ecfce5bd5ca1&page-id=275e4692-9a43-8087-8008-ecfce5bd5ca2&section=interactions&index=0&share-id=3564107c-c9f0-42b8-be20-a6ac3fae426f

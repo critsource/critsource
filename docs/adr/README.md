@@ -13,12 +13,13 @@ Each architecture decision record (ADR) in this folder says why the workspace is
 | [0005](0005-deploys-on-a-workflow-request.md)   | Watchtower updates a container only when a workflow asks it to               | Accepted                                                           |
 | [0006](0006-design-token-pipeline.md)           | A moon task generates committed CSS custom properties from the Penpot tokens | Accepted                                                           |
 | [0007](0007-storybook-on-vite.md)               | Storybook runs on its own Vite framework for Angular                         | Partly superseded by [0009](0009-storybook-through-angular-cli.md) |
-| [0008](0008-theme-mapping.md)                   | Media queries and a saved `data-theme` switch the Penpot themes              | Accepted                                                           |
+| [0008](0008-theme-mapping.md)                   | Media queries and a saved `data-theme` switch the Penpot themes              | Partly superseded by [0014](0014-tablet-page-margin.md)            |
 | [0009](0009-storybook-through-angular-cli.md)   | moon starts Storybook through the Angular CLI builders                       | Accepted                                                           |
 | [0010](0010-font-loading.md)                    | The token package hosts the fonts and generates their `@font-face` rules     | Accepted                                                           |
 | [0011](0011-storybook-on-github-pages.md)       | The workflows publish Storybook to GitHub Pages from a `gh-pages` branch     | Partly superseded by [0012](0012-storybook-previews-noindex.md)    |
 | [0012](0012-storybook-previews-noindex.md)      | Every Storybook build carries a `noindex` tag unless it opts out             | Accepted                                                           |
 | [0013](0013-prerendered-public-pages.md)        | Every public route is prerendered, and nginx serves it as a static file      | Accepted                                                           |
+| [0014](0014-tablet-page-margin.md)              | A Tablet theme widens the page margin from 37.5em                            | Accepted                                                           |
 
 ## When to write one
 
