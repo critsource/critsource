@@ -1,6 +1,7 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 import { ChipHarness } from '@critsource/ui-web/testing';
 import { CallsToActionHarness } from './calls-to-action.harness';
+import { FaqHarness } from './faq.harness';
 import { FeaturesHarness } from './features.harness';
 import { GetInvolvedHarness } from './get-involved.harness';
 import { GlowHarness } from './glow.harness';
@@ -15,8 +16,8 @@ export interface LandingPageTextLook {
 }
 
 /**
- * Reads the landing page: the chip, texts, calls to action, and glow of its hero, its features section, and its
- * get-involved section.
+ * Reads the landing page: the chip, texts, calls to action, and glow of its hero, its features section, its
+ * get-involved section, and its FAQ.
  */
 export class LandingPageHarness extends ComponentHarness {
     public static readonly hostSelector = 'dma-landing-page';
@@ -33,6 +34,7 @@ export class LandingPageHarness extends ComponentHarness {
     private readonly glowLocator = this.locatorFor(GlowHarness);
     private readonly featuresLocator = this.locatorFor(FeaturesHarness);
     private readonly getInvolvedLocator = this.locatorFor(GetInvolvedHarness);
+    private readonly faqLocator = this.locatorFor(FaqHarness);
 
     /** The number of level 1 headings, which a page has one of. */
     public async countHeadings(): Promise<number> {
@@ -81,5 +83,9 @@ export class LandingPageHarness extends ComponentHarness {
 
     public async getGetInvolved(): Promise<GetInvolvedHarness> {
         return await this.getInvolvedLocator();
+    }
+
+    public async getFaq(): Promise<FaqHarness> {
+        return await this.faqLocator();
     }
 }

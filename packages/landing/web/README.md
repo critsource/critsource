@@ -13,6 +13,7 @@ The page is prerendered during `web:build`, so every component on it follows the
 - `CallsToActionComponent`, in [`src/calls-to-action.component.ts`](src/calls-to-action.component.ts), is the pair of buttons that link to the repository and to the Ideas category of Discussions. The hero places it, and so will the closing call to action, so both keep the same labels and links.
 - `FeaturesComponent`, in [`src/features.component.ts`](src/features.component.ts), is the features section that follows the hero: three groups of the tools the app will offer, by when in a game you use them, and a link to every planned feature in the README. Its `id`, `features`, is the target of the Features link of the header.
 - `GetInvolvedComponent`, in [`src/get-involved.component.ts`](src/get-involved.component.ts), is the section that follows the features: three cards that link to GitHub to follow the project, share an idea in Discussions, and read the contributing guide and the code of conduct. It has no form, so the page collects no personal data.
+- `FaqComponent`, in [`src/faq.component.ts`](src/faq.component.ts), is the FAQ that follows the get-involved section: seven questions, each a Disclosure of `ui-web` that the browser opens and closes, the first two open. Its `id`, `faq`, is the target of the FAQ link of the header.
 - `GlowComponent`, in [`src/glow.component.ts`](src/glow.component.ts), is the decorative accent glow behind a section. The section that places it sets where the glow is brightest and how far it reaches.
 
 A component that a route renders as a page takes the `Page` suffix, in its class and its file name, as `LandingPage` does. Every other component takes the `Component` suffix.
@@ -25,10 +26,10 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                            | Source                                 | Exports                                                                                                                                                                     |
-|:----------------------------------|:---------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes`                                                                                                                                              |
-| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `CallsToActionHarness`, `FeatureGroupHarness`, `FeatureItemHarness`, `FeaturesHarness`, `GetInvolvedCardHarness`, `GetInvolvedHarness`, `GlowHarness`, `LandingPageHarness` |
+| Import                            | Source                                 | Exports                                                                                                                                                                                   |
+|:----------------------------------|:---------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes`                                                                                                                                                            |
+| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `CallsToActionHarness`, `FaqHarness`, `FeatureGroupHarness`, `FeatureItemHarness`, `FeaturesHarness`, `GetInvolvedCardHarness`, `GetInvolvedHarness`, `GlowHarness`, `LandingPageHarness` |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 
