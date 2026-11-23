@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - A Privacy page at `/privacy` says which personal data the site processes, why, and for how long, who else sees it, and how to use your rights. The footer links to it.
 - An Accessibility page at `/accessibility` says which standard the site aims for, what it does to meet it, the barriers it knows of, and how to report one, by email or on GitHub. The footer links to it.
 - A path that no page answers, such as a broken link, now shows a Not found page titled "Page not found - Critsource" and returns status 404 instead of 200, so search engines no longer index broken links as pages. The image answers a missing file, such as a bundle of an older build, with a plain 404, as before.
+- The landing page at `/` now says what Critsource is and that there is nothing to try yet.
 
 ### Fixed
 

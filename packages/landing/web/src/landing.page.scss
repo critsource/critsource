@@ -1,0 +1,44 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+
+@mixin typography($name) {
+    font-family: var(--typography-#{$name}-font-family);
+    font-size: var(--typography-#{$name}-font-size);
+    font-weight: var(--typography-#{$name}-font-weight);
+    letter-spacing: var(--typography-#{$name}-letter-spacing);
+    line-height: var(--typography-#{$name}-line-height);
+    text-decoration: var(--typography-#{$name}-text-decoration);
+    text-transform: var(--typography-#{$name}-text-case);
+}
+
+// The Hero text board of Penpot: a column space.20 apart below the desktop breakpoint and space.24 from it up, at the
+// width of its content, and at most the 580 px that Penpot fixes it at on Desktop, which no token holds.
+.text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-20);
+    max-inline-size: 36.25rem;
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .text {
+        gap: var(--space-24);
+    }
+}
+
+// The gap spaces the texts, so none keeps the margin of its element.
+.text > * {
+    margin: 0;
+}
+
+h1 {
+    @include typography(h1);
+
+    color: var(--color-foreground-default);
+}
+
+.lede {
+    @include typography(lead);
+
+    color: var(--color-foreground-muted);
+}

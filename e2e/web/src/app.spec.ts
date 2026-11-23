@@ -10,6 +10,15 @@ async function expectShell(page: Page) {
     await expect(root.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute('href', '#main');
 }
 
+/** Expects the hero of the landing page by its heading. */
+async function expectHero(page: Page) {
+    const landing = page.locator('dma-landing-page');
+
+    await expect(landing.getByRole('heading', { level: 1 })).toHaveText(
+        'Prepare, play, and remember your 5e campaign in one open-source app',
+    );
+}
+
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
@@ -19,7 +28,7 @@ test.describe('app', () => {
 
             await expect(page).toHaveTitle('Critsource');
             await expectShell(page);
-            await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
+            await expectHero(page);
         });
     });
 
@@ -39,7 +48,7 @@ test.describe('app', () => {
         await expect(root).toHaveAttribute('ng-server-context', 'ssg');
         await expect(root).not.toHaveAttribute('ngh');
         await expectShell(page);
-        await expect(page.locator('dma-landing-page')).toHaveText('landing works!');
+        await expectHero(page);
         expect(errors).toEqual([]);
     });
 });

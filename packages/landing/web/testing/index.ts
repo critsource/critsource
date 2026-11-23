@@ -1,1 +1,1 @@
-export { LandingPageHarness } from './harnesses/landing-page.harness';
+export { LandingPageHarness, type LandingPageText, type LandingPageTextLook } from './harnesses/landing-page.harness';
