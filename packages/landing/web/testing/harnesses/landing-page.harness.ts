@@ -2,6 +2,7 @@ import { ComponentHarness } from '@angular/cdk/testing';
 import { ChipHarness } from '@critsource/ui-web/testing';
 import { CallsToActionHarness } from './calls-to-action.harness';
 import { FeaturesHarness } from './features.harness';
+import { GetInvolvedHarness } from './get-involved.harness';
 import { GlowHarness } from './glow.harness';
 
 /** A text of the hero, which the harness reads by its role. */
@@ -13,7 +14,10 @@ export interface LandingPageTextLook {
     fontSize: string;
 }
 
-/** Reads the landing page: the chip, texts, calls to action, and glow of its hero, and its features section. */
+/**
+ * Reads the landing page: the chip, texts, calls to action, and glow of its hero, its features section, and its
+ * get-involved section.
+ */
 export class LandingPageHarness extends ComponentHarness {
     public static readonly hostSelector = 'dma-landing-page';
 
@@ -28,6 +32,7 @@ export class LandingPageHarness extends ComponentHarness {
     private readonly callsToActionLocator = this.locatorFor(CallsToActionHarness);
     private readonly glowLocator = this.locatorFor(GlowHarness);
     private readonly featuresLocator = this.locatorFor(FeaturesHarness);
+    private readonly getInvolvedLocator = this.locatorFor(GetInvolvedHarness);
 
     /** The number of level 1 headings, which a page has one of. */
     public async countHeadings(): Promise<number> {
@@ -72,5 +77,9 @@ export class LandingPageHarness extends ComponentHarness {
 
     public async getFeatures(): Promise<FeaturesHarness> {
         return await this.featuresLocator();
+    }
+
+    public async getGetInvolved(): Promise<GetInvolvedHarness> {
+        return await this.getInvolvedLocator();
     }
 }
