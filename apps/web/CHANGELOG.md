@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - A path that no page answers, such as a broken link, now shows a Not found page titled "Page not found - Critsource" and returns status 404 instead of 200, so search engines no longer index broken links as pages. The image answers a missing file, such as a bundle of an older build, with a plain 404, as before.
 - The landing page at `/` now says what Critsource is and that there is nothing to try yet, and links to the repository on GitHub to star it and to Discussions to share an idea. It explains how to watch the repository for releases.
 
+### Changed
+
+- The image now enforces its Content Security Policy: it sends the policy as `Content-Security-Policy` instead of `Content-Security-Policy-Report-Only`, so browsers block each script or style that neither the app nor Cloudflare's bot check loads. If you mount your own copy of `/etc/nginx/csp.inc`, change its header name to match.
+
 ### Fixed
 
 - The theme picker in the footer and the menu on narrow screens now shows only its icons when its labels no longer fit, so its options no longer run past its border.

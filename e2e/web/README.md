@@ -11,7 +11,7 @@ The project tests what only the running app shows: what nginx serves, that the a
 | [`app.spec.ts`](src/app.spec.ts)             | `/` shows the landing page in the app shell without JavaScript and once it hydrates.                                                |
 | [`not-found.spec.ts`](src/not-found.spec.ts) | An unknown path returns 404 with the Not found page, with and without JavaScript, and a missing file returns a plain 404.           |
 | [`theme.spec.ts`](src/theme.spec.ts)         | The boot script in `index.html` applies a saved Light theme before the app boots, and the app follows the device under System.      |
-| [`csp.spec.ts`](src/csp.spec.ts)             | Every route loads with no violation of the report-only policy, with and without a saved theme, and each response has its own nonce. |
+| [`csp.spec.ts`](src/csp.spec.ts)             | Every route loads with no violation of the enforced policy, with and without a saved theme, and each response has its own nonce.    |
 | [`headers.spec.ts`](src/headers.spec.ts)     | Each HTML page, a bundle, `build-info.json`, and a missing file carry every security header of the image.                           |
 
 Add a test to the spec of its area, or a new `src/<area>.spec.ts` for a new area. Test the behavior of a component or service in the unit tests of the project that holds it instead.
