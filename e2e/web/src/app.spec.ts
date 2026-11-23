@@ -21,13 +21,14 @@ async function expectHero(page: Page) {
     await expect(landing.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
 }
 
-/** Expects the features section of the landing page, under the id the header links to: its heading and its link. */
+/** Expects the features section of the landing page, under the id the header links to: its headings and its link. */
 async function expectFeatures(page: Page) {
     const features = page.locator('dma-landing-page section#features');
 
     await expect(features.getByRole('heading', { level: 2 })).toHaveText(
         'Everything for the game, from prep to the last session',
     );
+    await expect(features.getByRole('heading', { level: 3 })).toHaveText(['Prepare', 'Play', 'Remember']);
     await expect(features.getByRole('link', { name: 'See every planned feature in the README' })).toBeVisible();
 }
 
