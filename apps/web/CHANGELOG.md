@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The landing page at `/` now says what Critsource is and that there is nothing to try yet, and links to the repository on GitHub to star it and to Discussions to share an idea. It explains how to watch the repository for releases.
 - The landing page lists the features the app will offer, grouped by when you use them in a game: before the session, at the table, and after it. A DM tag marks the tools for dungeon masters, and a link leads to every planned feature in the README.
 - The landing page ends with three ways to get involved before launch: star the repository on GitHub and watch its releases, share an idea in Discussions, or read the contributing guide and the code of conduct.
+- The landing page answers the questions visitors ask most: whether Critsource is free, when you can use it, which rules it covers, whether it is official, whether you can bring your homebrew or run it on your own server, and who builds it. Open a question to read its answer.
 
 ### Changed
 

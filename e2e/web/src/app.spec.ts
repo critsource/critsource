@@ -53,6 +53,22 @@ async function expectGetInvolved(page: Page) {
     ]);
 }
 
+/** Expects the FAQ of the landing page, under the id the header links to: its heading and its questions. */
+async function expectFaq(page: Page) {
+    const faq = page.locator('dma-landing-page section#faq');
+
+    await expect(faq.getByRole('heading', { level: 2 })).toHaveText('Questions people ask');
+    await expect(faq.locator('summary')).toHaveText([
+        'Is it free?',
+        'When can I use it?',
+        'Which rules does it cover?',
+        'Is it official?',
+        'Can I bring my homebrew?',
+        'Can I run it on my own server?',
+        'Who builds it?',
+    ]);
+}
+
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
@@ -65,6 +81,7 @@ test.describe('app', () => {
             await expectHero(page);
             await expectFeatures(page);
             await expectGetInvolved(page);
+            await expectFaq(page);
         });
     });
 
@@ -87,6 +104,21 @@ test.describe('app', () => {
         await expectHero(page);
         await expectFeatures(page);
         await expectGetInvolved(page);
+        await expectFaq(page);
         expect(errors).toEqual([]);
+    });
+
+    test('opens and closes a question of the FAQ', async ({ page }) => {
+        await page.goto('/');
+
+        const question = page.locator('section#faq details').filter({ hasText: 'Who builds it?' });
+        const summary = question.locator('summary');
+
+        await expect(question).not.toHaveAttribute('open');
+        await summary.click();
+        await expect(question).toHaveAttribute('open');
+        await expect(question.getByText('One lead maintainer builds Critsource')).toBeVisible();
+        await summary.click();
+        await expect(question).not.toHaveAttribute('open');
     });
 });

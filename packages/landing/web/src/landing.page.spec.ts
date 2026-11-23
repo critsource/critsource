@@ -131,6 +131,12 @@ describe('LandingPage', () => {
         expect(await intro.getText('heading')).toBe('Help shape Critsource before it launches');
     });
 
+    it('should follow the get-involved section with the FAQ', async () => {
+        const { harness } = await setupTest();
+
+        expect(await (await harness.getFaq()).getId()).toBe('faq');
+    });
+
     it('should hide the glow from assistive technology', async () => {
         const { harness } = await setupTest();
 
