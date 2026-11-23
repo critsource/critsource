@@ -1,0 +1,101 @@
+<!--
+    The Tabbed preview board of Penpot. The list starts on Play, the second tab. Each roll box keeps the space between its
+    command and its result with &ngsp;, since Angular drops the whitespace between elements.
+-->
+<dma-tab-list aria-label="Preview of Critsource" [selected]="1">
+    <button dma-tab [panel]="prepare">Prepare</button>
+    <button dma-tab [panel]="play">Play</button>
+    <button dma-tab [panel]="remember">Remember</button>
+</dma-tab-list>
+<dma-tab-panel #prepare>
+    <div class="header">
+        <div class="title">
+            <p>Encounter</p>
+            <p>The Sunken Keep · Level 4 party</p>
+        </div>
+        <dma-chip>Concept</dma-chip>
+    </div>
+    <ul role="list">
+        <li class="current">
+            <span class="who"><span>Goblin boss</span><span class="tag">Boss</span></span>
+            <span class="value">CR 1</span>
+        </li>
+        <li>
+            <span class="who"><span>Goblin archer ×3</span></span>
+            <span class="value">CR 1/4</span>
+        </li>
+        <li>
+            <span class="who"><span>Wolf ×2</span></span>
+            <span class="value">CR 1/4</span>
+        </li>
+    </ul>
+    <div class="chips">
+        <span>Spells:</span>
+        <span class="highlight">Fireball</span>
+        <dma-chip>Shield</dma-chip>
+    </div>
+    <p class="inset roll">
+        <code>/cast Fireball</code>&ngsp;<span class="result"><span aria-hidden="true">→</span> 8d6 fire</span>
+    </p>
+</dma-tab-panel>
+<dma-tab-panel #play>
+    <div class="header">
+        <div class="title">
+            <p>Initiative</p>
+            <p>Round 2 · The Sunken Keep</p>
+        </div>
+        <dma-chip>Concept</dma-chip>
+    </div>
+    <ul role="list">
+        <li class="current">
+            <span class="who"><span>Aria, elf ranger</span><span class="tag">Current turn</span></span>
+            <span class="value">18</span>
+        </li>
+        <li>
+            <span class="who"><span>Goblin boss</span></span>
+            <span class="value">14</span>
+        </li>
+        <li>
+            <span class="who"><span>Borin, dwarf cleric</span></span>
+            <span class="value">9</span>
+        </li>
+    </ul>
+    <div class="chips">
+        <span>Aria:</span>
+        <span class="highlight">Hunter’s mark</span>
+        <dma-chip>Concentrating</dma-chip>
+    </div>
+    <p class="inset roll">
+        <code>/roll 1d20 + 7</code>&ngsp;<span class="result"><span aria-hidden="true">→</span> 19 to hit</span>
+    </p>
+</dma-tab-panel>
+<dma-tab-panel #remember>
+    <div class="header">
+        <div class="title">
+            <p>Session 12</p>
+            <p>The Sunken Keep · shared with the party</p>
+        </div>
+        <dma-chip>Concept</dma-chip>
+    </div>
+    <ul role="list">
+        <li class="current">
+            <span class="who"><span>Deal with the river hag</span><span class="tag">Latest</span></span>
+            <span class="value">12</span>
+        </li>
+        <li>
+            <span class="who"><span>Crossed the flooded gate</span></span>
+            <span class="value">11</span>
+        </li>
+        <li>
+            <span class="who"><span>Met Borin at the ferry</span></span>
+            <span class="value">10</span>
+        </li>
+    </ul>
+    <div class="chips">
+        <span>Shared with:</span>
+        <span class="highlight">Aria</span>
+        <dma-chip>Borin</dma-chip>
+    </div>
+    <p class="inset note">Safe passage from the river hag, for the silver bell.</p>
+</dma-tab-panel>
+<p class="caption">The tabs switch the preview between the three parts of the game.</p>

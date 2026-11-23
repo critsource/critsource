@@ -14,6 +14,20 @@ dma-glow {
     --glow-reach: 55%;
 }
 
+// The Hero board of Penpot puts the text and the preview side by side, space.64 apart and centered on each other, with
+// the preview filling the rest of the row. Where the preview would get less than the 320 px its tabs and rows need, which
+// no token holds, it wraps below the text, space.section-gap under it, as on Mobile.
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-section-gap) var(--space-64);
+}
+
+dma-tabbed-preview {
+    flex: 1 1 20rem;
+}
+
 // The Hero text board of Penpot: a column space.20 apart below the desktop breakpoint and space.24 from it up, at the
 // width of its content, and at most the 580 px that Penpot fixes it at on Desktop, which no token holds. The calls to
 // action fill it, so their buttons can fill the width below the desktop breakpoint.

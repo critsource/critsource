@@ -4,3 +4,9 @@ export { FeatureGroupHarness, FeatureItemHarness, FeaturesHarness } from './harn
 export { GetInvolvedCardHarness, GetInvolvedHarness, type GetInvolvedTextLook } from './harnesses/get-involved.harness';
 export { GlowHarness, type GlowLook } from './harnesses/glow.harness';
 export { LandingPageHarness, type LandingPageText, type LandingPageTextLook } from './harnesses/landing-page.harness';
+export {
+    TabbedPreviewHarness,
+    type TabbedPreviewLook,
+    TabbedPreviewPanelHarness,
+    TabbedPreviewRowHarness,
+} from './harnesses/tabbed-preview.harness';

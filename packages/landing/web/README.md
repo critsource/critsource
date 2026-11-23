@@ -9,7 +9,8 @@ The page at `/` and its sections. Build each section from the components of [`ui
 The page is prerendered during `web:build`, so every component on it follows the rules for prerendered routes in [ADR 0013](../../../docs/adr/0013-prerendered-public-pages.md#decision).
 
 - [`src/landing.routes.ts`](src/landing.routes.ts) holds `landingRoutes`, which renders `LandingPage` at the root of the routes.
-- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page. Its hero, the first section, holds the status chip, the heading, the lede, the calls to action, and the hint on how to follow releases.
+- `LandingPage`, in [`src/landing.page.ts`](src/landing.page.ts), is the page. Its hero, the first section, holds the status chip, the heading, the lede, the calls to action, and the hint on how to follow releases, beside the tabbed preview.
+- `TabbedPreviewComponent`, in [`src/tabbed-preview.component.ts`](src/tabbed-preview.component.ts), is the preview in the hero: the Tabs of `ui-web` with Prepare, Play, and Remember, a static panel for each, marked Concept, and a caption. It starts on Play, and switches only when the reader picks a tab.
 - `CallsToActionComponent`, in [`src/calls-to-action.component.ts`](src/calls-to-action.component.ts), is the pair of buttons that link to the repository and to the Ideas category of Discussions. The hero places it, and so will the closing call to action, so both keep the same labels and links.
 - `FeaturesComponent`, in [`src/features.component.ts`](src/features.component.ts), is the features section that follows the hero: three groups of the tools the app will offer, by when in a game you use them, and a link to every planned feature in the README. Its `id`, `features`, is the target of the Features link of the header.
 - `GetInvolvedComponent`, in [`src/get-involved.component.ts`](src/get-involved.component.ts), is the section that follows the features: three cards that link to GitHub to follow the project, share an idea in Discussions, and read the contributing guide and the code of conduct. It has no form, so the page collects no personal data.
@@ -26,10 +27,10 @@ The `exports` of [`package.json`](package.json) point at the TypeScript sources,
 
 ## Entry points
 
-| Import                            | Source                                 | Exports                                                                                                                                                                                   |
-|:----------------------------------|:---------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes`                                                                                                                                                            |
-| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `CallsToActionHarness`, `FaqHarness`, `FeatureGroupHarness`, `FeatureItemHarness`, `FeaturesHarness`, `GetInvolvedCardHarness`, `GetInvolvedHarness`, `GlowHarness`, `LandingPageHarness` |
+| Import                            | Source                                 | Exports                                                                                                                                                                                                                                                                   |
+|:----------------------------------|:---------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `@critsource/landing-web`         | [`src/index.ts`](src/index.ts)         | `LandingPage`, `landingRoutes`                                                                                                                                                                                                                                            |
+| `@critsource/landing-web/testing` | [`testing/index.ts`](testing/index.ts) | `CallsToActionHarness`, `FaqHarness`, `FeatureGroupHarness`, `FeatureItemHarness`, `FeaturesHarness`, `GetInvolvedCardHarness`, `GetInvolvedHarness`, `GlowHarness`, `LandingPageHarness`, `TabbedPreviewHarness`, `TabbedPreviewPanelHarness`, `TabbedPreviewRowHarness` |
 
 The `testing` entry point holds the [component harnesses](https://angular.dev/guide/testing/component-harnesses-overview) for the tests of this package and the packages that build on it, and stays out of the production sources.
 
