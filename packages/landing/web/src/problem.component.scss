@@ -1,0 +1,96 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
+
+:host {
+    display: block;
+}
+
+// The Slot board of Penpot: the four tools, the arrow, and the result, space.12 apart. Below the desktop breakpoint they
+// stack and center on each other, with the tools wrapping onto lines and the arrow pointing down; from it up, they sit in
+// one row, centered on each other, with the arrow pointing right.
+.illustration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-12);
+}
+
+// Below the desktop breakpoint, the tools fill the row and wrap space.8 apart; from it up, they sit space.12 apart.
+.tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: stretch;
+    gap: var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+// A list item holds a chip, which is inline, so the item draws as a flex box to keep the line height from adding space.
+.tools > li {
+    display: flex;
+}
+
+// The chips of Penpot are bigger than the label chip of the design system: space.12 by space.16 of padding below the
+// desktop breakpoint and space.12 by space.20 from it up, the small radius, and the nav typography. The chip draws a
+// border of the default width, so the padding leaves room for it.
+.tool,
+.result {
+    padding: calc(var(--space-12) - var(--border-width-default)) calc(var(--space-16) - var(--border-width-default));
+    border-radius: var(--radius-sm);
+
+    @include typography(nav);
+}
+
+// A tool keeps the raised fill of the neutral chip, with no visible border and muted text.
+.tool {
+    border-color: transparent;
+    color: var(--color-foreground-muted);
+}
+
+// The result is highlighted: no fill, an accent border, and the default text color. Below the desktop breakpoint it
+// fills the row, with its text centered.
+.result {
+    justify-content: center;
+    align-self: stretch;
+    border-color: var(--color-accent-text);
+    background: transparent;
+    color: var(--color-foreground-default);
+}
+
+dma-icon-arrow-right,
+dma-icon-arrow-down {
+    color: var(--color-foreground-muted);
+}
+
+dma-icon-arrow-right {
+    display: none;
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .illustration {
+        flex-direction: row;
+    }
+
+    .tools {
+        align-self: auto;
+        gap: var(--space-12);
+    }
+
+    .tool,
+    .result {
+        padding-inline: calc(var(--space-20) - var(--border-width-default));
+    }
+
+    .result {
+        align-self: auto;
+    }
+
+    dma-icon-arrow-right {
+        display: block;
+    }
+
+    dma-icon-arrow-down {
+        display: none;
+    }
+}

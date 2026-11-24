@@ -123,7 +123,15 @@ describe('LandingPage', () => {
         expect(await (await (await harness.getPreview()).getTabList()).getSelectedLabel()).toBe('Play');
     });
 
-    it('should follow the hero with the features section', async () => {
+    it('should follow the hero with the problem section', async () => {
+        const { harness } = await setupTest();
+
+        const intro = await (await harness.getProblem()).getIntro();
+
+        expect(await intro.getText('heading')).toBe('Your game is spread across four tabs');
+    });
+
+    it('should follow the problem section with the features section', async () => {
         const { harness } = await setupTest();
 
         expect(await (await harness.getFeatures()).getId()).toBe('features');

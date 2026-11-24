@@ -5,6 +5,7 @@ import { FaqHarness } from './faq.harness';
 import { FeaturesHarness } from './features.harness';
 import { GetInvolvedHarness } from './get-involved.harness';
 import { GlowHarness } from './glow.harness';
+import { ProblemHarness } from './problem.harness';
 import { TabbedPreviewHarness } from './tabbed-preview.harness';
 
 /** A text of the hero, which the harness reads by its role. */
@@ -17,8 +18,8 @@ export interface LandingPageTextLook {
 }
 
 /**
- * Reads the landing page: the chip, texts, calls to action, glow, and preview of its hero, its features section, its
- * get-involved section, and its FAQ.
+ * Reads the landing page: the chip, texts, calls to action, glow, and preview of its hero, its problem section, its
+ * features section, its get-involved section, and its FAQ.
  */
 export class LandingPageHarness extends ComponentHarness {
     public static readonly hostSelector = 'dma-landing-page';
@@ -35,6 +36,7 @@ export class LandingPageHarness extends ComponentHarness {
     private readonly glowLocator = this.locatorFor(GlowHarness);
     private readonly previewLocator = this.locatorFor(TabbedPreviewHarness);
     private readonly textBoxLocator = this.locatorFor('.text');
+    private readonly problemLocator = this.locatorFor(ProblemHarness);
     private readonly featuresLocator = this.locatorFor(FeaturesHarness);
     private readonly getInvolvedLocator = this.locatorFor(GetInvolvedHarness);
     private readonly faqLocator = this.locatorFor(FaqHarness);
@@ -87,6 +89,10 @@ export class LandingPageHarness extends ComponentHarness {
     /** Where the text of the hero sits on the page. */
     public async getTextBox(): Promise<ElementDimensions> {
         return await (await this.textBoxLocator()).getDimensions();
+    }
+
+    public async getProblem(): Promise<ProblemHarness> {
+        return await this.problemLocator();
     }
 
     public async getFeatures(): Promise<FeaturesHarness> {
