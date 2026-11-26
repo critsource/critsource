@@ -87,32 +87,40 @@ describe('ProblemComponent', () => {
         expect(await Promise.all(tools.map((tool) => tool.getText()))).toEqual(TOOLS);
     });
 
-    it('should draw the tools raised, with no border and muted text', async () => {
-        const { harness } = await setupTest();
+    it.each(['dark', 'light'])(
+        'should draw the tools raised, with no border and muted text in the %s theme',
+        async (theme) => {
+            document.documentElement.dataset['theme'] = theme;
+            const { harness } = await setupTest();
 
-        const looks = await Promise.all((await harness.getTools()).map((tool) => tool.getLook()));
+            const looks = await Promise.all((await harness.getTools()).map((tool) => tool.getLook()));
 
-        expect(looks).toEqual(
-            Array(4).fill({
-                background: readColorToken('--color-background-raised'),
-                borderColor: TRANSPARENT,
-                color: readColorToken('--color-foreground-muted'),
-            }),
-        );
-    });
+            expect(looks).toEqual(
+                Array(4).fill({
+                    background: readColorToken('--color-background-raised'),
+                    borderColor: TRANSPARENT,
+                    color: readColorToken('--color-foreground-muted'),
+                }),
+            );
+        },
+    );
 
-    it('should highlight the result with an accent border and no fill', async () => {
-        const { harness } = await setupTest();
+    it.each(['dark', 'light'])(
+        'should highlight the result with an accent border and no fill in the %s theme',
+        async (theme) => {
+            document.documentElement.dataset['theme'] = theme;
+            const { harness } = await setupTest();
 
-        const result = await harness.getResult();
+            const result = await harness.getResult();
 
-        expect(await result.getText()).toBe('Critsource: all four in one place');
-        expect(await result.getLook()).toEqual({
-            background: TRANSPARENT,
-            borderColor: readColorToken('--color-accent-text'),
-            color: readColorToken('--color-foreground-default'),
-        });
-    });
+            expect(await result.getText()).toBe('Critsource: all four in one place');
+            expect(await result.getLook()).toEqual({
+                background: TRANSPARENT,
+                borderColor: readColorToken('--color-accent-text'),
+                color: readColorToken('--color-foreground-default'),
+            });
+        },
+    );
 
     it('should show one arrow only', async () => {
         const { harness } = await setupTest();
