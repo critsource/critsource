@@ -33,11 +33,13 @@
 
 // The chips of Penpot are bigger than the label chip of the design system: space.12 by space.16 of padding below the
 // desktop breakpoint and space.12 by space.20 from it up, the small radius, and the nav typography. The chip draws a
-// border of the default width, so the padding leaves room for it.
+// border of the default width, so the padding leaves room for it. The chip keeps its text on one line; these chips wrap
+// it instead, so a larger root font size cannot push a chip past the content.
 .tool,
 .result {
     padding: calc(var(--space-12) - var(--border-width-default)) calc(var(--space-16) - var(--border-width-default));
     border-radius: var(--radius-sm);
+    white-space: normal;
 
     @include typography(nav);
 }
@@ -49,10 +51,11 @@
 }
 
 // The result is highlighted: no fill, an accent border, and the default text color. Below the desktop breakpoint it
-// fills the row, with its text centered.
+// fills the row, with its text centered, also on the lines of a wrapped text.
 .result {
     justify-content: center;
     align-self: stretch;
+    text-align: center;
     border-color: var(--color-accent-text);
     background: transparent;
     color: var(--color-foreground-default);
@@ -67,6 +70,8 @@ dma-icon-arrow-right {
     display: none;
 }
 
+// From the desktop breakpoint up, the illustration is a row. The tools shrink to fit it, so from 1024 px to about 1130 px
+// they wrap onto two lines beside the arrow and the result; from about 1130 px up they sit in one line.
 @media (min-width: breakpoints.$breakpoint-desktop) {
     .illustration {
         flex-direction: row;
