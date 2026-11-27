@@ -3,7 +3,7 @@ Title: a Conventional Commit subject of at most 72 characters, such as `feat: ad
 
 Breaking change: add `!` after the type in the title, and put a `> [!IMPORTANT]` alert above Why that says what breaks and how to migrate.
 
-Write for a reviewer who has only this pull request. Re-read the body before you open it, since auto-merge leaves no later chance to fix it.
+Write for a reviewer who has only this pull request. Re-read the body before you open it.
 -->
 
 ## Why
