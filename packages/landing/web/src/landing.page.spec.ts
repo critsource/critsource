@@ -151,7 +151,7 @@ describe('LandingPage', () => {
         expect(await (await harness.getFaq()).getId()).toBe('faq');
     });
 
-    it('should draw the problem, features, get-involved, and FAQ sections from top to bottom', async () => {
+    it('should draw the hero, problem, features, get-involved, and FAQ sections from top to bottom', async () => {
         const { harness } = await setupTest();
 
         const sections = [
@@ -160,12 +160,13 @@ describe('LandingPage', () => {
             await harness.getGetInvolved(),
             await harness.getFaq(),
         ];
-        const tops = await Promise.all(
-            sections.map(async (section) => (await (await section.host()).getDimensions()).top),
-        );
+        const tops = [
+            (await harness.getTextBox()).top,
+            ...(await Promise.all(sections.map(async (section) => (await (await section.host()).getDimensions()).top))),
+        ];
 
         expect(tops).toEqual([...tops].sort((first, second) => first - second));
-        expect(new Set(tops).size).toBe(sections.length);
+        expect(new Set(tops).size).toBe(tops.length);
     });
 
     it('should hide the glow from assistive technology', async () => {

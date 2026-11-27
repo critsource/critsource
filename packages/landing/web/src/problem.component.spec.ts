@@ -175,7 +175,7 @@ describe('ProblemComponent', () => {
 
             expect(box.left).toBe(20);
             expect(box.width).toBeCloseTo(window.innerWidth - 40);
-            expect(await harness.getResultAlignment()).toBe('center');
+            expect(await harness.getResultAlignment()).toEqual({ justifyContent: 'center', textAlign: 'center' });
         });
     });
 

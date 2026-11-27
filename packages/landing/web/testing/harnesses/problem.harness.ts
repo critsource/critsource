@@ -10,6 +10,12 @@ export interface ProblemToolSpacing {
     inline: number;
 }
 
+/** How the result aligns its text, as the CSS values of `justify-content` and `text-align`. */
+export interface ProblemResultAlignment {
+    justifyContent: string;
+    textAlign: string;
+}
+
 /** Reads the problem section of the landing page: its section, its intro, its tools, its arrow, and its result. */
 export class ProblemHarness extends ComponentHarness {
     public static readonly hostSelector = 'dma-problem';
@@ -93,8 +99,17 @@ export class ProblemHarness extends ComponentHarness {
         return { block: (paddingBlock ?? 0) + (borderBlock ?? 0), inline: (paddingInline ?? 0) + (borderInline ?? 0) };
     }
 
-    /** How the text of the result aligns in its box: `center` when it sits in the middle of the row. */
-    public async getResultAlignment(): Promise<string> {
-        return await (await this.resultElementLocator()).getCssValue('justify-content');
+    /**
+     * How the text of the result aligns in its box: `justifyContent` places a text on one line, and `textAlign` the lines of
+     * a wrapped text.
+     */
+    public async getResultAlignment(): Promise<ProblemResultAlignment> {
+        const result = await this.resultElementLocator();
+        const [justifyContent, textAlign] = await Promise.all([
+            result.getCssValue('justify-content'),
+            result.getCssValue('text-align'),
+        ]);
+
+        return { justifyContent, textAlign };
     }
 }
