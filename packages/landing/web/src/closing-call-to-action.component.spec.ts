@@ -88,6 +88,12 @@ describe('ClosingCallToActionComponent', () => {
         expect(await glow.getSize()).toEqual({ width: band.width, height: band.height });
     });
 
+    it('should brighten the glow at the middle of the bottom edge and fade it out over the whole band', async () => {
+        const { harness } = await setupTest();
+
+        expect((await (await harness.getGlow()).getLook()).backgroundImage).toContain('100% 100% at 50% 100%');
+    });
+
     describe.each([
         { screens: 'narrow', width: 390, height: 844, headingSize: '30px', lineSize: '17px', gap: 20 },
         { screens: 'wide', width: 1440, height: 900, headingSize: '44px', lineSize: '18px', gap: 24 },
@@ -145,9 +151,10 @@ describe('ClosingCallToActionComponent', () => {
         await page.viewport(1440, 900);
         const { harness } = await setupTest();
 
-        const [star, idea] = await getButtonBoxes(harness);
+        const [{ callsToAction }, [star, idea]] = await Promise.all([harness.getBoxes(), getButtonBoxes(harness)]);
 
         expect(idea.top).toBe(star.top);
         expect(idea.left).toBeGreaterThan(star.left + star.width);
+        expect(callsToAction.width).toBeCloseTo(idea.left + idea.width, 0);
     });
 });

@@ -1,7 +1,8 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 
-/** How the glow draws: its opacity, and its place in the stacking order of its container. */
+/** How the glow draws: its gradient, its opacity, and its place in the stacking order of its container. */
 export interface GlowLook {
+    backgroundImage: string;
     opacity: string;
     zIndex: string;
 }
@@ -16,9 +17,13 @@ export class GlowHarness extends ComponentHarness {
 
     public async getLook(): Promise<GlowLook> {
         const host = await this.host();
-        const [opacity, zIndex] = await Promise.all([host.getCssValue('opacity'), host.getCssValue('z-index')]);
+        const [backgroundImage, opacity, zIndex] = await Promise.all([
+            host.getCssValue('background-image'),
+            host.getCssValue('opacity'),
+            host.getCssValue('z-index'),
+        ]);
 
-        return { opacity, zIndex };
+        return { backgroundImage, opacity, zIndex };
     }
 
     /** The width and height of the glow in pixels. */
