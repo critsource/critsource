@@ -130,11 +130,7 @@ Open the pull request against `main`, and keep it to one concern: an unrelated f
 - Write the title as a Conventional Commit subject, under the same rules as a commit header. The `Pull request title` check lints it again after each edit.
 - Fill in the [pull request template](.github/PULL_REQUEST_TEMPLATE.md). Its comments explain each section.
 - End the description with a `Closes #<number>` line for the issue the pull request resolves, which moves the issue to In review on the project and closes it on merge.
-- Turn on auto-merge once the pull request is ready for review, so it merges as soon as it meets the conditions under [Review and merge](#review-and-merge). Leave it off for a release pull request, since merging it confirms the version, as [Releasing](docs/releasing.md#review-and-merge-the-release-pull-request) explains:
-
-    ```bash
-    gh pr merge <number> --auto --merge
-    ```
+- Leave auto-merge off. A maintainer merges the pull request once it meets the conditions under [Review and merge](#review-and-merge).
 
 ## Review and merge
 
