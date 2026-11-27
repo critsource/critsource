@@ -12,6 +12,12 @@ export { GetInvolvedCardHarness, GetInvolvedHarness, type GetInvolvedTextLook } 
 export { GlowHarness, type GlowLook } from './harnesses/glow.harness';
 export { LandingPageHarness, type LandingPageText, type LandingPageTextLook } from './harnesses/landing-page.harness';
 export {
+    type ProblemArrow,
+    ProblemHarness,
+    type ProblemResultAlignment,
+    type ProblemToolSpacing,
+} from './harnesses/problem.harness';
+export {
     TabbedPreviewHarness,
     type TabbedPreviewLook,
     TabbedPreviewPanelHarness,

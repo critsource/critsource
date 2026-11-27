@@ -5,12 +5,13 @@ import { FaqComponent } from './faq.component';
 import { FeaturesComponent } from './features.component';
 import { GetInvolvedComponent } from './get-involved.component';
 import { GlowComponent } from './glow.component';
+import { ProblemComponent } from './problem.component';
 import { TabbedPreviewComponent } from './tabbed-preview.component';
 
 /**
  * The landing page at `/`. Its hero says what Critsource is and that it is in early development, offers the calls to
- * action, and previews the app, on the glow. The features section, the get-involved section, and the FAQ follow it. It
- * follows the rules of ADR 0013 for a prerendered page.
+ * action, and previews the app, on the glow. The problem section, the features section, the get-involved section, and
+ * the FAQ follow it. It follows the rules of ADR 0013 for a prerendered page.
  */
 @Component({
     selector: 'dma-landing-page',
@@ -23,6 +24,7 @@ import { TabbedPreviewComponent } from './tabbed-preview.component';
         FeaturesComponent,
         GetInvolvedComponent,
         GlowComponent,
+        ProblemComponent,
         SectionComponent,
         TabbedPreviewComponent,
     ],

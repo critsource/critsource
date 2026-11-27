@@ -123,7 +123,15 @@ describe('LandingPage', () => {
         expect(await (await (await harness.getPreview()).getTabList()).getSelectedLabel()).toBe('Play');
     });
 
-    it('should follow the hero with the features section', async () => {
+    it('should follow the hero with the problem section', async () => {
+        const { harness } = await setupTest();
+
+        const intro = await (await harness.getProblem()).getIntro();
+
+        expect(await intro.getText('heading')).toBe('Your game is spread across four tabs');
+    });
+
+    it('should follow the problem section with the features section', async () => {
         const { harness } = await setupTest();
 
         expect(await (await harness.getFeatures()).getId()).toBe('features');
@@ -141,6 +149,24 @@ describe('LandingPage', () => {
         const { harness } = await setupTest();
 
         expect(await (await harness.getFaq()).getId()).toBe('faq');
+    });
+
+    it('should draw the hero, problem, features, get-involved, and FAQ sections from top to bottom', async () => {
+        const { harness } = await setupTest();
+
+        const sections = [
+            await harness.getProblem(),
+            await harness.getFeatures(),
+            await harness.getGetInvolved(),
+            await harness.getFaq(),
+        ];
+        const tops = [
+            (await harness.getTextBox()).top,
+            ...(await Promise.all(sections.map(async (section) => (await (await section.host()).getDimensions()).top))),
+        ];
+
+        expect(tops).toEqual([...tops].sort((first, second) => first - second));
+        expect(new Set(tops).size).toBe(tops.length);
     });
 
     it('should hide the glow from assistive technology', async () => {
