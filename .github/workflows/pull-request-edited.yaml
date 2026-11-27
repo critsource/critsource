@@ -66,8 +66,9 @@ jobs:
                   GH_REPO: ${{ github.repository }}
                   OLD_BASE: ${{ github.event.changes.base.ref.from }}
 
-            # Events that GITHUB_TOKEN causes trigger no workflows, so the app marks the pull request ready, which leaves
-            # its ready_for_review event free to trigger one. The app has write access to Pull requests.
+            # Events that GITHUB_TOKEN causes trigger no workflows, so the app marks the pull request ready. No workflow
+            # listens for its ready_for_review event yet; #299 would add one to rerun the checks. The app has write
+            # access to Pull requests.
             - name: Create a token of the critsource app
               id: app-token
               if: steps.old-base.outputs.deleted == 'true'
