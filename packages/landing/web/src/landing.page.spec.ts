@@ -151,7 +151,15 @@ describe('LandingPage', () => {
         expect(await (await harness.getFaq()).getId()).toBe('faq');
     });
 
-    it('should draw the hero, problem, features, get-involved, and FAQ sections from top to bottom', async () => {
+    it('should end with the closing call to action, after the FAQ', async () => {
+        const { harness } = await setupTest();
+
+        const heading = await (await harness.getClosingCallToAction()).getHeading();
+
+        expect(heading.text).toBe('Be there for the first roll');
+    });
+
+    it('should draw the hero, problem, features, get-involved, FAQ, and closing sections from top to bottom', async () => {
         const { harness } = await setupTest();
 
         const sections = [
@@ -159,6 +167,7 @@ describe('LandingPage', () => {
             await harness.getFeatures(),
             await harness.getGetInvolved(),
             await harness.getFaq(),
+            await harness.getClosingCallToAction(),
         ];
         const tops = [
             (await harness.getTextBox()).top,

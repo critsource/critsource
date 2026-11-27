@@ -72,6 +72,18 @@ async function expectFaq(page: Page) {
     ]);
 }
 
+/**
+ * Expects the closing call to action of the landing page: its heading and the calls to action that link to GitHub. The
+ * hero links to the same places under the same names, so the check stays inside the band.
+ */
+async function expectClosingCallToAction(page: Page) {
+    const band = page.locator('dma-closing-call-to-action');
+
+    await expect(band.getByRole('heading', { level: 2 })).toHaveText('Be there for the first roll');
+    await expect(band.getByRole('link', { name: 'Star Critsource on GitHub' })).toBeVisible();
+    await expect(band.getByRole('link', { name: 'Share an idea in Discussions' })).toBeVisible();
+}
+
 test.describe('app', () => {
     test.describe('without JavaScript', () => {
         test.use({ javaScriptEnabled: false });
@@ -85,6 +97,7 @@ test.describe('app', () => {
             await expectFeatures(page);
             await expectGetInvolved(page);
             await expectFaq(page);
+            await expectClosingCallToAction(page);
         });
     });
 
@@ -108,6 +121,7 @@ test.describe('app', () => {
         await expectFeatures(page);
         await expectGetInvolved(page);
         await expectFaq(page);
+        await expectClosingCallToAction(page);
         expect(errors).toEqual([]);
     });
 
