@@ -38,7 +38,7 @@ jobs:
 
     ready-retargeted-pull-request:
         # Once a stacked slice merges and its branch is deleted, GitHub retargets the next pull request, a draft, to
-        # main. This job marks it ready for review and turns on auto-merge, as a maintainer would by hand.
+        # main. This job marks it ready for review, as a maintainer would by hand.
         name: Ready retargeted pull request
         if: >-
             github.event.pull_request.draft &&
@@ -66,8 +66,8 @@ jobs:
                   GH_REPO: ${{ github.repository }}
                   OLD_BASE: ${{ github.event.changes.base.ref.from }}
 
-            # A merge that auto-merge makes on behalf of GITHUB_TOKEN triggers no workflows, so Push main would not run
-            # and development would not deploy. The app has write access to Contents and Pull requests.
+            # Events that GITHUB_TOKEN causes trigger no workflows, so the app marks the pull request ready, which leaves
+            # its ready_for_review event free to trigger one. The app has write access to Pull requests.
             - name: Create a token of the critsource app
               id: app-token
               if: steps.old-base.outputs.deleted == 'true'
@@ -75,14 +75,11 @@ jobs:
               with:
                   client-id: ${{ vars.GH_APP_CLIENT_ID }}
                   private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-                  permission-contents: write
                   permission-pull-requests: write
 
-            - name: Mark the pull request ready and turn on auto-merge
+            - name: Mark the pull request ready
               if: steps.old-base.outputs.deleted == 'true'
-              run: |
-                  gh pr ready "$NUMBER"
-                  gh pr merge "$NUMBER" --auto --merge
+              run: gh pr ready "$NUMBER"
               shell: bash
               env:
                   GH_TOKEN: ${{ steps.app-token.outputs.token }}
