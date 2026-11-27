@@ -130,6 +130,7 @@ Open the pull request against `main`, and keep it to one concern: an unrelated f
 - Write the title as a Conventional Commit subject, under the same rules as a commit header. The `Pull request title` check lints it again after each edit.
 - Fill in the [pull request template](.github/PULL_REQUEST_TEMPLATE.md). Its comments explain each section.
 - End the description with a `Closes #<number>` line for the issue the pull request resolves, which moves the issue to In review on the project and closes it on merge.
+- Leave auto-merge off. A maintainer merges the pull request once it meets the conditions under [Review and merge](#review-and-merge).
 
 ## Review and merge
 
