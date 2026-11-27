@@ -1,0 +1,53 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+@use '@critsource/design-tokens/typography.scss' as *;
+
+:host {
+    display: block;
+}
+
+// The section positions the glow and starts a stacking context of its own, so the glow sits over its background and
+// under its text. Penpot puts the brightest point of the glow at the middle of the bottom edge, and fades it out over
+// the full size of the band.
+section {
+    position: relative;
+    isolation: isolate;
+}
+
+dma-glow {
+    --glow-center: 50% 100%;
+    --glow-reach: 100%;
+}
+
+// The Closing call to action board of Penpot: a column with its text centered. Below the desktop breakpoint, its parts
+// fill the column space.20 apart, so the buttons of the calls to action stack at full width, as in the hero; from it
+// up, they hug their content space.24 apart, centered, and the buttons sit side by side.
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
+    text-align: center;
+}
+
+// The gap spaces the texts, so none keeps the margin of its element.
+.text > * {
+    margin: 0;
+}
+
+h2 {
+    @include typography(closing);
+
+    color: var(--color-foreground-default);
+}
+
+p {
+    @include typography(intro);
+
+    color: var(--color-foreground-muted);
+}
+
+@media (min-width: breakpoints.$breakpoint-desktop) {
+    .text {
+        align-items: center;
+        gap: var(--space-24);
+    }
+}

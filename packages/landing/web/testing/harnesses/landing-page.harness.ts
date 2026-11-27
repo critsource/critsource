@@ -1,6 +1,7 @@
 import { ComponentHarness, type ElementDimensions } from '@angular/cdk/testing';
 import { ChipHarness } from '@critsource/ui-web/testing';
 import { CallsToActionHarness } from './calls-to-action.harness';
+import { ClosingCallToActionHarness } from './closing-call-to-action.harness';
 import { FaqHarness } from './faq.harness';
 import { FeaturesHarness } from './features.harness';
 import { GetInvolvedHarness } from './get-involved.harness';
@@ -19,7 +20,7 @@ export interface LandingPageTextLook {
 
 /**
  * Reads the landing page: the chip, texts, calls to action, glow, and preview of its hero, its problem section, its
- * features section, its get-involved section, and its FAQ.
+ * features section, its get-involved section, its FAQ, and its closing call to action.
  */
 export class LandingPageHarness extends ComponentHarness {
     public static readonly hostSelector = 'dma-landing-page';
@@ -40,6 +41,7 @@ export class LandingPageHarness extends ComponentHarness {
     private readonly featuresLocator = this.locatorFor(FeaturesHarness);
     private readonly getInvolvedLocator = this.locatorFor(GetInvolvedHarness);
     private readonly faqLocator = this.locatorFor(FaqHarness);
+    private readonly closingCallToActionLocator = this.locatorFor(ClosingCallToActionHarness);
 
     /** The number of level 1 headings, which a page has one of. */
     public async countHeadings(): Promise<number> {
@@ -50,6 +52,7 @@ export class LandingPageHarness extends ComponentHarness {
         return await this.chipLocator();
     }
 
+    /** The calls to action of the hero, which come before those of the closing call to action. */
     public async getCallsToAction(): Promise<CallsToActionHarness> {
         return await this.callsToActionLocator();
     }
@@ -78,6 +81,7 @@ export class LandingPageHarness extends ComponentHarness {
         return note.top - (buttons.top + buttons.height);
     }
 
+    /** The glow of the hero, which comes before that of the closing call to action. */
     public async getGlow(): Promise<GlowHarness> {
         return await this.glowLocator();
     }
@@ -105,5 +109,9 @@ export class LandingPageHarness extends ComponentHarness {
 
     public async getFaq(): Promise<FaqHarness> {
         return await this.faqLocator();
+    }
+
+    public async getClosingCallToAction(): Promise<ClosingCallToActionHarness> {
+        return await this.closingCallToActionLocator();
     }
 }

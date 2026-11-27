@@ -15,8 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The hero of the landing page previews the app in three tabs, Prepare, Play, and Remember: an encounter, the initiative order with a dice roll, and the notes of a session. Each preview is marked Concept, since none of it is built yet, and Play shows first.
 - The landing page says why one app beats the four a table uses to run a game: a "Why Critsource" section names the rules compendium, character sheets, world notes, and virtual tabletop, and points to Critsource holding all four in one place.
 - The landing page lists the features the app will offer, grouped by when you use them in a game: before the session, at the table, and after it. A DM tag marks the tools for dungeon masters, and a link leads to every planned feature in the README. Each group previews what the app will show for it, marked Concept: the stats of Fireball, a roll of its damage, and a note of a session shared with the party.
-- The landing page ends with three ways to get involved before launch: star the repository on GitHub and watch its releases, share an idea in Discussions, or read the contributing guide and the code of conduct.
+- The landing page offers three ways to get involved before launch: star the repository on GitHub and watch its releases, share an idea in Discussions, or read the contributing guide and the code of conduct.
 - The landing page answers the questions visitors ask most: whether Critsource is free, when you can use it, which rules it covers, whether it is official, whether you can bring your homebrew or run it on your own server, and who builds it. Open a question to read its answer.
+- The landing page closes with a call to follow along: star the repository on GitHub or share an idea in Discussions, with the same buttons as the top of the page.
 
 ### Changed
 

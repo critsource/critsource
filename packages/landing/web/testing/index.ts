@@ -1,4 +1,9 @@
 export { type CallsToActionButtonBox, CallsToActionHarness } from './harnesses/calls-to-action.harness';
+export {
+    ClosingCallToActionHarness,
+    type ClosingCallToActionText,
+    type ClosingCallToActionTextLook,
+} from './harnesses/closing-call-to-action.harness';
 export { FaqHarness } from './harnesses/faq.harness';
 export {
     FeatureGroupHarness,
