@@ -1,0 +1,15 @@
+@use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
+
+// Draws a raised surface: the surface background with shadow.raised, padded space.24 by space.20 below the desktop
+// breakpoint and space.28 from it up. The feature groups and the get-involved cards use it; each sets the gaps between
+// its own parts.
+@mixin raised-surface {
+    padding: var(--space-24) var(--space-20);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-surface);
+    box-shadow: var(--shadow-raised);
+
+    @media (min-width: breakpoints.$breakpoint-desktop) {
+        padding: var(--space-28);
+    }
+}

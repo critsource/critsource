@@ -1,5 +1,6 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
 @use '@critsource/design-tokens/typography.scss' as *;
+@use 'raised-surface' as *;
 
 :host {
     display: block;
@@ -12,16 +13,14 @@
     gap: var(--space-12);
 }
 
-// A card draws as a raised surface, padded space.24 by space.20 below the desktop breakpoint and space.28 from it up,
-// with its parts space.12 apart below it and space.16 from it up.
+// A card draws the box of `raised-surface.scss`, with its parts space.12 apart below the desktop breakpoint and
+// space.16 from it up.
 .card {
+    @include raised-surface;
+
     display: flex;
     flex-direction: column;
     gap: var(--space-12);
-    padding: var(--space-24) var(--space-20);
-    border-radius: var(--radius-lg);
-    background: var(--color-background-surface);
-    box-shadow: var(--shadow-raised);
 }
 
 // The gap spaces the parts, so none keeps the margin of its element.
@@ -67,7 +66,6 @@ h3 {
 
     .card {
         gap: var(--space-16);
-        padding: var(--space-28);
     }
 
     .links {
