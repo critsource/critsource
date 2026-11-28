@@ -1,6 +1,6 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
 @use '@critsource/design-tokens/typography.scss' as *;
-@use 'raised-card' as *;
+@use 'raised-surface' as *;
 
 :host {
     display: block;
@@ -13,10 +13,10 @@
     gap: var(--space-12);
 }
 
-// A card draws as the raised card of `raised-card.scss`, with its parts space.12 apart below the desktop breakpoint and
+// A card draws the box of `raised-surface.scss`, with its parts space.12 apart below the desktop breakpoint and
 // space.16 from it up.
 .card {
-    @include raised-card;
+    @include raised-surface;
 
     display: flex;
     flex-direction: column;

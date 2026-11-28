@@ -1,6 +1,6 @@
 @use '@critsource/design-tokens/breakpoints.scss' as breakpoints;
 @use '@critsource/design-tokens/typography.scss' as *;
-@use 'raised-card' as *;
+@use 'raised-surface' as *;
 
 :host {
     display: block;
@@ -25,9 +25,9 @@
     gap: var(--space-16);
 }
 
-// A group draws as the raised card of `raised-card.scss`, with its eyebrow, heading, list, and preview space.16 apart.
+// A group draws the box of `raised-surface.scss`, with its eyebrow, heading, list, and preview space.16 apart.
 .group {
-    @include raised-card;
+    @include raised-surface;
 
     display: flex;
     flex-direction: column;
