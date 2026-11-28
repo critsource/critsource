@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - From 600 px up to desktop widths, such as on a tablet, pages keep a 48 px margin at the sides instead of 20 px, so the header, the sections, and the footer no longer run along the edge of the screen.
 - The image now enforces its Content Security Policy: it sends the policy as `Content-Security-Policy` instead of `Content-Security-Policy-Report-Only`, so browsers block each script or style that neither the app nor Cloudflare's bot check loads. If you mount your own copy of `/etc/nginx/csp.inc`, change its header name to match.
+- The light theme is less bright: pages use a softer off-white, and cards stand out lighter against it. The red glow at the top of the landing page and behind its closing call to action shows more clearly.
 
 ### Fixed
 
